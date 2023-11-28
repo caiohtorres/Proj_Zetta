@@ -21,15 +21,23 @@ function Relatorio() {
 
   const getCountByType = async () => {
     try {
-      const response = await Api.get(
-        "http://127.0.0.1:7777/annotations/countByType"
-      );
+      const response = await Api.get("http://127.0.0.1:7777/contadorPorTipo");
       const data = response.data;
       setTipoCounts(data);
     } catch (err) {
       console.log(err);
       alert("Erro ao buscar contagem por tipo!");
     }
+  };
+
+  const convertTipoCountsToChartData = (tipoCounts) => {
+    const chartData = [["Tipo", "Quantidade"]];
+
+    for (const tipo in tipoCounts) {
+      chartData.push([tipo, tipoCounts[tipo]]);
+    }
+
+    return chartData;
   };
 
   const [tituloEletronicos] = useState({
@@ -43,7 +51,7 @@ function Relatorio() {
     ["Equipamentos", "Quantidade"],
     ["Desktop", tipoCounts.desktop || 0],
     ["Workstation", 2],
-    ["Monitor", 1],
+    ["Monitor", 5],
   ]);
   const [dataOutros] = useState([
     ["Outros", "Quantidade"],
@@ -69,22 +77,17 @@ function Relatorio() {
         </ul>
       </div>
       <div className="tipoCounts">
-        <Chart
-          width={"500px"}
-          height={"300px"}
-          chartType="PieChart"
-          data={dataEletronicos}
-          options={tituloEletronicos}
-          style={chartStyle}
-        />{" "}
-        <Chart
-          width={"500px"}
-          height={"300px"}
-          chartType="PieChart"
-          data={dataOutros}
-          options={tituloOutros}
-          style={chartStyle}
-        />{" "}
+        {Object.keys(tipoCounts).map((tipo) => (
+          <Chart
+            key={tipo}
+            width={"500px"}
+            height={"300px"}
+            chartType="PieChart"
+            data={convertTipoCountsToChartData({ [tipo]: tipoCounts[tipo] })}
+            options={{ title: tipo }}
+            style={chartStyle}
+          />
+        ))}
       </div>
     </div>
   );

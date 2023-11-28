@@ -248,7 +248,13 @@ function CadastroPatrimonio() {
               value={objeto}
               onChange={(e) => {
                 setObjeto(e.target.value);
-                setTipo(e.target.value === "Desktop" ? "computador" : "");
+                setTipo(
+                  e.target.value === "Desktop"
+                    ? "computador"
+                    : "Monitor"
+                    ? "monitor"
+                    : ""
+                );
               }}
             >
               <option value="0">Escolha seu objeto</option>
