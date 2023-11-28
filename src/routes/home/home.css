@@ -1,0 +1,48 @@
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  border-radius: 5px;
+}
+
+li {
+  float: left;
+  border-right: 1px solid #bbb;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+#navbar {
+  font-family: sans-serif;
+}
+
+#chamativo {
+  font-family: sans-serif;
+  text-align: center;
+  margin: 100px auto;
+  width: auto;
+  display: block;
+}
+
+#zettaIcon {
+  height: 120px;
+  width: auto;
+  display: block;
+  margin: 70px auto;
+}
+
+#sobre {
+  float: right;
+}
+
+#sair {
+  float: right;
+}

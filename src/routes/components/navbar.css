@@ -1,0 +1,27 @@
+.navLetras {
+  font-family: sans-serif;
+  display: block;
+  color: white;
+  text-decoration: none;
+}
+
+ul {
+  list-style-type: none;
+  overflow: hidden;
+  background-color: #333;
+  border-radius: 5px;
+}
+
+li {
+  float: left;
+  border-right: 1px solid #bbb;
+}
+
+#incluindo {
+  float: left;
+  color: white;
+  display: flex;
+  padding: 14px 16px;
+  text-align: center;
+  font-family: sans-serif;
+}

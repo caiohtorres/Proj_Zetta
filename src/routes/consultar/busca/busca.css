@@ -1,0 +1,109 @@
+.data-container {
+  background-color: white;
+  color: white;
+  padding: 10px;
+}
+.data-container label {
+  padding: 10px;
+  display: flex;
+}
+.container-objeto {
+  text-align: center;
+  font-size: 25px;
+}
+
+.container-busca .data-objeto {
+  text-align: center;
+  color: #000000;
+  font-family: sans-serif;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.container-busca {
+  background-color: white;
+  border: 1px solid black;
+  background-color: #f2f2f2;
+  font-family: sans-serif;
+}
+
+.container-busca ul {
+  display: grid;
+  background-color: #f2f2f2;
+  color: black;
+}
+
+.container-busca li {
+  margin-left: 3px;
+  border-right: none;
+  font-family: sans-serif;
+}
+
+.save {
+  color: black;
+}
+
+.save:hover {
+  cursor: pointer;
+  color: #45a049;
+}
+
+.delete {
+  color: black;
+}
+
+.delete:hover {
+  cursor: pointer;
+  color: #45a049;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  position: relative;
+  bottom: 5px;
+  left: 10px;
+}
+.save-div {
+  margin-left: 15px;
+}
+
+.input-error {
+  outline: 1px solid red;
+}
+
+.imgBusca {
+  display: flex;
+  padding: 10px;
+}
+
+.container-busca input {
+  padding: 12px 15px;
+  width: 100%;
+}
+
+.corpo {
+  font-family: sans-serif;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.caixas p {
+  margin-left: 25px;
+}
+
+.caixas-notas input {
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+label {
+  font-weight: bolder;
+}
+
+.comunicado {
+  color: black;
+  font-size: 15px;
+  margin-left: 10px;
+}
