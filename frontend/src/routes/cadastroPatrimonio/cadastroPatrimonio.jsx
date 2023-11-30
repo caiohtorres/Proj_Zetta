@@ -277,43 +277,43 @@ function CadastroPatrimonio() {
                     tipoSelecionado = "computador";
                     break;
                   case "Monitor":
-                    tipoSelecionado = "monitor";
+                    tipoSelecionado = "Monitor";
                     break;
                   case "Mesa":
-                    tipoSelecionado = "mesa";
+                    tipoSelecionado = "Mesa";
                     break;
                   case "Workstation":
-                    tipoSelecionado = "workstation";
+                    tipoSelecionado = "Workstation";
                     break;
                   case "Notebook":
-                    tipoSelecionado = "notebook";
+                    tipoSelecionado = "Notebook";
                     break;
                   case "Impressora":
-                    tipoSelecionado = "impressora";
+                    tipoSelecionado = "Impressora";
                     break;
                   case "Geladeira":
-                    tipoSelecionado = "geladeira";
+                    tipoSelecionado = "Geladeira";
                     break;
                   case "Fogao":
-                    tipoSelecionado = "fogao";
+                    tipoSelecionado = "Fogao";
                     break;
                   case "Bebedouro":
-                    tipoSelecionado = "bebedouro";
+                    tipoSelecionado = "Bebedouro";
                     break;
                   case "Ar":
-                    tipoSelecionado = "ar";
+                    tipoSelecionado = "Ar";
                     break;
                   case "Cadeira":
-                    tipoSelecionado = "cadeira";
+                    tipoSelecionado = "Cadeira";
                     break;
                   case "Microondas":
-                    tipoSelecionado = "microondas";
+                    tipoSelecionado = "Microondas";
                     break;
                   case "noBreak":
                     tipoSelecionado = "noBreak";
                     break;
                   case "Televisao":
-                    tipoSelecionado = "televisao";
+                    tipoSelecionado = "Televisao";
                     break;
                   default:
                     tipoSelecionado = "";

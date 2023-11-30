@@ -21,7 +21,7 @@ const listaTipoEletrodomesticos = [
 ];
 
 const listaTipoEletronicos = [
-  "Computador",
+  "computador",
   "Monitor",
   "Workstation",
   "Notebook",
@@ -45,6 +45,7 @@ function Relatorio() {
       );
       const data = response.data;
       setTipoCounts(data);
+      console.log(data);
     } catch (err) {
       console.log(err);
       alert("Erro ao buscar contagem por tipo!");
