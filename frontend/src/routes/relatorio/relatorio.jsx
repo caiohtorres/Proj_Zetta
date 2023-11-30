@@ -11,8 +11,27 @@ class Sair extends React.Component {
   }
 }
 
+const listaTipoEletrodomesticos = [
+  "Geladeira",
+  "Fogao",
+  "Bebedouro",
+  "Ar",
+  "Microondas",
+  "Televisao",
+];
+
+const listaTipoEletronicos = [
+  "Computador",
+  "Monitor",
+  "Workstation",
+  "Notebook",
+  "Impressora",
+  "noBreak",
+];
+
+const listaTipoMoveis = ["Mesa", "Cadeira"];
+
 function Relatorio() {
-  const [data, setData] = useState({});
   const [tipoCounts, setTipoCounts] = useState({});
 
   useEffect(() => {
@@ -21,7 +40,9 @@ function Relatorio() {
 
   const getCountByType = async () => {
     try {
-      const response = await Api.get("http://127.0.0.1:7777/contadorPorTipo");
+      const response = await Api.get(
+        "http://177.105.35.235:7777/contadorPorTipo"
+      );
       const data = response.data;
       setTipoCounts(data);
     } catch (err) {
@@ -30,40 +51,47 @@ function Relatorio() {
     }
   };
 
-  const convertTipoCountsToChartData = (tipoCounts) => {
-    const chartData = [["Tipo", "Quantidade"]];
+  const convertTipoCountsToChartDataEletrodomesticos = () => {
+    const tipoEletrodomesticos = [["TipoEletrodomesticos", "Quantidade"]];
 
     for (const tipo in tipoCounts) {
-      chartData.push([tipo, tipoCounts[tipo]]);
+      if (listaTipoEletrodomesticos.includes(tipo)) {
+        tipoEletrodomesticos.push([tipo, tipoCounts[tipo]]);
+      }
     }
 
-    return chartData;
+    return tipoEletrodomesticos;
   };
 
-  const [tituloEletronicos] = useState({
-    title: "Eletônicos",
-  });
+  const convertTipoCountsToChartDataEletronicos = () => {
+    const tipoEletronicos = [["TipoEletronicos", "Quantidade"]];
 
-  const [tituloOutros] = useState({
-    title: "Outros",
-  });
-  const [dataEletronicos] = useState([
-    ["Equipamentos", "Quantidade"],
-    ["Desktop", tipoCounts.desktop || 0],
-    ["Workstation", 2],
-    ["Monitor", 5],
-  ]);
-  const [dataOutros] = useState([
-    ["Outros", "Quantidade"],
-    ["Mesa", 100],
-    ["Cadeira", 80],
-    ["Geladeira", 50],
-  ]);
+    for (const tipo in tipoCounts) {
+      if (listaTipoEletronicos.includes(tipo)) {
+        tipoEletronicos.push([tipo, tipoCounts[tipo]]);
+      }
+    }
+
+    return tipoEletronicos;
+  };
+
+  const convertTipoCountsToChartDataMoveis = () => {
+    const tipoMoveis = [["TipoMoveis", "Quantidade"]];
+
+    for (const tipo in tipoCounts) {
+      if (listaTipoMoveis.includes(tipo)) {
+        tipoMoveis.push([tipo, tipoCounts[tipo]]);
+      }
+    }
+
+    return tipoMoveis;
+  };
 
   const chartStyle = {
     width: "100%",
     height: "400px",
   };
+
   return (
     <div id="consultar">
       <div className="cabecalho">
@@ -76,18 +104,37 @@ function Relatorio() {
           </li>
         </ul>
       </div>
-      <div className="tipoCounts">
-        {Object.keys(tipoCounts).map((tipo) => (
+      <div className="graficos">
+        <div className="tipoEletronicos">
           <Chart
-            key={tipo}
-            width={"500px"}
-            height={"300px"}
+            width={"100%"}
+            height={"400px"}
             chartType="PieChart"
-            data={convertTipoCountsToChartData({ [tipo]: tipoCounts[tipo] })}
-            options={{ title: tipo }}
+            data={convertTipoCountsToChartDataEletronicos()}
+            options={{ title: "Eletrônicos" }}
             style={chartStyle}
           />
-        ))}
+        </div>
+        <div className="tipoEletrodomesticos">
+          <Chart
+            width={"100%"}
+            height={"400px"}
+            chartType="PieChart"
+            data={convertTipoCountsToChartDataEletrodomesticos()}
+            options={{ title: "Eletrodomésticos" }}
+            style={chartStyle}
+          />
+        </div>
+        <div className="tipoMoveis">
+          <Chart
+            width={"100%"}
+            height={"400px"}
+            chartType="PieChart"
+            data={convertTipoCountsToChartDataMoveis()}
+            options={{ title: "Móveis" }}
+            style={chartStyle}
+          />
+        </div>
       </div>
     </div>
   );

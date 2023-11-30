@@ -23,7 +23,7 @@ function Sobre() {
       </div>
       <div className="corpo">
         <label for="sobre">
-          Esse é um projeto desenvolvido por x para fins y
+          Esse é um projeto desenvolvido por Caio para fins de estudos
         </label>
       </div>
     </>

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const mongodb = require("mongodb");
 
 //const URL = `mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@cluster0.iod39cc.mongodb.net/?retryWrites=true&w=majority`;
-const URL = `mongodb://127.0.0.1:27017/annotations`;
+const URL = `mongodb://177.105.35.235:27017/annotations`;
 const connectionDB = () => {
   mongoose
     .connect(URL, {

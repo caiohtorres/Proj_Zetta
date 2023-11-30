@@ -1,7 +1,21 @@
 const Annotations = require("../models/AnnotationData");
 
-let contadorDesktop = 0;
-let contadorMonitor = 0;
+const tipoContadores = {
+  computador: "contadorDesktop",
+  Monitor: "contadorMonitor",
+  Mesa: "contadorMesa",
+  Workstation: "contadorWorkstation",
+  Notebook: "contadorNotebook",
+  Impressora: "contadorImpressora",
+  Geladeira: "contadorGeladeira",
+  Fogao: "contadorFogao",
+  Bebedouro: "contadorBebedouro",
+  Ar: "contadorAr",
+  Cadeira: "contadorCadeira",
+  Microondas: "contadorMicroondas",
+  noBreak: "contadorNoBreak",
+  Televisao: "contadorTelevisao",
+};
 
 module.exports = {
   async read(req, res) {
@@ -9,7 +23,7 @@ module.exports = {
 
     if (!patrimonio) {
       return res
-        .status(400)
+        .status(401)
         .json({ error: "Número do patrimônio não preenchido!" });
     }
     const annotationList = await Annotations.findOne({
@@ -38,9 +52,7 @@ module.exports = {
     } = req.body;
 
     if (!patrimonio || !objeto || !estadoConservacao || !valor || !quantidade) {
-      return res
-        .status(400)
-        .json({ error: "Ainda há dados a serem preenchidos" });
+      return res.json({ error: "Ainda há dados a serem preenchidos" });
     }
 
     const annotationCreated = await Annotations.create({
@@ -56,12 +68,11 @@ module.exports = {
       tipo,
       armazenamento,
     });
-    if (tipo === "computador") {
-      contadorDesktop += 1;
+
+    if (tipoContadores[tipo]) {
+      global[tipoContadores[tipo]] += 1;
     }
-    if (tipo === "Monitor") {
-      contadorMonitor += 1;
-    }
+
     return res.json(annotationCreated);
   },
 
@@ -71,15 +82,14 @@ module.exports = {
     const annotationDeleted = await Annotations.findOneAndDelete({
       patrimonio: patrimonio,
     });
+
     if (annotationDeleted) {
+      if (tipoContadores[annotationDeleted.tipo]) {
+        global[tipoContadores[annotationDeleted.tipo]] -= 1;
+      }
       return res.json(annotationDeleted);
     }
-    if (tipo === "computador") {
-      contadorDesktop -= 1;
-    }
-    if (tipo === "Monitor") {
-      contadorMonitor -= 1;
-    }
+
     return res.status(401).json({ error: "Patrimônio não encontrado!" });
   },
 
@@ -95,16 +105,11 @@ module.exports = {
 
   async countByType(req, res) {
     try {
-      const countDesktop = await Annotations.countDocuments({
-        tipo: "computador",
-      });
-      const countMonitor = await Annotations.countDocuments({
-        tipo: "monitor",
-      });
-      const counts = {
-        Computador: countDesktop,
-        Monitor: countMonitor,
-      };
+      const counts = {};
+
+      for (const tipo in tipoContadores) {
+        counts[tipo] = await Annotations.countDocuments({ tipo });
+      }
 
       res.json(counts);
     } catch (error) {

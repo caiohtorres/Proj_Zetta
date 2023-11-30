@@ -9,7 +9,7 @@ function Busca({ data }) {
 
   async function handleSave(e) {
     const notasAlteradas = await Api.post(
-      "http://127.0.0.1:7777/contentChange/" + e,
+      "http://177.105.35.235:7777/contentChange/" + e,
       {
         notas: changedNote,
       }
@@ -21,7 +21,7 @@ function Busca({ data }) {
 
   async function handleDelete(e) {
     const patrimonioDeletado = await Api.delete(
-      "http://127.0.0.1:7777/annotations/" + e
+      "http://177.105.35.235:7777/annotations/" + e
     );
     if (patrimonioDeletado) {
       alert("Patrimônio deletado com sucesso!");

@@ -26,7 +26,7 @@ function Consultar() {
     console.log(ev);
     try {
       const response = await Api.get(
-        "http://127.0.0.1:7777/annotations/" + patrimonioById
+        "http://177.105.35.235:7777/annotations/" + patrimonioById
       );
       const data = response.data;
       setData(data);
@@ -42,7 +42,7 @@ function Consultar() {
   const getAllPatrimonios = async (ev) => {
     ev.preventDefault();
     try {
-      const response = await Api.get("http://127.0.0.1:7777/annotations/");
+      const response = await Api.get("http://177.105.35.235:7777/annotations/");
       const data = response.data;
       setData(data);
       setMostrarTodos(true);
@@ -132,7 +132,7 @@ function Consultar() {
             <table className="mostrarTodos">
               <thead>
                 <tr>
-                  <th>Nome do patrimônio</th>
+                  <th>Objeto</th>
                   <th>Número do patrimônio</th>
                 </tr>
               </thead>

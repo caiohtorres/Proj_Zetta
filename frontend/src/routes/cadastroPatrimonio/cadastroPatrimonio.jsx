@@ -10,9 +10,6 @@ class Sair extends React.Component {
     return <RiArrowGoBackFill />;
   }
 }
-const refreshPage = () => {
-  window.location.reload();
-};
 
 function CadastroPatrimonio() {
   const [patrimonio, setPatrimonio] = useState("");
@@ -76,7 +73,22 @@ function CadastroPatrimonio() {
     "RTX 4090",
   ];
 
-  const listaObjetos = ["Desktop", "Mesa", "Monitor", "Workstation"];
+  const listaObjetos = [
+    "Desktop",
+    "Monitor",
+    "Mesa",
+    "Workstation",
+    "Notebook",
+    "Impressora",
+    "Geladeira",
+    "Fogao",
+    "Bebedouro",
+    "Ar",
+    "Cadeira",
+    "Microondas",
+    "noBreak",
+    "Televisao",
+  ];
   const listaMemoriaRam = [
     "DDR3-800 4GB",
     "DDR3-800 8GB",
@@ -173,11 +185,18 @@ function CadastroPatrimonio() {
     console.log(data);
   };
 
+  const patrimonioValidation = (value) => {
+    if (!isNaN(value) && value.trim() !== "") {
+      return true;
+    }
+    return "Número do patrimônio deve ser um valor numérico";
+  };
+
   async function handleForm(e) {
     e.preventDefault();
 
     const response = await Api.post("/annotations", {
-      patrimonio,
+      patrimonio: Number(patrimonio),
       objeto,
       notas,
       estadoConservacao,
@@ -202,9 +221,6 @@ function CadastroPatrimonio() {
     setMemoriaRam("");
     setTipo("");
     console.log(response);
-
-    alert("Patrimônio cadastrado com sucesso!");
-    refreshPage();
   }
 
   return (
@@ -231,12 +247,18 @@ function CadastroPatrimonio() {
               className={errors?.patrimonio && "input-error"}
               type="text"
               placeholder="Número do patrimônio:"
-              {...register("patrimonio", { required: true })}
+              {...register("patrimonio", {
+                required: true,
+                validate: patrimonioValidation,
+              })}
               value={patrimonio}
               onChange={(e) => setPatrimonio(e.target.value)}
             />
             {errors?.patrimonio?.type === "required" && (
               <p className="error-message">Número do patrimônio é necessário</p>
+            )}
+            {errors?.patrimonio?.type === "validate" && (
+              <p className="error-message">Patrimônio deve ser um número</p>
             )}
           </div>
 
@@ -247,14 +269,57 @@ function CadastroPatrimonio() {
               defaultValue="0"
               value={objeto}
               onChange={(e) => {
-                setObjeto(e.target.value);
-                setTipo(
-                  e.target.value === "Desktop"
-                    ? "computador"
-                    : "Monitor"
-                    ? "monitor"
-                    : ""
-                );
+                const selectedValue = e.target.value;
+                setObjeto(selectedValue);
+                let tipoSelecionado = "";
+                switch (selectedValue) {
+                  case "Desktop":
+                    tipoSelecionado = "computador";
+                    break;
+                  case "Monitor":
+                    tipoSelecionado = "monitor";
+                    break;
+                  case "Mesa":
+                    tipoSelecionado = "mesa";
+                    break;
+                  case "Workstation":
+                    tipoSelecionado = "workstation";
+                    break;
+                  case "Notebook":
+                    tipoSelecionado = "notebook";
+                    break;
+                  case "Impressora":
+                    tipoSelecionado = "impressora";
+                    break;
+                  case "Geladeira":
+                    tipoSelecionado = "geladeira";
+                    break;
+                  case "Fogao":
+                    tipoSelecionado = "fogao";
+                    break;
+                  case "Bebedouro":
+                    tipoSelecionado = "bebedouro";
+                    break;
+                  case "Ar":
+                    tipoSelecionado = "ar";
+                    break;
+                  case "Cadeira":
+                    tipoSelecionado = "cadeira";
+                    break;
+                  case "Microondas":
+                    tipoSelecionado = "microondas";
+                    break;
+                  case "noBreak":
+                    tipoSelecionado = "noBreak";
+                    break;
+                  case "Televisao":
+                    tipoSelecionado = "televisao";
+                    break;
+                  default:
+                    tipoSelecionado = "";
+                }
+
+                setTipo(tipoSelecionado);
               }}
             >
               <option value="0">Escolha seu objeto</option>
