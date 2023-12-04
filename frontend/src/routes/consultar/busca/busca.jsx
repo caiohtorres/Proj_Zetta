@@ -54,7 +54,7 @@ function Busca({ data }) {
                 <p>{data.tipo}</p>
               </li>
             </div>
-            {data.tipo === "computador" && (
+            {data.tipo === "Desktop" && (
               <div className="caixas">
                 <li>
                   {" "}
@@ -63,7 +63,7 @@ function Busca({ data }) {
                 </li>
               </div>
             )}
-            {data.tipo === "computador" && (
+            {data.tipo === "Desktop" && (
               <div className="caixas">
                 <li>
                   {" "}
@@ -72,7 +72,7 @@ function Busca({ data }) {
                 </li>
               </div>
             )}
-            {data.tipo === "computador" && (
+            {data.tipo === "Desktop" && (
               <div className="caixas">
                 <li>
                   {" "}
@@ -81,7 +81,7 @@ function Busca({ data }) {
                 </li>
               </div>
             )}
-            {data.tipo === "computador" && (
+            {data.tipo === "Desktop" && (
               <div className="caixas">
                 <li>
                   {" "}

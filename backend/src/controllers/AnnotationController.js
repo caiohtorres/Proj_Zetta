@@ -1,7 +1,7 @@
 const Annotations = require("../models/AnnotationData");
 
 const tipoContadores = {
-  computador: "contadorDesktop",
+  Desktop: "contadorDesktop",
   Monitor: "contadorMonitor",
   Mesa: "contadorMesa",
   Workstation: "contadorWorkstation",
@@ -49,6 +49,7 @@ module.exports = {
       armazenamento,
       memoriaRam,
       tipo,
+      local,
     } = req.body;
 
     if (!patrimonio || !objeto || !estadoConservacao || !valor || !quantidade) {
@@ -67,6 +68,7 @@ module.exports = {
       memoriaRam,
       tipo,
       armazenamento,
+      local,
     });
 
     if (tipoContadores[tipo]) {

@@ -21,7 +21,7 @@ const listaTipoEletrodomesticos = [
 ];
 
 const listaTipoEletronicos = [
-  "computador",
+  "Desktop",
   "Monitor",
   "Workstation",
   "Notebook",

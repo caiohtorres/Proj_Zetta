@@ -23,6 +23,7 @@ function CadastroPatrimonio() {
   const [armazenamento, setArmazenamento] = useState("");
   const [memoriaRam, setMemoriaRam] = useState("");
   const [tipo, setTipo] = useState("");
+  const [local, setLocal] = useState("");
 
   const criarListaProcessadores = (serie, maxGeneracao) => {
     const processadores = [];
@@ -72,6 +73,8 @@ function CadastroPatrimonio() {
     "RTX 4080 Ti",
     "RTX 4090",
   ];
+
+  const listaLocal = ["Administrativo", "MPF", "Cozinha"];
 
   const listaObjetos = [
     "Desktop",
@@ -207,6 +210,7 @@ function CadastroPatrimonio() {
       placaVideo,
       memoriaRam,
       tipo,
+      local,
     });
 
     setPatrimonio("");
@@ -220,6 +224,7 @@ function CadastroPatrimonio() {
     setArmazenamento("");
     setMemoriaRam("");
     setTipo("");
+    setLocal("");
     console.log(response);
   }
 
@@ -274,7 +279,7 @@ function CadastroPatrimonio() {
                 let tipoSelecionado = "";
                 switch (selectedValue) {
                   case "Desktop":
-                    tipoSelecionado = "computador";
+                    tipoSelecionado = "Desktop";
                     break;
                   case "Monitor":
                     tipoSelecionado = "Monitor";
@@ -331,7 +336,7 @@ function CadastroPatrimonio() {
             </select>
           </div>
 
-          {tipo === "computador" && (
+          {tipo === "Desktop" && (
             <div className="form-group">
               <label>Processador</label>
               <select
@@ -349,7 +354,7 @@ function CadastroPatrimonio() {
               </select>
             </div>
           )}
-          {tipo === "computador" && (
+          {tipo === "Desktop" && (
             <div className="form-group">
               <label>Placa de Vídeo</label>
               <select
@@ -367,7 +372,7 @@ function CadastroPatrimonio() {
               </select>
             </div>
           )}
-          {tipo === "computador" && (
+          {tipo === "Desktop" && (
             <div className="form-group">
               <label>Memória Ram</label>
               <select
@@ -385,7 +390,7 @@ function CadastroPatrimonio() {
               </select>
             </div>
           )}
-          {tipo === "computador" && (
+          {tipo === "Desktop" && (
             <div className="form-group">
               <label>Armazenamento</label>
               <select
@@ -403,6 +408,29 @@ function CadastroPatrimonio() {
               </select>
             </div>
           )}
+
+          <div className="form-group">
+            <label>Local</label>
+            <select
+              className={errors?.local && "input-error"}
+              defaultValue="0"
+              {...register("local", {
+                validate: (value) => value !== "0",
+              })}
+              value={local}
+              onChange={(e) => setLocal(e.target.value)}
+            >
+              <option value="0">Escolha o local</option>
+              {listaLocal.map((local, index) => (
+                <option key={index} value={local}>
+                  {local}
+                </option>
+              ))}
+            </select>
+            {errors?.local?.type === "validate" && (
+              <p className="error-message">Local é necessário</p>
+            )}
+          </div>
 
           <div className="form-group">
             <label>Estado de Conservação</label>

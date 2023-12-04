@@ -66,6 +66,7 @@ function Consultar() {
         <tr key={index}>
           <td>{dado.objeto}</td>
           <td>{dado.patrimonio}</td>
+          <td>{dado.local}</td>
         </tr>
       );
     });
