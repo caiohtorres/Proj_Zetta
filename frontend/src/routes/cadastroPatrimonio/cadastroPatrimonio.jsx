@@ -197,35 +197,39 @@ function CadastroPatrimonio() {
 
   async function handleForm(e) {
     e.preventDefault();
+    try {
+      const response = await Api.post("/annotations", {
+        patrimonio: Number(patrimonio),
+        objeto,
+        notas,
+        estadoConservacao,
+        valor,
+        quantidade,
+        armazenamento,
+        processador,
+        placaVideo,
+        memoriaRam,
+        tipo,
+        local,
+      });
 
-    const response = await Api.post("/annotations", {
-      patrimonio: Number(patrimonio),
-      objeto,
-      notas,
-      estadoConservacao,
-      valor,
-      quantidade,
-      armazenamento,
-      processador,
-      placaVideo,
-      memoriaRam,
-      tipo,
-      local,
-    });
-
-    setPatrimonio("");
-    setObjeto("");
-    setNotas("");
-    setEstadoConservacao("");
-    setValor("");
-    setQuantidade("");
-    setPlacaVideo("");
-    setProcessador("");
-    setArmazenamento("");
-    setMemoriaRam("");
-    setTipo("");
-    setLocal("");
-    console.log(response);
+      setPatrimonio("");
+      setObjeto("");
+      setNotas("");
+      setEstadoConservacao("");
+      setValor("");
+      setQuantidade("");
+      setPlacaVideo("");
+      setProcessador("");
+      setArmazenamento("");
+      setMemoriaRam("");
+      setTipo("");
+      setLocal("");
+      console.log(response);
+      alert("Patrimônio cadastrado com sucesso!");
+    } catch (error) {
+      console.error("Erro ao cadastrar patrimônio: ", error);
+    }
   }
 
   return (

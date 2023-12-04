@@ -74,8 +74,11 @@ module.exports = {
     if (tipoContadores[tipo]) {
       global[tipoContadores[tipo]] += 1;
     }
-
-    return res.json(annotationCreated);
+    return res.json({
+      success: true,
+      message: "Patrimônio cadastrado com sucesso!",
+      annotation: annotationCreated,
+    });
   },
 
   async delete(req, res) {

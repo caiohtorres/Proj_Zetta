@@ -4,18 +4,22 @@ import { MdDeleteForever } from "react-icons/md";
 import Api from "../../../services/api";
 import "./busca.css";
 
+const listaLocal = ["Administrativo", "MPF", "Cozinha"];
+
 function Busca({ data }) {
   const [changedNote, setChangedNote] = useState();
+  const [changedLocal, setChangedLocal] = useState();
 
   async function handleSave(e) {
-    const notasAlteradas = await Api.post(
+    const patrimonioAlterado = await Api.post(
       "http://177.105.35.235:7777/contentChange/" + e,
       {
         notas: changedNote,
+        local: changedLocal,
       }
     );
-    if (notasAlteradas) {
-      alert("Notas alteradas com sucesso!");
+    if (patrimonioAlterado) {
+      alert("Patrimônio alterado com sucesso!");
     }
   }
 
@@ -90,6 +94,24 @@ function Busca({ data }) {
                 </li>
               </div>
             )}
+            <div className="caixas-notas">
+              <li>
+                {" "}
+                <label>Local:</label>
+                <select
+                  defaultValue="0"
+                  value={changedLocal}
+                  onChange={(e) => setChangedLocal(e.target.value)}
+                >
+                  <option value="0">{data.local}</option>
+                  {listaLocal.map((local, index) => (
+                    <option key={index} value={local}>
+                      {local}
+                    </option>
+                  ))}
+                </select>
+              </li>
+            </div>
             <div className="caixas">
               <li>
                 {" "}
@@ -124,7 +146,7 @@ function Busca({ data }) {
           </ul>
 
           <p className="comunicado">
-            É possível fazer alterações na nota do patrimônio!
+            É possível fazer alterações no patrimônio!
           </p>
 
           <div className="imgBusca">

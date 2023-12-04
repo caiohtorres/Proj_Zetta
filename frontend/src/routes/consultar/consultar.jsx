@@ -135,6 +135,7 @@ function Consultar() {
                 <tr>
                   <th>Objeto</th>
                   <th>Número do patrimônio</th>
+                  <th>Local</th>
                 </tr>
               </thead>
               <tbody>{renderColumns()}</tbody>

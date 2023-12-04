@@ -1,0 +1,67 @@
+.telaLogin form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  height: 100vh;
+  background-color: #f2f2f2;
+  font-family: sans-serif;
+  text-decoration: none;
+}
+
+.preencherDados {
+  gap: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  box-shadow: 0 1px 2px #0003;
+  background-color: white;
+  max-width: 350px;
+  padding: 20px;
+  border-radius: 5px;
+}
+input {
+  height: 50px;
+  width: 300px;
+  border-radius: 5px;
+  border-color: #f2f2f2;
+  border-style: solid;
+}
+.btnLogin {
+  width: 300px;
+
+  font-family: sans-serif;
+}
+
+.preencherDados label {
+  font-size: 18px;
+  font-weight: 600;
+  color: #676767;
+}
+
+.preencherDados strong {
+  cursor: pointer;
+
+  text-decoration: none;
+  color: #676767;
+}
+
+.cadastrar {
+  font-size: 16px;
+  color: #676767;
+}
+
+.errorLogin {
+  color: red;
+}
+
+.telaLogin .tituloLogin {
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
