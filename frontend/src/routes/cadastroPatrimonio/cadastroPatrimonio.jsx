@@ -239,7 +239,7 @@ function CadastroPatrimonio() {
           <ul>
             <li id="incluindo">Incluindo</li>
             <li id="sair">
-              <Link to="/">
+              <Link to="/home">
                 <Sair />
               </Link>
             </li>

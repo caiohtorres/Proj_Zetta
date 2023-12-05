@@ -23,19 +23,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/cadastropatrimonio",
-    element: <CadastroPatrimonio />,
+    element: <Private Item={CadastroPatrimonio} />,
   },
   {
     path: "/consultar",
-    element: <Consultar />,
+    element: <Private Item={Consultar} />,
   },
   {
     path: "/relatorio",
-    element: <Relatorio />,
+    element: <Private Item={Relatorio} />,
   },
   {
     path: "/sobre",
-    element: <Sobre />,
+    element: <Private Item={Sobre} />,
   },
   {
     path: "/",

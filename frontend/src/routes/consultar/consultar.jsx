@@ -85,7 +85,7 @@ function Consultar() {
         <ul>
           <li id="nomepag">Consultando</li>
           <li id="sair">
-            <Link to="/">
+            <Link to="/home">
               <Sair />
             </Link>
           </li>

@@ -99,7 +99,7 @@ function Relatorio() {
         <ul>
           <li id="incluindo">Relatório</li>
           <li id="sair">
-            <Link to="/">
+            <Link to="/home">
               <Sair />
             </Link>
           </li>

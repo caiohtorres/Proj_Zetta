@@ -1,10 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+import UseAuth from "../../hooks/useAuth";
 import "./navbar.css";
 
 const Navbar = () => {
-  const { signout } = useAuth();
+  const { signout } = UseAuth();
   const navigate = useNavigate();
+
   return (
     <nav className="navbar">
       <div className="bloco">
@@ -20,7 +21,7 @@ const Navbar = () => {
               <Link to="/relatorio">Relatorio</Link>
             </li>
             <li id="sair" onClick={() => [signout(), navigate("/")]}>
-              <Link to="/sair">Sair</Link>
+              <Link>Sair</Link>
             </li>
             <li id="sobre">
               <Link to="/sobre">Sobre</Link>

@@ -15,7 +15,7 @@ function Sobre() {
         <ul>
           <li id="nomepag">Sobre</li>
           <li id="sair">
-            <Link to="/">
+            <Link to="/home">
               <Sair />
             </Link>
           </li>
