@@ -26,17 +26,9 @@ const Signup = () => {
         email: form.email,
         password: form.password,
       });
-      if (data) {
-        const responseLogin = await userService.login({
-          email: form.email,
-          password: form.password,
-        });
-        if (responseLogin === true) {
-          alert("Usuário cadastrado com sucesso");
-          navigate("/home");
-        }
-      }
+      console.log(data);
       setLoading(false);
+      navigate("/");
     } catch (error) {
       alert("Algo de errado com o cadastro" + error);
     }

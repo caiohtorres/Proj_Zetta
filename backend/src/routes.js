@@ -5,7 +5,6 @@ const AnnotationController = require("./controllers/AnnotationController");
 const EConservacaoController = require("./controllers/EConservacaoController");
 const ContentController = require("./controllers/ContentController");
 const QuantidadeController = require("./controllers/QuantidadeController");
-const Login = require("./controllers/Login");
 const UserController = require("./controllers/UserController");
 
 //Rota Annotations
@@ -28,7 +27,8 @@ routes.post("/quantidadeChange/:patrimonio", QuantidadeController.update);
 
 routes.get("/contadorPorTipo", AnnotationController.countByType);
 
-routes.post("/login", Login.login);
+routes.post("/login", UserController.login);
 routes.post("/cadastrousuario", UserController.create);
+routes.get("/users", UserController.getAll);
 
 module.exports = routes;
