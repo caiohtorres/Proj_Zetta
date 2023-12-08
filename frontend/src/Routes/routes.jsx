@@ -13,7 +13,7 @@ import ProtectedRoutes from "./ProtectedRoutes";
 const Routering = () => {
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Login />} />
       <Route path="/cadastrousuario" element={<Signup />} />
       <Route
         path="/home/*"
