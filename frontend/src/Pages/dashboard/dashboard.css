@@ -1,0 +1,49 @@
+.graficos {
+  display: flex;
+  justify-content: space-around;
+}
+
+.grafico-com-legenda {
+  display: flex;
+  flex-direction: column;
+}
+.legenda {
+  background-color: #f2f2f2;
+  border-radius: 5px;
+
+  padding: 20px;
+  font-family: sans-serif;
+}
+
+.legenda h2 {
+  margin-bottom: 15px;
+  color: #000;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.legenda table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+}
+
+.legenda th,
+.legenda td {
+  padding: 10px;
+
+  text-align: left;
+}
+
+.legenda tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+.legenda th {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.legenda tr:hover {
+  background-color: #ddd;
+}

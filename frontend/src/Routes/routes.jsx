@@ -3,9 +3,9 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import CadastroPatrimonio from "../Pages/cadastroPatrimonio/cadastroPatrimonio";
 import Consultar from "../Pages/consultar/consultar";
+import Dashboard from "../Pages/dashboard/dashboard";
 import App from "../Pages/home/home";
 import Login from "../Pages/login/login";
-import Relatorio from "../Pages/relatorio/relatorio";
 import Signup from "../Pages/signup/cadastro";
 import Sobre from "../Pages/sobre/sobre";
 import ProtectedRoutes from "./ProtectedRoutes";
@@ -40,10 +40,10 @@ const Routering = () => {
         }
       />
       <Route
-        path="/relatorio"
+        path="/dashboard"
         element={
           <ProtectedRoutes>
-            <Relatorio />
+            <Dashboard />
           </ProtectedRoutes>
         }
       />
