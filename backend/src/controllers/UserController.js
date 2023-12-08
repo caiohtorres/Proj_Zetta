@@ -1,46 +1,52 @@
 const jwt = require("jsonwebtoken");
 const Users = require("../models/UsersData");
+require("dotenv").config();
 
 module.exports = {
   async login(req, res) {
     const { email, password } = req.body;
 
     try {
-      if (!validarEmail(email)) {
-        return res.status(400).json({ error: "E-mail inválido" });
-      }
-      if (!validarSenha(password)) {
-        return res.status(400).json({ error: "Senha inválida" });
-      }
-
       const user = await Users.findOne({ email, password });
 
       if (!user) {
         return res.status(401).json({ message: "Credenciais inválidas" });
       }
 
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
 
       res.status(200).json({
         message: "Login bem-sucedido",
-        user,
+        user: {
+          _id: user._id,
+          nome: user.nome,
+          email: user.email,
+        },
+        token: {
+          token,
+        },
       });
     } catch (error) {
+      console.error(error);
       return res.status(500).json({ error: "Erro interno do servidor" });
     }
   },
-
   async create(req, res) {
     const { nome, email, password } = req.body;
 
     try {
+      const existingUser = await Users.findOne({ email });
+      if (existingUser) {
+        return res.status(400).json({ error: "E-mail já cadastrado" });
+      }
+
       const user = await Users.create({
         nome,
         email,
         password,
       });
 
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
 
       user.token = token;
 

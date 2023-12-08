@@ -1,36 +1,39 @@
-import axios from "axios";
+import Api from "./api";
 
 export default class UserService {
-  constructor() {
-    this.axios = axios.create({
-      baseURL: process.env.REACT_APP_API_LOGIN + "/api",
-    });
-  }
+  // ...
+
   async login(dados) {
-    const { data } = await this.axios.post(
-      "http://177.105.35.235:7777/login",
-      dados
-    );
-    if (data) {
-      localStorage.setItem("nome", data.user.nome);
-      localStorage.setItem("email", data.user.email);
-      localStorage.setItem("token", data.token.token);
-      return true;
+    try {
+      const response = await Api.post("/login", dados);
+      localStorage.setItem("nome", response.data.user.nome);
+      localStorage.setItem("email", response.data.user.email);
+      localStorage.setItem("token", response.data.user.token);
+      return response.data;
+    } catch (error) {
+      console.error("Erro durante o login:", error);
+      return { error: "Erro durante o login" };
     }
-    return;
   }
 
   async cadastrar(dados) {
-    return this.axios.post("http://177.105.35.235:7777/cadastrousuario", dados);
+    try {
+      const response = await Api.post("/cadastrousuario", dados);
+      return response.data;
+    } catch (error) {
+      console.error("Erro durante o cadastro do usuário:", error);
+      throw error;
+    }
   }
 
   usuarioAutenticado() {
-    return localStorage.getItem("token") !== undefined ? true : false;
+    return localStorage.getItem("token") !== null;
   }
 
   async logout() {
     localStorage.removeItem("token");
     localStorage.removeItem("nome");
     localStorage.removeItem("email");
+    sessionStorage.clear();
   }
 }

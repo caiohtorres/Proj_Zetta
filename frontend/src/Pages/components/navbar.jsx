@@ -1,8 +1,15 @@
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import UserService from "../../Services/UserService";
 import "./navbar.css";
 
 const Navbar = () => {
+  const userService = new UserService();
+  const navigate = useNavigate();
+  const handleLogout = (event) => {
+    event.preventDefault();
+    userService.logout();
+    navigate("/");
+  };
   return (
     <nav className="navbar">
       <div className="bloco">
@@ -18,7 +25,9 @@ const Navbar = () => {
               <Link to="/relatorio">Relatorio</Link>
             </li>
             <li id="sair">
-              <Link>Sair</Link>
+              <Link to="/" onClick={handleLogout}>
+                Sair
+              </Link>
             </li>
             <li id="sobre">
               <Link to="/sobre">Sobre</Link>

@@ -13,19 +13,21 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     try {
-      setLoading(true);
       const response = await userService.login(form);
       console.log("response do login", response);
-      if (response === true) {
+      if (response && !response.error) {
         alert("Usuário logado com sucesso");
         navigate("/home");
+        window.location.reload();
+      } else {
+        alert("Credenciais inválidas");
       }
-
-      setLoading(false);
     } catch (error) {
       alert("Algo de errado com o login" + error);
     }
+    setLoading(false);
   };
 
   const handleChange = (event) => {
@@ -49,12 +51,14 @@ const Login = () => {
             type="email"
             placeholder="Digite seu E-mail"
             onChange={handleChange}
+            autoComplete="username"
           />
           <input
             name="password"
             type="password"
             placeholder="Digite sua Senha"
             onChange={handleChange}
+            autoComplete="current-password"
           />
         </div>
         <div className="btnLogin">
