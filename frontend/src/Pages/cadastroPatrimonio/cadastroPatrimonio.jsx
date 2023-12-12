@@ -389,7 +389,7 @@ function CadastroPatrimonio() {
             </select>
           </div>
 
-          {tipo === "Desktop" && (
+          {(tipo === "Desktop" || tipo === "Notebook") && (
             <div className="form-group">
               <label>Processador</label>
               <select
@@ -407,7 +407,7 @@ function CadastroPatrimonio() {
               </select>
             </div>
           )}
-          {tipo === "Desktop" && (
+          {(tipo === "Desktop" || tipo === "Notebook") && (
             <div className="form-group">
               <label>Placa de Vídeo</label>
               <select
@@ -425,7 +425,7 @@ function CadastroPatrimonio() {
               </select>
             </div>
           )}
-          {tipo === "Desktop" && (
+          {(tipo === "Desktop" || tipo === "Notebook") && (
             <div className="form-group">
               <label>Memória Ram</label>
               <select
@@ -443,7 +443,7 @@ function CadastroPatrimonio() {
               </select>
             </div>
           )}
-          {tipo === "Desktop" && (
+          {(tipo === "Desktop" || tipo === "Notebook") && (
             <div className="form-group">
               <label>Armazenamento</label>
               <select
