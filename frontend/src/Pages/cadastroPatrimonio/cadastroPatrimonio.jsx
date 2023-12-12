@@ -37,10 +37,10 @@ function CadastroPatrimonio() {
   };
 
   const processadoresIntel = [
-    ...criarListaProcessadores("i9", 13),
-    ...criarListaProcessadores("i7", 13),
-    ...criarListaProcessadores("i5", 13),
-    ...criarListaProcessadores("i3", 13),
+    ...criarListaProcessadores("i9", 14),
+    ...criarListaProcessadores("i7", 14),
+    ...criarListaProcessadores("i5", 14),
+    ...criarListaProcessadores("i3", 14),
   ];
 
   const placaDeVideoNvidea = [
@@ -74,7 +74,7 @@ function CadastroPatrimonio() {
     "RTX 4090",
   ];
 
-  const listaLocal = ["Administrativo", "MPF", "Cozinha"];
+  const listaLocal = ["Administrativo", "MPF", "Cozinha", "Almoxarifado"];
 
   const listaObjetos = [
     "Desktop",
