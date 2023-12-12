@@ -94,6 +94,24 @@ function Busca({ data }) {
                 </li>
               </div>
             )}
+            {data.tipo === "Monitor" && (
+              <div className="caixas">
+                <li>
+                  {" "}
+                  <label>Marca:</label>
+                  <p>{data.marcaMonitor}</p>
+                </li>
+              </div>
+            )}
+            {data.tipo === "Monitor" && (
+              <div className="caixas">
+                <li>
+                  {" "}
+                  <label>Tamanho:</label>
+                  <p>{data.tamanhoMonitor}</p>
+                </li>
+              </div>
+            )}
             <div className="caixas-notas">
               <li>
                 {" "}

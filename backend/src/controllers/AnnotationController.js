@@ -50,6 +50,8 @@ module.exports = {
       memoriaRam,
       tipo,
       local,
+      marcaMonitor,
+      tamanhoMonitor,
     } = req.body;
 
     if (!patrimonio || !objeto || !estadoConservacao || !valor || !quantidade) {
@@ -69,6 +71,8 @@ module.exports = {
       tipo,
       armazenamento,
       local,
+      marcaMonitor,
+      tamanhoMonitor,
     });
 
     if (tipoContadores[tipo]) {

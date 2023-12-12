@@ -24,6 +24,8 @@ function CadastroPatrimonio() {
   const [memoriaRam, setMemoriaRam] = useState("");
   const [tipo, setTipo] = useState("");
   const [local, setLocal] = useState("");
+  const [marcaMonitor, setMarcaMonitor] = useState("");
+  const [tamanhoMonitor, setTamanhoMonitor] = useState("");
 
   const criarListaProcessadores = (serie, maxGeneracao) => {
     const processadores = [];
@@ -35,6 +37,28 @@ function CadastroPatrimonio() {
 
     return processadores;
   };
+
+  const listaMarcaMonitor = [
+    "LG",
+    "Samsung",
+    "Dell",
+    "Daten",
+    "Hp",
+    "Brazil PC",
+  ];
+
+  const listaTamanhoMonitor = [
+    "15 polegadas",
+    "17 polegadas",
+    "19 polegadas",
+    "21,5 polegadas",
+    "23 polegadas",
+    "24 polegadas",
+    "27 polegadas",
+    "32 polegadas",
+    "34 polegadas",
+    "38 polegadas",
+  ];
 
   const processadoresIntel = [
     ...criarListaProcessadores("i9", 14),
@@ -95,63 +119,84 @@ function CadastroPatrimonio() {
   const listaMemoriaRam = [
     "DDR3-800 4GB",
     "DDR3-800 8GB",
+    "DDR3-800 12GB",
     "DDR3-800 16GB",
+
     "DDR3-1066 4GB",
     "DDR3-1066 8GB",
+    "DDR3-1066 12GB",
     "DDR3-1066 16GB",
     "DDR3-1333 4GB",
     "DDR3-1333 8GB",
+    "DDR3-1333 12GB",
     "DDR3-1333 16GB",
     "DDR3-1600 4GB",
     "DDR3-1600 8GB",
+    "DDR3-1600 12GB",
     "DDR3-1600 16GB",
     "DDR3-1866 4GB",
     "DDR3-1866 8GB",
+    "DDR3-1866 12GB",
     "DDR3-1866 16GB",
     "DDR3-2000 4GB",
     "DDR3-2000 8GB",
+    "DDR3-2000 12GB",
     "DDR3-2000 16GB",
     "DDR3-2133 4GB",
     "DDR3-2133 8GB",
+    "DDR3-2133 12GB",
     "DDR3-2133 16GB",
     "DDR3-2400 4GB",
     "DDR3-2400 8GB",
+    "DDR3-2400 12GB",
     "DDR3-2400 16GB",
     "DDR4-1600 4GB",
     "DDR4-1600 8GB",
+    "DDR4-1600 12GB",
     "DDR4-1600 16GB",
     "DDR4-1866 4GB",
     "DDR4-1866 8GB",
+    "DDR4-1866 12GB",
     "DDR4-1866 16GB",
     "DDR4-2133 4GB",
     "DDR4-2133 8GB",
+    "DDR4-2133 12GB",
     "DDR4-2133 16GB",
     "DDR4-2400 4GB",
     "DDR4-2400 8GB",
+    "DDR4-2400 12GB",
     "DDR4-2400 16GB",
     "DDR4-2666 4GB",
     "DDR4-2666 8GB",
+    "DDR4-2666 12GB",
     "DDR4-2666 16GB",
     "DDR4-2933 4GB",
     "DDR4-2933 8GB",
+    "DDR4-2933 12GB",
     "DDR4-2933 16GB",
     "DDR4-3200 4GB",
     "DDR4-3200 8GB",
+    "DDR4-3200 12GB",
     "DDR4-3200 16GB",
     "DDR4-3600 4GB",
     "DDR4-3600 8GB",
+    "DDR4-3600 12GB",
     "DDR4-3600 16GB",
     "DDR4-4000 4GB",
     "DDR4-4000 8GB",
+    "DDR4-4000 12GB",
     "DDR4-4000 16GB",
     "DDR5-4800 4GB",
     "DDR5-4800 8GB",
+    "DDR5-4800 12GB",
     "DDR5-4800 16GB",
     "DDR5-5200 4GB",
     "DDR5-5200 8GB",
+    "DDR5-5200 12GB",
     "DDR5-5200 16GB",
     "DDR5-5600 4GB",
     "DDR5-5600 8GB",
+    "DDR5-5600 12GB",
     "DDR5-5600 16GB",
   ];
 
@@ -211,6 +256,8 @@ function CadastroPatrimonio() {
         memoriaRam,
         tipo,
         local,
+        marcaMonitor,
+        tamanhoMonitor,
       });
 
       setPatrimonio("");
@@ -225,6 +272,8 @@ function CadastroPatrimonio() {
       setMemoriaRam("");
       setTipo("");
       setLocal("");
+      setTamanhoMonitor("");
+      setMarcaMonitor("");
       console.log(response);
       alert("Patrimônio cadastrado com sucesso!");
     } catch (error) {
@@ -407,6 +456,42 @@ function CadastroPatrimonio() {
                 {listaArmazenamento.map((armazenamento, index) => (
                   <option key={index} value={armazenamento}>
                     {armazenamento}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+          {tipo === "Monitor" && (
+            <div className="form-group">
+              <label>Marca do monitor</label>
+              <select
+                className={errors?.marcaMonitor && "input-error"}
+                defaultValue="0"
+                value={marcaMonitor}
+                onChange={(e) => setMarcaMonitor(e.target.value)}
+              >
+                <option value="0">Escolha a marca</option>
+                {listaMarcaMonitor.map((marcaMonitor, index) => (
+                  <option key={index} value={marcaMonitor}>
+                    {marcaMonitor}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+          {tipo === "Monitor" && (
+            <div className="form-group">
+              <label>Tamanho do monitor</label>
+              <select
+                className={errors?.tamanhoMonitor && "input-error"}
+                defaultValue="0"
+                value={tamanhoMonitor}
+                onChange={(e) => setTamanhoMonitor(e.target.value)}
+              >
+                <option value="0">Escolha o tamanho do monitor</option>
+                {listaTamanhoMonitor.map((tamanhoMonitor, index) => (
+                  <option key={index} value={tamanhoMonitor}>
+                    {tamanhoMonitor}
                   </option>
                 ))}
               </select>

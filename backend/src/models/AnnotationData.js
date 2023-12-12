@@ -13,6 +13,8 @@ const AnnotationDataSchema = new mongoose.Schema({
   memoriaRam: String,
   tipo: String,
   local: String,
+  marcaMonitor: String,
+  tamanhoMonitor: String,
 });
 
 module.exports = mongoose.model("Annotations", AnnotationDataSchema);
