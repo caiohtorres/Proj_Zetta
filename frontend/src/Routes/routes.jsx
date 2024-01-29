@@ -6,7 +6,6 @@ import Consultar from "../Pages/consultar/consultar";
 import Dashboard from "../Pages/dashboard/dashboard";
 import App from "../Pages/home/home";
 import Login from "../Pages/login/login";
-import Signup from "../Pages/signup/cadastro";
 import Sobre from "../Pages/sobre/sobre";
 import ProtectedRoutes from "./ProtectedRoutes";
 
@@ -14,7 +13,8 @@ const Routering = () => {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
-      <Route path="/cadastrousuario" element={<Signup />} />
+
+      {/*<Route path="/cadastrousuario" element={<Signup />} />*/}
       <Route
         path="/home/*"
         element={

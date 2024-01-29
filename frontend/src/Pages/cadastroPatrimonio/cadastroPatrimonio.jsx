@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { RiArrowGoBackFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import Api from "../../Services/api";
+
 import "./stylePag.css";
 
 class Sair extends React.Component {
@@ -26,6 +27,9 @@ function CadastroPatrimonio() {
   const [local, setLocal] = useState("");
   const [marcaMonitor, setMarcaMonitor] = useState("");
   const [tamanhoMonitor, setTamanhoMonitor] = useState("");
+  const [destinatario, setDestinatario] = useState("");
+  const [cidade, setCidade] = useState("");
+  const [file, setFile] = useState("");
 
   const criarListaProcessadores = (serie, maxGeneracao) => {
     const processadores = [];
@@ -55,6 +59,7 @@ function CadastroPatrimonio() {
     "23 polegadas",
     "24 polegadas",
     "27 polegadas",
+    "28 polegadas",
     "32 polegadas",
     "34 polegadas",
     "38 polegadas",
@@ -98,7 +103,14 @@ function CadastroPatrimonio() {
     "RTX 4090",
   ];
 
-  const listaLocal = ["Administrativo", "MPF", "Cozinha", "Almoxarifado"];
+  const listaLocal = [
+    "Administrativo",
+    "GEO",
+    "MPF",
+    "Cozinha",
+    "Almoxarifado",
+    "Desfazimento",
+  ];
 
   const listaObjetos = [
     "Desktop",
@@ -115,6 +127,7 @@ function CadastroPatrimonio() {
     "Microondas",
     "noBreak",
     "Televisao",
+    "Switch",
   ];
   const listaMemoriaRam = [
     "DDR3-800 4GB",
@@ -170,6 +183,7 @@ function CadastroPatrimonio() {
     "DDR4-2666 8GB",
     "DDR4-2666 12GB",
     "DDR4-2666 16GB",
+    "DDR4-2666 32GB",
     "DDR4-2933 4GB",
     "DDR4-2933 8GB",
     "DDR4-2933 12GB",
@@ -232,7 +246,6 @@ function CadastroPatrimonio() {
   const onSubmit = async (data) => {
     console.log(data);
   };
-
   const patrimonioValidation = (value) => {
     if (!isNaN(value) && value.trim() !== "") {
       return true;
@@ -240,8 +253,26 @@ function CadastroPatrimonio() {
     return "Número do patrimônio deve ser um valor numérico";
   };
 
+  async function handleUpload(e) {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      // Faça a requisição de upload e obtenha a resposta
+      const response = await Api.post("/uploads", formData);
+
+      // Atualize o estado do arquivo com o caminho correto
+      setFile(response.data.src);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  }
   async function handleForm(e) {
     e.preventDefault();
+
+    console.log(file);
     try {
       const response = await Api.post("/annotations", {
         patrimonio: Number(patrimonio),
@@ -258,6 +289,7 @@ function CadastroPatrimonio() {
         local,
         marcaMonitor,
         tamanhoMonitor,
+        file: file,
       });
 
       setPatrimonio("");
@@ -274,9 +306,12 @@ function CadastroPatrimonio() {
       setLocal("");
       setTamanhoMonitor("");
       setMarcaMonitor("");
+      setDestinatario("");
+      setCidade("");
       console.log(response);
       alert("Patrimônio cadastrado com sucesso!");
     } catch (error) {
+      console.log("oi");
       console.error("Erro ao cadastrar patrimônio: ", error);
     }
   }
@@ -297,7 +332,7 @@ function CadastroPatrimonio() {
       </header>
 
       <div className="corpo">
-        <form onSubmit={handleForm}>
+        <form onSubmit={handleForm} encType="multipart/form-data">
           <div className="form-group">
             <label>Patrimônio</label>
 
@@ -372,6 +407,9 @@ function CadastroPatrimonio() {
                     break;
                   case "Televisao":
                     tipoSelecionado = "Televisao";
+                    break;
+                  case "Switch":
+                    tipoSelecionado = "Switch";
                     break;
                   default:
                     tipoSelecionado = "";
@@ -497,29 +535,57 @@ function CadastroPatrimonio() {
               </select>
             </div>
           )}
+          {tipo === "Notebook" && (
+            <div className="form-group">
+              <label>Destinatário</label>
 
-          <div className="form-group">
-            <label>Local</label>
-            <select
-              className={errors?.local && "input-error"}
-              defaultValue="0"
-              {...register("local", {
-                validate: (value) => value !== "0",
-              })}
-              value={local}
-              onChange={(e) => setLocal(e.target.value)}
-            >
-              <option value="0">Escolha o local</option>
-              {listaLocal.map((local, index) => (
-                <option key={index} value={local}>
-                  {local}
-                </option>
-              ))}
-            </select>
-            {errors?.local?.type === "validate" && (
-              <p className="error-message">Local é necessário</p>
-            )}
-          </div>
+              <input
+                className={errors?.destinatario && "input-error"}
+                type="text"
+                placeholder="Nome do destinatário:"
+                value={destinatario}
+                onChange={(e) => setDestinatario(e.target.value)}
+              />
+            </div>
+          )}
+          {tipo === "Notebook" && (
+            <div className="form-group">
+              <label>Cidade</label>
+
+              <input
+                className={errors?.cidade && "input-error"}
+                type="text"
+                placeholder="Cidade do destinatário:"
+                value={cidade}
+                onChange={(e) => setCidade(e.target.value)}
+              />
+            </div>
+          )}
+
+          {tipo !== "Notebook" && (
+            <div className="form-group">
+              <label>Local</label>
+              <select
+                className={errors?.local && "input-error"}
+                defaultValue="0"
+                {...register("local", {
+                  validate: (value) => value !== "0",
+                })}
+                value={local}
+                onChange={(e) => setLocal(e.target.value)}
+              >
+                <option value="0">Escolha o local</option>
+                {listaLocal.map((local, index) => (
+                  <option key={index} value={local}>
+                    {local}
+                  </option>
+                ))}
+              </select>
+              {errors?.local?.type === "validate" && (
+                <p className="error-message">Local é necessário</p>
+              )}
+            </div>
+          )}
 
           <div className="form-group">
             <label>Estado de Conservação</label>
@@ -586,6 +652,17 @@ function CadastroPatrimonio() {
               onChange={(e) => setNotas(e.target.value)}
             />
           </div>
+
+          {/*<div className="form-group">
+            <label>Arquivo</label>
+            <br />
+            <input
+              type="file"
+              className="file"
+              accept="image/png, image/jpeg, application/pdf"
+              onChange={handleUpload}
+            />
+            </div>*/}
 
           <div className="btnSalvar">
             <button type="submit" onClick={() => handleSubmit(onSubmit)()}>

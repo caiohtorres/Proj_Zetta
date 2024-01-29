@@ -1,4 +1,5 @@
 const Annotations = require("../models/AnnotationData");
+const File = require("../models/FileData");
 
 const tipoContadores = {
   Desktop: "contadorDesktop",
@@ -15,6 +16,7 @@ const tipoContadores = {
   Microondas: "contadorMicroondas",
   noBreak: "contadorNoBreak",
   Televisao: "contadorTelevisao",
+  Switch: "contadorSwitch",
 };
 
 module.exports = {
@@ -52,37 +54,57 @@ module.exports = {
       local,
       marcaMonitor,
       tamanhoMonitor,
+      destinatario,
+      cidade,
     } = req.body;
-
-    if (!patrimonio || !objeto || !estadoConservacao || !valor || !quantidade) {
-      return res.json({ error: "Ainda há dados a serem preenchidos" });
+    console.log(req);
+    // Verifica se todos os campos obrigatórios estão preenchidos
+    if (
+      !patrimonio ||
+      !objeto ||
+      !estadoConservacao ||
+      !valor ||
+      !quantidade ||
+      !tipo ||
+      !local
+    ) {
+      return res.status(400).json({ error: req.body });
     }
+    console.log("75");
+    console.log("82");
+    try {
+      const annotationCreated = await Annotations.create({
+        patrimonio,
+        objeto,
+        notas,
+        processador,
+        placaVideo,
+        estadoConservacao,
+        valor,
+        quantidade,
+        memoriaRam,
+        tipo,
+        armazenamento,
+        local,
+        marcaMonitor,
+        tamanhoMonitor,
+        destinatario,
+        cidade,
+      });
 
-    const annotationCreated = await Annotations.create({
-      patrimonio,
-      objeto,
-      notas,
-      processador,
-      placaVideo,
-      estadoConservacao,
-      valor,
-      quantidade,
-      memoriaRam,
-      tipo,
-      armazenamento,
-      local,
-      marcaMonitor,
-      tamanhoMonitor,
-    });
+      if (tipoContadores[tipo]) {
+        global[tipoContadores[tipo]] += 1;
+      }
 
-    if (tipoContadores[tipo]) {
-      global[tipoContadores[tipo]] += 1;
+      return res.status(201).json({
+        success: true,
+        message: "Patrimônio cadastrado com sucesso!",
+        annotation: annotationCreated,
+      });
+    } catch (error) {
+      console.log("oi");
+      return res.status(500).json({ error: "Erro ao cadastrar patrimônio." });
     }
-    return res.json({
-      success: true,
-      message: "Patrimônio cadastrado com sucesso!",
-      annotation: annotationCreated,
-    });
   },
 
   async delete(req, res) {
@@ -117,7 +139,10 @@ module.exports = {
       const counts = {};
 
       for (const tipo in tipoContadores) {
-        counts[tipo] = await Annotations.countDocuments({ tipo });
+        counts[tipo] = await Annotations.countDocuments({
+          tipo,
+          local: { $ne: "Desfazimento" }, // Adiciona a condição para local diferente de "Desfazimento"
+        });
       }
 
       res.json(counts);

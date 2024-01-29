@@ -66,6 +66,8 @@ function Consultar() {
         <tr key={index}>
           <td>{dado.objeto}</td>
           <td>{dado.patrimonio}</td>
+          <td>{dado.processador}</td>
+          <td>{dado.notas}</td>
           <td>{dado.local}</td>
         </tr>
       );
@@ -135,6 +137,8 @@ function Consultar() {
                 <tr>
                   <th>Objeto</th>
                   <th>Número do patrimônio</th>
+                  <th>Processador</th>
+                  <th>Notas</th>
                   <th>Local</th>
                 </tr>
               </thead>

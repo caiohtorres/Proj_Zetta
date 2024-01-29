@@ -21,6 +21,7 @@ const listaTipoEletronicos = [
   "Notebook",
   "Impressora",
   "noBreak",
+  "Switch",
 ];
 
 const listaTipoMoveis = ["Mesa", "Cadeira"];
