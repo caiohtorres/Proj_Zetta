@@ -56,6 +56,7 @@ module.exports = {
       tamanhoMonitor,
       destinatario,
       cidade,
+      marca,
     } = req.body;
     console.log(req);
     // Verifica se todos os campos obrigatórios estão preenchidos
@@ -65,8 +66,7 @@ module.exports = {
       !estadoConservacao ||
       !valor ||
       !quantidade ||
-      !tipo ||
-      !local
+      !tipo
     ) {
       return res.status(400).json({ error: req.body });
     }
@@ -90,6 +90,7 @@ module.exports = {
         tamanhoMonitor,
         destinatario,
         cidade,
+        marca,
       });
 
       if (tipoContadores[tipo]) {
@@ -141,7 +142,7 @@ module.exports = {
       for (const tipo in tipoContadores) {
         counts[tipo] = await Annotations.countDocuments({
           tipo,
-          local: { $ne: "Desfazimento" }, // Adiciona a condição para local diferente de "Desfazimento"
+          local: { $ne: "Desfazimento" },
         });
       }
 
@@ -149,6 +150,31 @@ module.exports = {
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Erro ao contar os tipos." });
+    }
+  },
+
+  async readSala(req, res) {
+    const { local } = req.params;
+
+    if (!local) {
+      return res.status(401).json({ error: "Nome da sala não preenchido!" });
+    }
+
+    try {
+      const annotationList = await Annotations.find({ local });
+
+      if (annotationList.length > 0) {
+        return res.json(annotationList);
+      }
+
+      return res
+        .status(401)
+        .json({ error: "Nenhum patrimônio encontrado para a sala!" });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .json({ error: "Erro ao buscar os patrimônios da sala." });
     }
   },
 };

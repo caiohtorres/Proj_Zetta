@@ -18,6 +18,7 @@ const AnnotationDataSchema = new mongoose.Schema({
   destinatario: String,
   cidade: String,
   file: String,
+  marca: String,
 });
 
 module.exports = mongoose.model("Annotations", AnnotationDataSchema);

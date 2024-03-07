@@ -9,6 +9,7 @@ const ContentController = require("./controllers/ContentController");
 const QuantidadeController = require("./controllers/QuantidadeController");
 const UserController = require("./controllers/UserController");
 const FileController = require("./controllers/FileController");
+const BuscaSalaController = require("./controllers/BuscaSalaController");
 
 //Rota Annotations
 //cria
@@ -29,6 +30,8 @@ routes.post("/contentChange/:patrimonio", ContentController.update);
 routes.post("/quantidadeChange/:patrimonio", QuantidadeController.update);
 
 routes.get("/contadorPorTipo", AnnotationController.countByType);
+
+routes.get("/buscasala/:local", BuscaSalaController.readSala);
 
 routes.post("/login", UserController.login);
 routes.post("/cadastrousuario", UserController.create);

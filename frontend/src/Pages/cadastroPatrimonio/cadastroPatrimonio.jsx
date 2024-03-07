@@ -30,6 +30,9 @@ function CadastroPatrimonio() {
   const [destinatario, setDestinatario] = useState("");
   const [cidade, setCidade] = useState("");
   const [file, setFile] = useState("");
+  const [marca, setMarca] = useState("");
+
+  console.log("Renderizou");
 
   const criarListaProcessadores = (serie, maxGeneracao) => {
     const processadores = [];
@@ -51,6 +54,8 @@ function CadastroPatrimonio() {
     "Brazil PC",
   ];
 
+  const listaMarca = ["Brastemp", "Midea", "Consul", "Eletrolux", "Komeco"];
+
   const listaTamanhoMonitor = [
     "15 polegadas",
     "17 polegadas",
@@ -63,6 +68,7 @@ function CadastroPatrimonio() {
     "32 polegadas",
     "34 polegadas",
     "38 polegadas",
+    "65 polegadas",
   ];
 
   const processadoresIntel = [
@@ -109,7 +115,20 @@ function CadastroPatrimonio() {
     "MPF",
     "Cozinha",
     "Almoxarifado",
+    "Criatividade",
+    "Comunicação",
+    "Treinamento",
+    "Recepção",
+    "Sociedade",
+    "Projetos",
+    "Coordenação",
+    "Ara",
+    "Vale",
+    "Embrapii",
+    "Inovação",
+    "Lemaf",
     "Desfazimento",
+    "Servidor 2º andar",
   ];
 
   const listaObjetos = [
@@ -134,7 +153,6 @@ function CadastroPatrimonio() {
     "DDR3-800 8GB",
     "DDR3-800 12GB",
     "DDR3-800 16GB",
-
     "DDR3-1066 4GB",
     "DDR3-1066 8GB",
     "DDR3-1066 12GB",
@@ -259,10 +277,8 @@ function CadastroPatrimonio() {
     formData.append("file", file);
 
     try {
-      // Faça a requisição de upload e obtenha a resposta
       const response = await Api.post("/uploads", formData);
 
-      // Atualize o estado do arquivo com o caminho correto
       setFile(response.data.src);
       console.log(response);
     } catch (error) {
@@ -289,6 +305,9 @@ function CadastroPatrimonio() {
         local,
         marcaMonitor,
         tamanhoMonitor,
+        marca,
+        destinatario,
+        cidade,
         file: file,
       });
 
@@ -308,6 +327,7 @@ function CadastroPatrimonio() {
       setMarcaMonitor("");
       setDestinatario("");
       setCidade("");
+      setMarca("");
       console.log(response);
       alert("Patrimônio cadastrado com sucesso!");
     } catch (error) {
@@ -499,7 +519,7 @@ function CadastroPatrimonio() {
               </select>
             </div>
           )}
-          {tipo === "Monitor" && (
+          {(tipo === "Monitor" || tipo === "Televisao") && (
             <div className="form-group">
               <label>Marca do monitor</label>
               <select
@@ -517,7 +537,27 @@ function CadastroPatrimonio() {
               </select>
             </div>
           )}
-          {tipo === "Monitor" && (
+
+          {(tipo === "Microondas" || tipo === "Geladeira" || tipo === "Ar") && (
+            <div className="form-group">
+              <label>Marca</label>
+              <select
+                className={errors?.marca && "input-error"}
+                defaultValue="0"
+                value={marca}
+                onChange={(e) => setMarca(e.target.value)}
+              >
+                <option value="0">Escolha a marca</option>
+                {listaMarca.map((marca, index) => (
+                  <option key={index} value={marca}>
+                    {marca}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {(tipo === "Monitor" || tipo === "Televisao") && (
             <div className="form-group">
               <label>Tamanho do monitor</label>
               <select

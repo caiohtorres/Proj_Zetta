@@ -10,6 +10,7 @@
     "axios": "^1.6.2",
     "filesize": "^10.1.0",
     "filter-data-advanced": "^1.0.8",
+    "jspdf": "^2.5.1",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-circular-progressbar": "^2.1.0",
@@ -21,6 +22,7 @@
     "react-radio-group": "^3.0.3",
     "react-router-dom": "^6.18.0",
     "react-scripts": "5.0.1",
+    "react-to-pdf": "^1.0.1",
     "styled-components": "^6.1.1",
     "web-vitals": "^2.1.4"
   },

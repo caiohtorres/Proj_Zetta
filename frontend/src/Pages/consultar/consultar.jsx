@@ -67,6 +67,7 @@ function Consultar() {
           <td>{dado.objeto}</td>
           <td>{dado.patrimonio}</td>
           <td>{dado.processador}</td>
+          <td>{dado.placaVideo}</td>
           <td>{dado.notas}</td>
           <td>{dado.local}</td>
         </tr>
@@ -138,6 +139,7 @@ function Consultar() {
                   <th>Objeto</th>
                   <th>Número do patrimônio</th>
                   <th>Processador</th>
+                  <th>Placa de Vídeo</th>
                   <th>Notas</th>
                   <th>Local</th>
                 </tr>

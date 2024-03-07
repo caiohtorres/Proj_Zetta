@@ -4,7 +4,26 @@ import { MdDeleteForever } from "react-icons/md";
 import Api from "../../../Services/api";
 import "./busca.css";
 
-const listaLocal = ["Administrativo", "MPF", "Cozinha"];
+const listaLocal = [
+  "Administrativo",
+  "GEO",
+  "MPF",
+  "Cozinha",
+  "Almoxarifado",
+  "Criatividade",
+  "Comunicação",
+  "Treinamento",
+  "Recepção",
+  "Sociedade",
+  "Projetos",
+  "Coordenação",
+  "Ara",
+  "Vale",
+  "Embrapii",
+  "Inovação",
+  "Lemaf",
+  "Desfazimento",
+];
 
 function Busca({ data }) {
   const [changedNote, setChangedNote] = useState();
@@ -91,6 +110,24 @@ function Busca({ data }) {
                   {" "}
                   <label>Armazenamento:</label>
                   <p>{data.armazenamento}</p>
+                </li>
+              </div>
+            )}
+            {data.tipo === "Notebook" && (
+              <div className="caixas">
+                <li>
+                  {" "}
+                  <label>Cidade:</label>
+                  <p>{data.cidade}</p>
+                </li>
+              </div>
+            )}
+            {data.tipo === "Notebook" && (
+              <div className="caixas">
+                <li>
+                  {" "}
+                  <label>Destinatário:</label>
+                  <p>{data.destinatario}</p>
                 </li>
               </div>
             )}

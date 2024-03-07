@@ -7,14 +7,15 @@ import Dashboard from "../Pages/dashboard/dashboard";
 import App from "../Pages/home/home";
 import Login from "../Pages/login/login";
 import Sobre from "../Pages/sobre/sobre";
+import Salas from "../Pages/salas/salas";
 import ProtectedRoutes from "./ProtectedRoutes";
 
 const Routering = () => {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
-
-      {/*<Route path="/cadastrousuario" element={<Signup />} />*/}
+      {/*<Route path="/cadastrousuario" element={<Signup />} />*/}{" "}
+      {/*tá comendado pra ngm conseguir se cadastrar no sistema ainda*/}
       <Route
         path="/home/*"
         element={
@@ -44,6 +45,14 @@ const Routering = () => {
         element={
           <ProtectedRoutes>
             <Dashboard />
+          </ProtectedRoutes>
+        }
+      />
+      <Route
+        path="/salas"
+        element={
+          <ProtectedRoutes>
+            <Salas />
           </ProtectedRoutes>
         }
       />
