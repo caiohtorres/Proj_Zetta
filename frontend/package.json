@@ -11,6 +11,7 @@
     "filesize": "^10.1.0",
     "filter-data-advanced": "^1.0.8",
     "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.2",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-circular-progressbar": "^2.1.0",

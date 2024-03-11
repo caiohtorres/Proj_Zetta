@@ -66,6 +66,7 @@ function Consultar() {
         <tr key={index}>
           <td>{dado.objeto}</td>
           <td>{dado.patrimonio}</td>
+          <td>{dado.marca || dado.marcaMonitor}</td>
           <td>{dado.processador}</td>
           <td>{dado.placaVideo}</td>
           <td>{dado.notas}</td>
@@ -138,6 +139,7 @@ function Consultar() {
                 <tr>
                   <th>Objeto</th>
                   <th>Número do patrimônio</th>
+                  <th>Marca</th>
                   <th>Processador</th>
                   <th>Placa de Vídeo</th>
                   <th>Notas</th>

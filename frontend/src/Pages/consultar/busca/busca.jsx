@@ -25,6 +25,10 @@ const listaLocal = [
   "Desfazimento",
 ];
 
+const listaMarcaMonitor = ["LG", "Samsung", "Dell", "Daten", "Hp", "Brazil PC"];
+
+const listaMarca = ["Brastemp", "Midea", "Consul", "Eletrolux", "Komeco"];
+
 function Busca({ data }) {
   const [changedNote, setChangedNote] = useState();
   const [changedLocal, setChangedLocal] = useState();
@@ -131,15 +135,15 @@ function Busca({ data }) {
                 </li>
               </div>
             )}
-            {data.tipo === "Monitor" && (
-              <div className="caixas">
-                <li>
-                  {" "}
-                  <label>Marca:</label>
-                  <p>{data.marcaMonitor}</p>
-                </li>
-              </div>
-            )}
+
+            <div className="caixas">
+              <li>
+                {" "}
+                <label>Marca:</label>
+                <p>{data.marcaMonitor || data.marca}</p>
+              </li>
+            </div>
+
             {data.tipo === "Monitor" && (
               <div className="caixas">
                 <li>

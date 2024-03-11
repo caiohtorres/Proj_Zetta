@@ -54,7 +54,16 @@ function CadastroPatrimonio() {
     "Brazil PC",
   ];
 
-  const listaMarca = ["Brastemp", "Midea", "Consul", "Eletrolux", "Komeco"];
+  const listaMarca = [
+    "Brastemp",
+    "Midea",
+    "Consul",
+    "Eletrolux",
+    "Komeco",
+    "Cavaletti",
+    "UFLA",
+    "VIPH",
+  ];
 
   const listaTamanhoMonitor = [
     "15 polegadas",

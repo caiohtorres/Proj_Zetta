@@ -1,5 +1,6 @@
 import jsPDF from "jspdf";
-import React, { useEffect, useState } from "react";
+import "jspdf-autotable";
+import React, { useState } from "react";
 import { RiArrowGoBackFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import Api from "../../Services/api";
@@ -41,12 +42,6 @@ function Salas() {
   const [data, setData] = useState([]);
   const [salas, setSala] = useState("");
 
-  useEffect(() => {
-    if (salas !== "") {
-      getAllPatrimonios();
-    }
-  }, [salas]);
-
   const getAllPatrimonios = async () => {
     try {
       if (salas !== "") {
@@ -66,6 +61,10 @@ function Salas() {
   };
 
   const generatePDF = () => {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleDateString();
+    const formattedTime = currentDate.toLocaleTimeString();
+
     const pdf = new jsPDF({
       orientation: "portrait",
       unit: "mm",
@@ -73,41 +72,100 @@ function Salas() {
     });
 
     let yPos = 10;
-    const rectWidth = 180;
-    const rectHeight = 20;
-    const fontSize = 8;
+    const colWidth = 40;
 
-    data.forEach((dado, index) => {
-      if (yPos + rectHeight + 5 > pdf.internal.pageSize.height) {
-        pdf.addPage();
-        yPos = 10;
-      }
+    pdf.setFont("PTSans");
 
-      pdf.setFillColor(230);
-      pdf.rect(15, yPos, rectWidth, rectHeight, "F");
+    // Title and information on the first page
+    pdf.text(
+      "Relatório Patrimonial Zetta",
+      pdf.internal.pageSize.width / 2,
+      yPos,
+      { align: "center" }
+    );
 
-      pdf.setFontSize(fontSize);
-      pdf.text(`Objeto: ${dado.objeto}`, 20, yPos + 5);
-      pdf.text(`Número do patrimônio: ${dado.patrimonio}`, 20, yPos + 15);
+    yPos += 15;
 
-      yPos += rectHeight + 2;
+    // Header grid for general information
+    const headerData = [
+      ["Total de Patrimônios", data.length.toString()],
+      ["Local Vistoriado", salas],
+      ["Data e hora", `${formattedDate} ${formattedTime}`],
+    ];
+
+    const headerHeight = 6;
+
+    pdf.autoTable({
+      startY: yPos,
+      head: headerData,
+      body: [], // Empty body as we only want to display the headers
+      theme: "grid",
+      margin: { top: 20 },
+      columnStyles: {
+        0: { cellWidth: colWidth, halign: "left" },
+        1: { cellWidth: colWidth, halign: "right" },
+      },
+      styles: {
+        overflow: "linebreak",
+        fontStyle: "bold",
+        rowHeight: headerHeight,
+        halign: "left",
+      },
     });
 
-    const currentDate = new Date();
-    const formattedDate = currentDate.toLocaleDateString();
-    const formattedTime = currentDate.toLocaleTimeString();
+    yPos += headerHeight * headerData.length + 10;
 
-    pdf.setFontSize(fontSize);
-    pdf.text(`Total de patrimônios na sala: ${data.length}`, 15, yPos + 5);
-    pdf.text(
-      `Relatório gerado em: ${formattedDate} ${formattedTime}`,
-      15,
-      yPos + 12
+    // Objects quantity table
+    const objectCount = {};
+    data.forEach((dado) => {
+      objectCount[dado.objeto] = (objectCount[dado.objeto] || 0) + 1;
+    });
+
+    const objectGridData = Object.entries(objectCount).map(
+      ([objeto, quantidade]) => [objeto, quantidade]
     );
+
+    // Move to the next line to avoid overlapping
+    yPos = "auto";
+
+    pdf.autoTable({
+      startY: yPos,
+      head: [["Objeto", "Quantidade"]],
+      body: objectGridData,
+      theme: "grid",
+      margin: { top: 20 },
+      columnStyles: {
+        0: { cellWidth: "auto" },
+        1: { cellWidth: "auto" },
+      },
+      styles: { overflow: "linebreak", halign: "center" },
+    });
+
+    yPos = "auto";
+
+    // Details of each object
+    pdf.autoTable({
+      startY: yPos,
+      head: [["Patrimônio", "Objeto", "Marca", "Checkbox"]],
+      body: data.map((dado) => [
+        dado.patrimonio,
+        dado.objeto,
+        dado.marca || dado.marcaMonitor,
+        "", // Checkbox column (empty for now)
+      ]),
+      theme: "grid",
+      margin: { top: 20 },
+      columnStyles: {
+        0: { cellWidth: "auto" },
+        1: { cellWidth: "auto" },
+        2: { cellWidth: "auto" },
+        3: { cellWidth: "auto", halign: "center" },
+      },
+      styles: { overflow: "linebreak", halign: "center" },
+    });
 
     pdf.save(`${salas}_patrimonios.pdf`);
   };
-
   return (
     <div className="salas">
       <div className="cabecalho">
@@ -132,25 +190,29 @@ function Salas() {
           </select>
         </div>
         <div className="botoes">
+          <button type="submit" onClick={getAllPatrimonios}>
+            Mostrar Patrimônios da Sala
+          </button>
+          <div className="divVazia"></div>
           <button id="btnSala" onClick={generatePDF}>
             Gerar PDF
           </button>
         </div>
         <div className="tabela">
           <table>
-            <thead>
-              <tr>
-                <th>Número do Patrimônio</th>
-                <th>Objeto</th>
-                <th>Notas</th>
-              </tr>
-            </thead>
             <tbody>
+              {
+                <tr>
+                  <th>Número do Patrimônio</th>
+                  <th>Objeto</th>
+                  <th>Marca</th>
+                </tr>
+              }
               {data.map((dado, index) => (
                 <tr key={index}>
                   <td>{dado.patrimonio}</td>
                   <td>{dado.objeto}</td>
-                  <td>{dado.notas}</td>
+                  <td>{dado.marca || dado.marcaMonitor}</td>
                 </tr>
               ))}
             </tbody>
