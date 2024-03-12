@@ -76,7 +76,6 @@ function Salas() {
 
     pdf.setFont("PTSans");
 
-    // Title and information on the first page
     pdf.text(
       "Relatório Patrimonial Zetta",
       pdf.internal.pageSize.width / 2,
@@ -86,7 +85,6 @@ function Salas() {
 
     yPos += 15;
 
-    // Header grid for general information
     const headerData = [
       ["Total de Patrimônios", data.length.toString()],
       ["Local Vistoriado", salas],
@@ -98,7 +96,7 @@ function Salas() {
     pdf.autoTable({
       startY: yPos,
       head: headerData,
-      body: [], // Empty body as we only want to display the headers
+      body: [],
       theme: "grid",
       margin: { top: 20 },
       columnStyles: {
@@ -115,7 +113,6 @@ function Salas() {
 
     yPos += headerHeight * headerData.length + 10;
 
-    // Objects quantity table
     const objectCount = {};
     data.forEach((dado) => {
       objectCount[dado.objeto] = (objectCount[dado.objeto] || 0) + 1;
@@ -125,7 +122,6 @@ function Salas() {
       ([objeto, quantidade]) => [objeto, quantidade]
     );
 
-    // Move to the next line to avoid overlapping
     yPos = "auto";
 
     pdf.autoTable({
@@ -143,7 +139,6 @@ function Salas() {
 
     yPos = "auto";
 
-    // Details of each object
     pdf.autoTable({
       startY: yPos,
       head: [["Patrimônio", "Objeto", "Marca", "Checkbox"]],
@@ -151,7 +146,7 @@ function Salas() {
         dado.patrimonio,
         dado.objeto,
         dado.marca || dado.marcaMonitor,
-        "", // Checkbox column (empty for now)
+        "",
       ]),
       theme: "grid",
       margin: { top: 20 },
