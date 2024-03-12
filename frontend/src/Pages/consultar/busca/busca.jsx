@@ -25,13 +25,21 @@ const listaLocal = [
   "Desfazimento",
 ];
 
-const listaMarcaMonitor = ["LG", "Samsung", "Dell", "Daten", "Hp", "Brazil PC"];
-
-const listaMarca = ["Brastemp", "Midea", "Consul", "Eletrolux", "Komeco"];
+const listaMarca = [
+  "Brastemp",
+  "Midea",
+  "Consul",
+  "Eletrolux",
+  "Komeco",
+  "Cavaletti",
+  "UFLA",
+  "VIPH",
+];
 
 function Busca({ data }) {
   const [changedNote, setChangedNote] = useState();
   const [changedLocal, setChangedLocal] = useState();
+  const [changedMarca, setChangedMarca] = useState();
 
   async function handleSave(e) {
     const patrimonioAlterado = await Api.post(
@@ -39,6 +47,7 @@ function Busca({ data }) {
       {
         notas: changedNote,
         local: changedLocal,
+        marca: changedMarca,
       }
     );
     if (patrimonioAlterado) {
@@ -136,11 +145,22 @@ function Busca({ data }) {
               </div>
             )}
 
-            <div className="caixas">
+            <div className="caixas-notas">
               <li>
                 {" "}
                 <label>Marca:</label>
-                <p>{data.marcaMonitor || data.marca}</p>
+                <select
+                  defaultValue="0"
+                  value={changedMarca}
+                  onChange={(e) => setChangedMarca(e.target.value)}
+                >
+                  <option value="0">{data.marca}</option>
+                  {listaMarca.map((marca, index) => (
+                    <option key={index} value={marca}>
+                      {marca}
+                    </option>
+                  ))}
+                </select>
               </li>
             </div>
 

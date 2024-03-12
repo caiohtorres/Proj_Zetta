@@ -4,7 +4,7 @@ module.exports = {
   async update(req, res) {
     try {
       const { patrimonio } = req.params;
-      const { notas, local } = req.body;
+      const { notas, local, marca } = req.body;
 
       const annotation = await Annotations.findOne({ patrimonio });
 
@@ -18,6 +18,10 @@ module.exports = {
 
       if (local !== undefined) {
         annotation.local = local;
+      }
+
+      if (marca !== undefined) {
+        annotation.marca = marca;
       }
 
       await annotation.save();
