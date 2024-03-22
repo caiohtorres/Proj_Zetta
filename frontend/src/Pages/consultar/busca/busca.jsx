@@ -6,6 +6,7 @@ import "./busca.css";
 
 const listaLocal = [
   "Administrativo",
+  "Beco",
   "GEO",
   "MPF",
   "Cozinha",
@@ -34,6 +35,7 @@ const listaMarca = [
   "Cavaletti",
   "UFLA",
   "VIPH",
+  "EPSON",
 ];
 
 function Busca({ data }) {
@@ -144,8 +146,7 @@ function Busca({ data }) {
                 </li>
               </div>
             )}
-
-            <div className="caixas-notas">
+            {/*<div className="caixas-notas">
               <li>
                 {" "}
                 <label>Marca:</label>
@@ -162,8 +163,15 @@ function Busca({ data }) {
                   ))}
                 </select>
               </li>
+                  </div>*/}{" "}
+            {/*caso precise alterar ja ta aqui*/}
+            <div className="caixas">
+              <li>
+                {" "}
+                <label>Marca:</label>
+                <p>{data.marca || data.marcaMonitor}</p>
+              </li>
             </div>
-
             {data.tipo === "Monitor" && (
               <div className="caixas">
                 <li>

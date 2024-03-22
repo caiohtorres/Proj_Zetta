@@ -18,6 +18,7 @@ const refreshPage = () => {
 
 const listaSalas = [
   "Administrativo",
+  "Beco",
   "GEO",
   "MPF",
   "Cozinha",
@@ -74,7 +75,7 @@ function Salas() {
     let yPos = 10;
     const colWidth = 40;
 
-    pdf.setFont("PTSans");
+    pdf.setFont("Lato");
 
     pdf.text(
       "Relatório Patrimonial Zetta",

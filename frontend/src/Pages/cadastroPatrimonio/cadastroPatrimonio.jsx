@@ -31,6 +31,7 @@ function CadastroPatrimonio() {
   const [cidade, setCidade] = useState("");
   const [file, setFile] = useState("");
   const [marca, setMarca] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   console.log("Renderizou");
 
@@ -63,6 +64,7 @@ function CadastroPatrimonio() {
     "Cavaletti",
     "UFLA",
     "VIPH",
+    "EPSON",
   ];
 
   const listaTamanhoMonitor = [
@@ -120,6 +122,7 @@ function CadastroPatrimonio() {
 
   const listaLocal = [
     "Administrativo",
+    "Beco",
     "GEO",
     "MPF",
     "Cozinha",
@@ -340,7 +343,11 @@ function CadastroPatrimonio() {
       console.log(response);
       alert("Patrimônio cadastrado com sucesso!");
     } catch (error) {
-      console.log("oi");
+      if (error.response && error.response.data && error.response.data.error) {
+        setErrorMessage(error.response.data.error); // define a mensagem de erro do servidor
+      } else {
+        setErrorMessage("Erro ao cadastrar patrimônio."); // caso não haja uma mensagem específica do servidor
+      }
       console.error("Erro ao cadastrar patrimônio: ", error);
     }
   }
@@ -547,7 +554,13 @@ function CadastroPatrimonio() {
             </div>
           )}
 
-          {(tipo === "Microondas" || tipo === "Geladeira" || tipo === "Ar") && (
+          {(tipo === "Microondas" ||
+            tipo === "Geladeira" ||
+            tipo === "Ar" ||
+            tipo === "Cadeira" ||
+            tipo === "Impressora" ||
+            tipo === "Mesa" ||
+            tipo === "Desktop") && (
             <div className="form-group">
               <label>Marca</label>
               <select
@@ -712,7 +725,7 @@ function CadastroPatrimonio() {
               onChange={handleUpload}
             />
             </div>*/}
-
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
           <div className="btnSalvar">
             <button type="submit" onClick={() => handleSubmit(onSubmit)()}>
               Salvar

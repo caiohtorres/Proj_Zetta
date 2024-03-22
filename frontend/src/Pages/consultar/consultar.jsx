@@ -64,13 +64,7 @@ function Consultar() {
     data.forEach((dado, index) => {
       rows.push(
         <tr key={index}>
-          <td>{dado.objeto}</td>
           <td>{dado.patrimonio}</td>
-          <td>{dado.marca || dado.marcaMonitor}</td>
-          <td>{dado.processador}</td>
-          <td>{dado.placaVideo}</td>
-          <td>{dado.notas}</td>
-          <td>{dado.local}</td>
         </tr>
       );
     });

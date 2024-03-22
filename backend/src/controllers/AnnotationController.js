@@ -58,8 +58,7 @@ module.exports = {
       cidade,
       marca,
     } = req.body;
-    console.log(req);
-    // Verifica se todos os campos obrigatórios estão preenchidos
+
     if (
       !patrimonio ||
       !objeto ||
@@ -68,11 +67,20 @@ module.exports = {
       !quantidade ||
       !tipo
     ) {
-      return res.status(400).json({ error: req.body });
+      return res
+        .status(400)
+        .json({ error: "Todos os campos obrigatórios devem ser preenchidos." });
     }
-    console.log("75");
-    console.log("82");
+
     try {
+      const existingAnnotation = await Annotations.findOne({ patrimonio });
+
+      if (existingAnnotation) {
+        return res.status(400).json({
+          error: "Já existe um objeto com este número de patrimônio.",
+        });
+      }
+
       const annotationCreated = await Annotations.create({
         patrimonio,
         objeto,
@@ -103,7 +111,7 @@ module.exports = {
         annotation: annotationCreated,
       });
     } catch (error) {
-      console.log("oi");
+      console.error(error);
       return res.status(500).json({ error: "Erro ao cadastrar patrimônio." });
     }
   },
