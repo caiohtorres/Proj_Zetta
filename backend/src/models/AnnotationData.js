@@ -18,6 +18,8 @@ const AnnotationDataSchema = new mongoose.Schema({
   destinatario: String,
   cidade: String,
   file: String,
+  data: String,
+  projeto: String,
   marca: String,
 });
 

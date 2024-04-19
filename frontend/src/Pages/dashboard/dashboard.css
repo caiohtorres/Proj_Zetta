@@ -1,6 +1,7 @@
 .graficos {
   display: flex;
   justify-content: space-around;
+  margin-top: 20px;
 }
 
 .grafico-com-legenda {
@@ -8,30 +9,41 @@
   flex-direction: column;
 }
 .legenda {
-  background-color: #f2f2f2;
-  border-radius: 5px;
-
   padding: 20px;
-  font-family: sans-serif;
+  font-family: "Roboto", sans-serif;
+  font-weight: 450;
+  font-style: normal;
+  font-size: 13px;
+  overflow: hidden;
+  border-radius: 5px;
+  border-color: #f2f2f2;
+  border-style: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 .legenda h2 {
   margin-bottom: 15px;
   color: #000;
-  font-size: 20px;
+  font-size: 10px;
   font-weight: bolder;
 }
 
 .legenda table {
   width: 100%;
   border-collapse: collapse;
-  border: 1px solid #ddd;
+  border-radius: 5px;
+  border-color: #f2f2f2;
+  border-style: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 .legenda th,
 .legenda td {
   padding: 10px;
-
+  font-family: "Roboto", sans-serif;
+  font-weight: 450;
+  font-style: normal;
+  font-size: 10px;
   text-align: left;
 }
 
@@ -40,10 +52,15 @@
 }
 
 .legenda th {
-  background-color: #4caf50;
+  background-color: #80549f;
+
   color: #fff;
 }
 
 .legenda tr:hover {
   background-color: #ddd;
+}
+
+#consultar {
+  height: 100vh;
 }

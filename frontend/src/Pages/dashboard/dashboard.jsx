@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
-import { RiArrowGoBackFill } from "react-icons/ri";
-import { Link } from "react-router-dom";
 import Api from "../../Services/api";
 import "./dashboard.css";
 
@@ -85,7 +83,7 @@ function Dashboard() {
 
   const chartStyle = {
     width: "100%",
-    height: "400px",
+    height: "200px",
   };
 
   const gerarLegendaPorCategoria = (tipoCounts) => {
@@ -134,8 +132,6 @@ function Dashboard() {
             totalGrafico > 0 ? ((dados / totalGrafico) * 100).toFixed(2) : 0,
         };
       } else {
-        // Handle other cases if needed
-        // Default to 1 if the type is not recognized
         totalGrafico = 1;
       }
     }
@@ -147,16 +143,7 @@ function Dashboard() {
 
   return (
     <div id="consultar">
-      <div className="cabecalho">
-        <ul>
-          <li id="incluindo">Dashboard</li>
-          <li id="sair">
-            <Link to="/home">
-              <RiArrowGoBackFill />
-            </Link>
-          </li>
-        </ul>
-      </div>
+      <div className="cabecalho"></div>
       <div className="legenda">
         <div className="legenda-categoria">
           <h3>Eletrônicos</h3>
@@ -232,7 +219,7 @@ function Dashboard() {
         <div className="tipoEletronicos">
           <Chart
             width={"100%"}
-            height={"400px"}
+            height={"200px"}
             chartType="PieChart"
             data={convertTipoCountsToChartDataEletronicos()}
             options={{ title: "Eletrônicos" }}
@@ -242,7 +229,7 @@ function Dashboard() {
         <div className="tipoEletrodomesticos">
           <Chart
             width={"100%"}
-            height={"400px"}
+            height={"200px"}
             chartType="PieChart"
             data={convertTipoCountsToChartDataEletrodomesticos()}
             options={{ title: "Eletrodomésticos" }}
@@ -252,7 +239,7 @@ function Dashboard() {
         <div className="tipoMoveis">
           <Chart
             width={"100%"}
-            height={"400px"}
+            height={"200px"}
             chartType="PieChart"
             data={convertTipoCountsToChartDataMoveis()}
             options={{ title: "Móveis" }}

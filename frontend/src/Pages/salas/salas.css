@@ -1,4 +1,4 @@
-input[type="text"],
+input,
 select {
   width: 100%;
   padding: 12px 20px;
@@ -34,11 +34,15 @@ input[type="submit"]:hover {
   outline: 1px solid red;
 }
 
-.corpo {
+.salas {
+  height: 100vh;
+}
+
+.corpo-salas {
   border-radius: 5px;
-  background-color: #f2f2f2;
+  margin-left: 50px;
+  margin-right: 50px;
   font-family: sans-serif;
-  margin: 8px;
 }
 
 .botoes {
@@ -60,25 +64,22 @@ input[type="submit"]:hover {
 .mostrarTodos {
   font-family: sans-serif;
   border-collapse: collapse;
-  width: 100%;
+  width: 100vh;
+
+  margin: auto auto;
 }
 
 td,
 th {
-  padding: 8px;
-  border-radius: 5px;
+  padding: 15px;
 }
 
 th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #4caf50;
+  background-color: #80549f;
   color: white;
-}
-
-tr:nth-child(even) {
-  background-color: #f2f2f2;
 }
 
 tr:hover {

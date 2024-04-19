@@ -1,0 +1,70 @@
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+  pointer-events: none; /* Adiciona pointer-events none por padrão */
+}
+
+.modal-background.active {
+  opacity: 1;
+  pointer-events: auto; /* Ativa pointer-events quando o modal está ativo */
+}
+
+.modal-box {
+  background-color: rgb(255, 255, 255);
+  width: 393px;
+  height: 235px;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+
+.modal-box.active {
+  opacity: 1;
+}
+
+.modal-box p {
+  margin-bottom: 20px;
+  padding: 10px;
+  font-size: 20px;
+  color: #909090;
+}
+
+.modal-box button {
+  display: inline;
+  margin: 10px 10px;
+  padding: 8px 20px;
+  cursor: pointer;
+  width: 130px;
+  height: 50px;
+}
+
+.btnnao {
+  color: #80549f;
+  background-color: white;
+  border: 1px solid #80549f;
+}
+
+.btnnao:hover {
+  color: white;
+  background-color: #80549f;
+}
+
+.modal-box .button-container {
+  display: flex;
+  justify-content: space-between;
+}

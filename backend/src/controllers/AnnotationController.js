@@ -51,6 +51,8 @@ module.exports = {
       armazenamento,
       memoriaRam,
       tipo,
+      projeto,
+      data,
       local,
       marcaMonitor,
       tamanhoMonitor,
@@ -97,6 +99,8 @@ module.exports = {
         marcaMonitor,
         tamanhoMonitor,
         destinatario,
+        projeto,
+        data,
         cidade,
         marca,
       });
@@ -183,6 +187,51 @@ module.exports = {
       return res
         .status(500)
         .json({ error: "Erro ao buscar os patrimônios da sala." });
+    }
+  },
+
+  async insumosMes(req, res) {
+    try {
+      // Obtém a data de início e fim do mês atual
+      const dataInicioMes = new Date(
+        new Date().getFullYear(),
+        new Date().getMonth(),
+        1
+      );
+      const dataFimMes = new Date(
+        new Date().getFullYear(),
+        new Date().getMonth() + 1,
+        0
+      );
+
+      // Consulta os insumos registrados no mês atual
+      const insumosMesAtual = await Annotations.find({
+        dataEntrada: { $gte: dataInicioMes, $lte: dataFimMes },
+      });
+
+      // Calcula as contagens de insumos (entradas, saídas, empréstimos)
+      let entradas = 0;
+      let saidas = 0;
+      let emprestimos = 0;
+
+      insumosMesAtual.forEach((insumo) => {
+        if (
+          insumo.local !== "Desfazimento" &&
+          insumo.local !== "Transferência"
+        ) {
+          entradas++;
+        } else if (insumo.local === "Desfazimento") {
+          saidas++;
+        } else if (insumo.local === "Transferência") {
+          emprestimos++;
+        }
+      });
+
+      // Retorna as contagens
+      res.json({ entradas, saidas, emprestimos });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Erro ao buscar insumos do mês atual." });
     }
   },
 };

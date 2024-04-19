@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { FaSave } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
 import Api from "../../../Services/api";
 import "./busca.css";
 
@@ -39,9 +37,12 @@ const listaMarca = [
 ];
 
 function Busca({ data }) {
-  const [changedNote, setChangedNote] = useState();
-  const [changedLocal, setChangedLocal] = useState();
-  const [changedMarca, setChangedMarca] = useState();
+  const [editMode, setEditMode] = useState(false);
+  const [changedNote, setChangedNote] = useState(data.notas);
+  const [changedLocal, setChangedLocal] = useState(data.local);
+  const [changedMarca, setChangedMarca] = useState(
+    data.marca || data.marcaMonitor
+  );
 
   async function handleSave(e) {
     const patrimonioAlterado = await Api.post(
@@ -54,6 +55,8 @@ function Busca({ data }) {
     );
     if (patrimonioAlterado) {
       alert("Patrimônio alterado com sucesso!");
+      setEditMode(false);
+      refreshPage();
     }
   }
 
@@ -63,6 +66,7 @@ function Busca({ data }) {
     );
     if (patrimonioDeletado) {
       alert("Patrimônio deletado com sucesso!");
+      refreshPage();
     }
   }
 
@@ -70,13 +74,25 @@ function Busca({ data }) {
     window.location.reload();
   };
 
+  function handleCancel() {
+    setEditMode(false);
+    setChangedNote(data.notas);
+    setChangedLocal(data.local);
+    setChangedMarca(data.marca || data.marcaMonitor);
+  }
+
   return (
     <>
+      <h2>Visualizar Patrimônio</h2>
       <div className="container-busca">
-        <div className="container-objeto">
-          <label className="objeto">{data.objeto}</label>
-        </div>
         <div className="data-container">
+          <img
+            className="img-editar"
+            src={require("../../img/Vector.png")}
+            alt="editar-patrimonio"
+            width={26}
+            onClick={() => setEditMode(true)}
+          />
           <ul>
             <div className="caixas">
               <li>
@@ -146,25 +162,6 @@ function Busca({ data }) {
                 </li>
               </div>
             )}
-            {/*<div className="caixas-notas">
-              <li>
-                {" "}
-                <label>Marca:</label>
-                <select
-                  defaultValue="0"
-                  value={changedMarca}
-                  onChange={(e) => setChangedMarca(e.target.value)}
-                >
-                  <option value="0">{data.marca}</option>
-                  {listaMarca.map((marca, index) => (
-                    <option key={index} value={marca}>
-                      {marca}
-                    </option>
-                  ))}
-                </select>
-              </li>
-                  </div>*/}{" "}
-            {/*caso precise alterar ja ta aqui*/}
             <div className="caixas">
               <li>
                 {" "}
@@ -181,22 +178,39 @@ function Busca({ data }) {
                 </li>
               </div>
             )}
-            <div className="caixas-notas">
+            <div className="caixas">
+              <li>
+                {" "}
+                <label>Projeto:</label>
+                <p>{data.projeto}</p>
+              </li>
+            </div>
+            <div className="caixas">
+              <li>
+                {" "}
+                <label>Data:</label>
+                <p>{data.data}</p>
+              </li>
+            </div>
+            <div className="caixas">
               <li>
                 {" "}
                 <label>Local:</label>
-                <select
-                  defaultValue="0"
-                  value={changedLocal}
-                  onChange={(e) => setChangedLocal(e.target.value)}
-                >
-                  <option value="0">{data.local}</option>
-                  {listaLocal.map((local, index) => (
-                    <option key={index} value={local}>
-                      {local}
-                    </option>
-                  ))}
-                </select>
+                {editMode ? (
+                  <select
+                    className="select-edit"
+                    value={changedLocal}
+                    onChange={(e) => setChangedLocal(e.target.value)}
+                  >
+                    {listaLocal.map((local, index) => (
+                      <option key={index} value={local}>
+                        {local}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <p>{data.local}</p>
+                )}
               </li>
             </div>
             <div className="caixas">
@@ -220,44 +234,37 @@ function Busca({ data }) {
                 <p>{data.quantidade}</p>
               </li>
             </div>
-            <div className="caixas-notas">
-              <li>
-                {" "}
-                <label>Notas:</label>
-                <input
-                  defaultValue={data.notas}
-                  onChange={(e) => setChangedNote(e.target.value)}
-                ></input>
-              </li>
-            </div>
+            {editMode && (
+              <>
+                <div className="botoesEditar">
+                  <div className="esquerda">
+                    <img
+                      className="iconCadastrar"
+                      src={require("../../img/salvar-editar.png")}
+                      alt="botao-salvar"
+                      onClick={() => handleSave(data.patrimonio)}
+                    />
+
+                    <img
+                      className="iconCancelar"
+                      src={require("../../img/Botão Limpar.png")}
+                      alt="botao-cancelar"
+                      onClick={handleCancel}
+                    />
+                  </div>
+                  <div className="lixeira">
+                    <img
+                      className="iconLixeira"
+                      src={require("../../img/Trash-Bin-Circle--Streamline-Ultimate.svg.png")}
+                      alt="iconlixeira"
+                      onClick={() => handleDelete(data.patrimonio)}
+                      width={50}
+                    />
+                  </div>
+                </div>
+              </>
+            )}
           </ul>
-
-          <p className="comunicado">
-            É possível fazer alterações no patrimônio!
-          </p>
-
-          <div className="imgBusca">
-            <div className="delete-div" type="button" onClick={refreshPage}>
-              <div
-                type="button"
-                className="delete"
-                onClick={() => handleDelete(data.patrimonio)}
-              >
-                <MdDeleteForever size="20" />
-                {"Excluir"}
-              </div>
-            </div>
-            <div className="save-div" type="button" onClick={refreshPage}>
-              <div
-                className="save"
-                type="button"
-                onClick={() => handleSave(data.patrimonio)}
-              >
-                <FaSave size="18" />
-                Salvar
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </>

@@ -16,35 +16,63 @@
   padding: 14px 16px;
 }
 
+.form-group p {
+  color: #d70000;
+  display: inline-block;
+  font-size: 10px;
+  margin: 0 0;
+}
+
 .form-group input {
   padding: 12px 20px;
   outline: none;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+.form-group label {
+  padding: 10px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 550;
+  font-style: normal;
+  font-size: 13px;
 }
 
 .form-group select {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  outline: none;
   border-radius: 5px;
+  border-color: #f2f2f2;
+  border-style: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  color: #676767;
+  padding: 10px;
+  text-indent: 35px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.form-group select:hover::after {
+  color: #23b499;
 }
 
 .form-group .error-message {
-  color: red;
+  color: #d70000;
   font-size: 12px;
   position: relative;
   bottom: 5px;
   left: 10px;
 }
+.form-group {
+  padding: 5px;
+}
 
 .form-group .input-error {
-  outline: 1px solid red;
+  outline: 1px solid #d70000;
 }
 
 button {
   width: 100%;
-  background-color: #4caf50;
+  background-color: #80549f;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -54,13 +82,14 @@ button {
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #80549f;
 }
 
-.corpo {
-  font-family: sans-serif;
-  border-radius: 5px;
-  background-color: #f2f2f2;
+.corpo-cadastro {
+  font-family: "Roboto", sans-serif;
+  font-weight: 450;
+  font-style: normal;
+  font-size: 13px;
   padding: 20px;
 }
 
@@ -71,4 +100,43 @@ button:hover {
 
 .file {
   width: auto;
+}
+
+.corpo-cadastro h2 {
+  font-weight: 500;
+}
+
+#select-estilizado option {
+  font-size: 14px;
+  color: #555;
+  background-color: #fff;
+}
+
+#select-estilizado option:checked {
+  background-color: #ccc;
+  color: #fff;
+}
+
+#select-estilizado option:first-child {
+  display: none;
+}
+
+.iconCadastrar {
+  width: 139px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.iconCancelar {
+  width: 150px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.data-aquisicao {
+  color: #676767;
+}
+
+.cadastroPatrimonio {
+  height: 100vh;
 }

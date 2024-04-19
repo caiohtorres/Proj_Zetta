@@ -1,27 +1,117 @@
-.navLetras {
-  font-family: sans-serif;
-  display: block;
-  color: white;
-  text-decoration: none;
+.navbar li {
+  font-family: "Roboto", sans-serif;
+  font-weight: 450;
+  font-style: normal;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: inline;
+  margin: 10px;
 }
 
-ul {
-  list-style-type: none;
-  overflow: hidden;
-  background-color: #333;
-  border-radius: 5px;
+.planejaZetta {
+  top: 0;
+  left: 0;
+
+  cursor: pointer;
 }
 
-li {
-  float: left;
-  border-right: 1px solid #bbb;
-}
-
-#incluindo {
-  float: left;
-  color: white;
+.navbar {
+  max-height: 100vh;
+  overflow-y: hidden;
+  top: 0;
+  right: 0;
   display: flex;
-  padding: 14px 16px;
-  text-align: center;
-  font-family: sans-serif;
+  z-index: 1;
+  flex-direction: column;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #333;
+  margin-right: 20px;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 550;
+  font-style: normal;
+  border-bottom: 1.4px solid transparent;
+  transition: border-bottom 0.3s ease;
+}
+.navLetras {
+  display: flex;
+  padding: 15px;
+  justify-content: space-between;
+  border-bottom: 1px solid #909090;
+}
+.navbar a:hover {
+  color: #80549f;
+}
+
+.footer {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+}
+
+.ul-footer {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+  border-top: 1px solid #909090;
+}
+
+.ul-footer a {
+  text-decoration: none;
+  color: #333;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.ul-footer .separador {
+  left: 0;
+  width: 100vw;
+  height: 1.6px;
+  background-color: #b8b8b8;
+  z-index: 1;
+}
+
+.zettaiconfooter {
+  margin-right: 20px;
+  margin-top: 5px;
+}
+
+.ul-img img {
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.navbar li.active a {
+  color: #80549f;
+}
+
+.navbar li.active a {
+  border-bottom: 1.4px solid #80549f;
+}
+
+.navbar li a:hover {
+  color: #80549f;
+  border-bottom: 1.4px solid #80549f;
+}
+
+.navbar .botaocadastraroffhover:hover {
+  border-bottom: 1.4px solid transparent;
+  transition: none;
+}
+
+.body {
+  overflow-y: scroll;
+  flex: 1;
+}
+
+body {
+  margin: 0 0;
 }

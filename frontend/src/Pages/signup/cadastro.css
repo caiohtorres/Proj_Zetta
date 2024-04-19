@@ -1,4 +1,4 @@
-.telaLogin .form-login {
+.telaRegistro .form-Registro {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8,10 +8,10 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   width: 900px;
-  height: 750px;
+  height: 1000px;
 }
 
-.preencherDados {
+.preencherDadosRegistro {
   gap: 15px;
   display: flex;
   align-items: center;
@@ -24,7 +24,7 @@
   padding: 20px;
   border-radius: 5px;
 }
-.preencherDados input {
+.preencherDadosRegistro input {
   height: 50px;
   width: 300px;
   border-radius: 5px;
@@ -33,18 +33,19 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   padding-left: 30px;
 }
-.btnLogin {
+.btnRegistro {
+  width: 340px;
   color: #80549f;
   font-family: sans-serif;
 }
 
-.preencherDados label {
+.preencherDadosRegistro label {
   font-size: 18px;
   font-weight: 600;
   color: #676767;
 }
 
-.preencherDados strong {
+.preencherDadosRegistro strong {
   cursor: pointer;
 
   text-decoration: none;
@@ -60,36 +61,36 @@
   color: red;
 }
 
-.tituloLogin,
+.tituloRegistro,
 p,
 h2,
-.form-login {
+.form-Registro {
   text-align: center;
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
 
-.tituloLogin p {
+.tituloRegistro p {
   font-size: 12px;
   letter-spacing: 3px;
   color: #acacac;
 }
 
-.tituloLogin h2 {
+.tituloRegistro h2 {
   font-size: 25px;
   letter-spacing: 1px;
   color: #000000;
 }
 
-.telaLogin button:hover {
+.telaRegistro button:hover {
   background-color: #53a2cb;
 }
 
-.telaLogin .navlink-registrar:hover {
+.telaRegistro .navlink-registrar:hover {
   color: #53a2cb;
 }
-.telaLogin {
+.telaRegistro {
   position: relative;
   display: flex;
   justify-content: center;

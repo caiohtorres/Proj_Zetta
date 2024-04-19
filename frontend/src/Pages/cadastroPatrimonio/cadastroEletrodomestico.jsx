@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { RiArrowGoBackFill } from "react-icons/ri";
 import Api from "../../Services/api";
+import Navbar from "../components/navbar";
 import "./stylePag.css";
 
 class Sair extends React.Component {
@@ -29,8 +30,6 @@ function CadastroPatrimonio() {
   const [cidade, setCidade] = useState("");
   const [file, setFile] = useState("");
   const [marca, setMarca] = useState("");
-  const [projeto, setProjeto] = useState("");
-  const [data, setData] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   console.log("Renderizou");
@@ -301,8 +300,6 @@ function CadastroPatrimonio() {
     setDestinatario("");
     setCidade("");
     setMarca("");
-    setProjeto("");
-    setData("");
     setErrorMessage("");
   };
 
@@ -343,8 +340,6 @@ function CadastroPatrimonio() {
         marca,
         destinatario,
         cidade,
-        projeto,
-        data,
         file: file,
       });
 
@@ -364,8 +359,6 @@ function CadastroPatrimonio() {
       setMarcaMonitor("");
       setDestinatario("");
       setCidade("");
-      setProjeto("");
-      setData("");
       setMarca("");
       console.log(response);
       alert("Patrimônio cadastrado com sucesso!");
@@ -381,7 +374,9 @@ function CadastroPatrimonio() {
 
   return (
     <div className="cadastroPatrimonio">
-      <div className="cabecalho"></div>
+      <div className="cabecalho">
+        <Navbar />
+      </div>
       <h2>Cadastro Patrimônio</h2>
       <div className="corpo-cadastro">
         <form onSubmit={handleForm} encType="multipart/form-data">
@@ -482,201 +477,157 @@ function CadastroPatrimonio() {
             </select>
           </div>
 
-          {(tipo === "Desktop" || tipo === "Notebook") && (
-            <div className="form-group">
-              <label>Processador</label>
+          <div className="form-group">
+            <label>Processador</label>
 
-              <select
-                className={errors?.processador && "input-error"}
-                id="select-estilizado"
-                defaultValue="0"
-                value={processador}
-                onChange={(e) => setProcessador(e.target.value)}
-              >
-                <option value="0">Escolha seu Processador</option>
-                {processadoresIntel.map((processador, index) => (
-                  <option key={index} value={processador}>
-                    {processador}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-          {(tipo === "Desktop" || tipo === "Notebook") && (
-            <div className="form-group">
-              <label>Placa de Vídeo</label>
-              <select
-                className={errors?.placaVideo && "input-error"}
-                id="select-estilizado"
-                defaultValue="0"
-                value={placaVideo}
-                onChange={(e) => setPlacaVideo(e.target.value)}
-              >
-                <option value="0">Escolha sua Placa de Vídeo</option>
-                {placaDeVideoNvidea.map((placa, index) => (
-                  <option key={index} value={placa}>
-                    {placa}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-          {(tipo === "Desktop" || tipo === "Notebook") && (
-            <div className="form-group">
-              <label>Memória Ram</label>
-              <select
-                className={errors?.memoriaRam && "input-error"}
-                id="select-estilizado"
-                defaultValue="0"
-                value={memoriaRam}
-                onChange={(e) => setMemoriaRam(e.target.value)}
-              >
-                <option value="0">Escolha sua Memória Ram</option>
-                {listaMemoriaRam.map((memoria, index) => (
-                  <option key={index} value={memoria}>
-                    {memoria}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-          {(tipo === "Desktop" || tipo === "Notebook") && (
-            <div className="form-group">
-              <label>Armazenamento</label>
-              <select
-                className={errors?.armazenamento && "input-error"}
-                id="select-estilizado"
-                defaultValue="0"
-                value={armazenamento}
-                onChange={(e) => setArmazenamento(e.target.value)}
-              >
-                <option value="0">Escolha seu Armazenamento</option>
-                {listaArmazenamento.map((armazenamento, index) => (
-                  <option key={index} value={armazenamento}>
-                    {armazenamento}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-          {(tipo === "Monitor" || tipo === "Televisao") && (
-            <div className="form-group">
-              <label>Marca do monitor</label>
-              <select
-                className={errors?.marcaMonitor && "input-error"}
-                id="select-estilizado"
-                defaultValue="0"
-                value={marcaMonitor}
-                onChange={(e) => setMarcaMonitor(e.target.value)}
-              >
-                <option value="0">Escolha a marca</option>
-                {listaMarcaMonitor.map((marcaMonitor, index) => (
-                  <option key={index} value={marcaMonitor}>
-                    {marcaMonitor}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
+            <select
+              className={errors?.processador && "input-error"}
+              id="select-estilizado"
+              defaultValue="0"
+              value={processador}
+              onChange={(e) => setProcessador(e.target.value)}
+            >
+              <option value="0">Escolha seu Processador</option>
+              {processadoresIntel.map((processador, index) => (
+                <option key={index} value={processador}>
+                  {processador}
+                </option>
+              ))}
+            </select>
+          </div>
 
-          {(tipo === "Microondas" ||
-            tipo === "Geladeira" ||
-            tipo === "Ar" ||
-            tipo === "Cadeira" ||
-            tipo === "Impressora" ||
-            tipo === "Mesa" ||
-            tipo === "Desktop") && (
-            <div className="form-group">
-              <label>Marca</label>
-              <select
-                className={errors?.marca && "input-error"}
-                id="select-estilizado"
-                defaultValue="0"
-                value={marca}
-                onChange={(e) => setMarca(e.target.value)}
-              >
-                <option value="0">Escolha a marca</option>
-                {listaMarca.map((marca, index) => (
-                  <option key={index} value={marca}>
-                    {marca}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
+          <div className="form-group">
+            <label>Placa de Vídeo</label>
+            <select
+              className={errors?.placaVideo && "input-error"}
+              id="select-estilizado"
+              defaultValue="0"
+              value={placaVideo}
+              onChange={(e) => setPlacaVideo(e.target.value)}
+            >
+              <option value="0">Escolha sua Placa de Vídeo</option>
+              {placaDeVideoNvidea.map((placa, index) => (
+                <option key={index} value={placa}>
+                  {placa}
+                </option>
+              ))}
+            </select>
+          </div>
 
-          {(tipo === "Monitor" || tipo === "Televisao") && (
-            <div className="form-group">
-              <label>Tamanho do monitor</label>
-              <select
-                className={errors?.tamanhoMonitor && "input-error"}
-                id="select-estilizado"
-                defaultValue="0"
-                value={tamanhoMonitor}
-                onChange={(e) => setTamanhoMonitor(e.target.value)}
-              >
-                <option value="0">Escolha o tamanho do monitor</option>
-                {listaTamanhoMonitor.map((tamanhoMonitor, index) => (
-                  <option key={index} value={tamanhoMonitor}>
-                    {tamanhoMonitor}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-          {tipo === "Notebook" && (
-            <div className="form-group">
-              <label>Destinatário</label>
+          <div className="form-group">
+            <label>Memória Ram</label>
+            <select
+              className={errors?.memoriaRam && "input-error"}
+              id="select-estilizado"
+              defaultValue="0"
+              value={memoriaRam}
+              onChange={(e) => setMemoriaRam(e.target.value)}
+            >
+              <option value="0">Escolha sua Memória Ram</option>
+              {listaMemoriaRam.map((memoria, index) => (
+                <option key={index} value={memoria}>
+                  {memoria}
+                </option>
+              ))}
+            </select>
+          </div>
 
-              <input
-                className={errors?.destinatario && "input-error"}
-                type="text"
-                placeholder="Nome do destinatário:"
-                value={destinatario}
-                onChange={(e) => setDestinatario(e.target.value)}
-              />
-            </div>
-          )}
-          {tipo === "Notebook" && (
-            <div className="form-group">
-              <label>Cidade</label>
+          <div className="form-group">
+            <label>Armazenamento</label>
+            <select
+              className={errors?.armazenamento && "input-error"}
+              id="select-estilizado"
+              defaultValue="0"
+              value={armazenamento}
+              onChange={(e) => setArmazenamento(e.target.value)}
+            >
+              <option value="0">Escolha seu Armazenamento</option>
+              {listaArmazenamento.map((armazenamento, index) => (
+                <option key={index} value={armazenamento}>
+                  {armazenamento}
+                </option>
+              ))}
+            </select>
+          </div>
 
-              <input
-                className={errors?.cidade && "input-error"}
-                type="text"
-                placeholder="Cidade do destinatário:"
-                value={cidade}
-                onChange={(e) => setCidade(e.target.value)}
-              />
-            </div>
-          )}
+          <div className="form-group">
+            <label>Marca do monitor</label>
+            <select
+              className={errors?.marcaMonitor && "input-error"}
+              id="select-estilizado"
+              defaultValue="0"
+              value={marcaMonitor}
+              onChange={(e) => setMarcaMonitor(e.target.value)}
+            >
+              <option value="0">Escolha a marca</option>
+              {listaMarcaMonitor.map((marcaMonitor, index) => (
+                <option key={index} value={marcaMonitor}>
+                  {marcaMonitor}
+                </option>
+              ))}
+            </select>
+          </div>
 
-          {tipo !== "Notebook" && (
-            <div className="form-group">
-              <label>Local</label>
-              <p>*obrigatorio</p>
-              <select
-                className={errors?.local && "input-error"}
-                id="select-estilizado"
-                defaultValue="0"
-                {...register("local", {
-                  validate: (value) => value !== "0",
-                })}
-                value={local}
-                onChange={(e) => setLocal(e.target.value)}
-              >
-                <option value="0">Escolha o local</option>
-                {listaLocal.map((local, index) => (
-                  <option key={index} value={local}>
-                    {local}
-                  </option>
-                ))}
-              </select>
-              {errors?.local?.type === "validate" && (
-                <p className="error-message">Local é necessário</p>
-              )}
-            </div>
-          )}
+          <div className="form-group">
+            <label>Marca</label>
+            <select
+              className={errors?.marca && "input-error"}
+              id="select-estilizado"
+              defaultValue="0"
+              value={marca}
+              onChange={(e) => setMarca(e.target.value)}
+            >
+              <option value="0">Escolha a marca</option>
+              {listaMarca.map((marca, index) => (
+                <option key={index} value={marca}>
+                  {marca}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label>Tamanho do monitor</label>
+            <select
+              className={errors?.tamanhoMonitor && "input-error"}
+              id="select-estilizado"
+              defaultValue="0"
+              value={tamanhoMonitor}
+              onChange={(e) => setTamanhoMonitor(e.target.value)}
+            >
+              <option value="0">Escolha o tamanho do monitor</option>
+              {listaTamanhoMonitor.map((tamanhoMonitor, index) => (
+                <option key={index} value={tamanhoMonitor}>
+                  {tamanhoMonitor}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label>Local</label>
+            <p>*obrigatorio</p>
+            <select
+              className={errors?.local && "input-error"}
+              id="select-estilizado"
+              defaultValue="0"
+              {...register("local", {
+                validate: (value) => value !== "0",
+              })}
+              value={local}
+              onChange={(e) => setLocal(e.target.value)}
+            >
+              <option value="0">Escolha o local</option>
+              {listaLocal.map((local, index) => (
+                <option key={index} value={local}>
+                  {local}
+                </option>
+              ))}
+            </select>
+            {errors?.local?.type === "validate" && (
+              <p className="error-message">Local é necessário</p>
+            )}
+          </div>
 
           <div className="form-group">
             <label>Estado de Conservação</label>
@@ -701,29 +652,6 @@ function CadastroPatrimonio() {
                 Estado de conservação é necessário
               </p>
             )}
-          </div>
-
-          <div className="form-group">
-            <label>Projeto</label>
-            <input
-              type="text"
-              className="projeto"
-              placeholder="Projeto:"
-              {...register("projeto")}
-              value={projeto}
-              onChange={(e) => setProjeto(e.target.value)}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Data de aquisição</label>
-            <input
-              type="date"
-              className="data-aquisicao"
-              {...register("data")}
-              value={data}
-              onChange={(e) => setData(e.target.value)}
-            />
           </div>
 
           <div className="form-group">

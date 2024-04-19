@@ -1,25 +1,11 @@
-input[type="text"],
-select {
+.form-group input {
+  height: 50px;
   width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: block;
-  border: 1px solid #ccc;
   border-radius: 5px;
-}
-
-input[type="submit"] {
-  background-color: #4caf50;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-input[type="submit"]:hover {
-  background-color: #45a049;
+  border-color: #f2f2f2;
+  border-style: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  padding-left: 50px;
 }
 
 .form-group .error-message {
@@ -34,11 +20,23 @@ input[type="submit"]:hover {
   outline: 1px solid red;
 }
 
-.corpo {
+.consultar {
+  display: block;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: none;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.consultar .corpo {
   border-radius: 5px;
-  background-color: #f2f2f2;
-  font-family: sans-serif;
-  margin: 8px;
+  background-color: transparent;
+  font-family: "Roboto", sans-serif;
+  font-weight: 450;
+  font-style: normal;
+  margin-top: 50px;
 }
 
 .botoes {
@@ -57,29 +55,182 @@ input[type="submit"]:hover {
   width: 5%;
 }
 
-.mostrarTodos {
-  font-family: sans-serif;
-  border-collapse: collapse;
+.mostrarTodosConsultar {
+  font-family: "Roboto", sans-serif;
+  font-weight: 450;
+  font-style: normal;
   width: 100%;
+  border-radius: 10px;
+  border-color: #fafafa;
+  border-style: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  border-collapse: collapse;
 }
 
-.mostrarTodos td,
-.mostrarTodos th {
-  padding: 8px;
+.input-container {
+  position: relative;
 }
 
-.mostrarTodos th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #4caf50;
-  color: white;
+.input-container input {
+  width: calc(100% - 40px);
+  background-color: transparent;
 }
 
-tr:nth-child(even) {
-  background-color: #f2f2f2;
+.input-container button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-right: 100px;
+  bottom: 0;
+  width: 100px;
+  padding: 0 0;
 }
 
-tr:hover {
-  background-color: #ddd;
+.input-container img {
+  position: absolute;
+  margin-top: 15px;
+  margin-left: 15px;
+}
+
+.input-container .img-filtro {
+  position: absolute;
+  top: 50%;
+  right: 60px;
+  transform: translateY(-120%);
+  cursor: pointer;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  cursor: pointer;
+  font-family: "Roboto", sans-serif;
+  font-weight: 450;
+  font-style: normal;
+}
+
+.pagination button {
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  margin: 0 0;
+  width: 40px;
+  height: 30px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  padding: 0px 0px;
+}
+
+.pagination button:hover {
+  color: #ffffff;
+  background-color: #80549f;
+}
+
+.page-number {
+  display: inline-block;
+  width: 40px;
+  margin-left: 15px;
+  margin-right: 15px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: transparent;
+  text-align: center;
+  line-height: 30px;
+  transition: background-color 0.8s ease-out;
+}
+
+.page-number.active {
+  background-color: #80549f;
+  color: #fff;
+}
+
+.page-number:hover {
+  color: #ffffff;
+  background-color: #80549f;
+}
+
+.thead-consultar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  text-decoration: none;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  width: 900px;
+  height: 750px;
+}
+
+thead th {
+  background-color: transparent;
+  color: black;
+  font-size: 12px;
+}
+
+.mostrarTodosConsultar thead tr th:hover {
+  background-color: transparent;
+}
+
+.mostrarTodosConsultar tr:hover {
+  background-color: #dcdcdc;
+}
+
+.tr-dados {
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
+}
+
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip {
+  visibility: hidden;
+  width: 200px;
+  height: 50px;
+  background-color: #80549f;
+  color: #fff;
+  text-align: center;
+  border-radius: 10px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.tooltip-container:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.arrowup:hover {
+  cursor: pointer;
+}
+
+.arrowdown:hover {
+  cursor: pointer;
+}
+
+.mostrarTodosConsultar thead tr th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.mostrarTodosConsultar thead tr th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.mostrarTodosConsultar tbody tr:last-child:hover td:first-child {
+  border-bottom-left-radius: 10px;
+}
+
+.mostrarTodosConsultar tbody tr:last-child:hover td:last-child {
+  border-bottom-right-radius: 10px;
 }

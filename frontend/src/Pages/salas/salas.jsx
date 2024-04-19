@@ -2,7 +2,6 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import React, { useState } from "react";
 import { RiArrowGoBackFill } from "react-icons/ri";
-import { Link } from "react-router-dom";
 import Api from "../../Services/api";
 import "./salas.css";
 
@@ -42,6 +41,7 @@ const listaSalas = [
 function Salas() {
   const [data, setData] = useState([]);
   const [salas, setSala] = useState("");
+  const [showPatrimonios, setShowPatrimonios] = useState(false);
 
   const getAllPatrimonios = async () => {
     try {
@@ -52,6 +52,7 @@ function Salas() {
 
         const data = response.data;
         setData(data);
+        setShowPatrimonios(true);
         console.log(data);
       }
     } catch (err) {
@@ -162,19 +163,13 @@ function Salas() {
 
     pdf.save(`${salas}_patrimonios.pdf`);
   };
+
   return (
     <div className="salas">
-      <div className="cabecalho">
-        <ul>
-          <li id="nomepag">Busca por Sala</li>
-          <li id="sair">
-            <Link to="/home">
-              <Sair />
-            </Link>
-          </li>
-        </ul>
-      </div>
-      <div className="corpo">
+      <div className="cabecalho"></div>
+
+      <div className="corpo-salas">
+        <h2>Busca por Sala</h2>
         <div className="form-group">
           <select value={salas} onChange={(e) => setSala(e.target.value)}>
             <option value="">Escolha a sala</option>
@@ -185,6 +180,7 @@ function Salas() {
             ))}
           </select>
         </div>
+
         <div className="botoes">
           <button type="submit" onClick={getAllPatrimonios}>
             Mostrar Patrimônios da Sala
@@ -194,26 +190,28 @@ function Salas() {
             Gerar PDF
           </button>
         </div>
-        <div className="tabela">
-          <table>
-            <tbody>
-              {
+
+        {showPatrimonios && (
+          <div className="tabela">
+            <table className="mostrarTodosConsultar">
+              <tbody>
                 <tr>
                   <th>Número do Patrimônio</th>
                   <th>Objeto</th>
                   <th>Marca</th>
                 </tr>
-              }
-              {data.map((dado, index) => (
-                <tr key={index}>
-                  <td>{dado.patrimonio}</td>
-                  <td>{dado.objeto}</td>
-                  <td>{dado.marca || dado.marcaMonitor}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+
+                {data.map((dado, index) => (
+                  <tr key={index}>
+                    <td>{dado.patrimonio}</td>
+                    <td>{dado.objeto}</td>
+                    <td>{dado.marca || dado.marcaMonitor}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );
