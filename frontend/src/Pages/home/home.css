@@ -74,3 +74,18 @@
 .homebody {
   height: 100vh;
 }
+
+.imgzetta {
+  text-align: center;
+  margin-top: 300px;
+}
+
+#app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-image: url("../img/giphy.gif");
+}

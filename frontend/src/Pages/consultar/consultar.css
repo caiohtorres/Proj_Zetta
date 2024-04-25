@@ -113,18 +113,13 @@
 .pagination button {
   cursor: pointer;
   font-size: 16px;
-  color: #333;
+
   margin: 0 0;
-  width: 40px;
+  width: 30px;
+  margin: 5px;
   height: 30px;
-  background-color: #ffffff;
   border-radius: 50%;
   padding: 0px 0px;
-}
-
-.pagination button:hover {
-  color: #ffffff;
-  background-color: #80549f;
 }
 
 .page-number {
@@ -135,19 +130,20 @@
   height: 30px;
   border-radius: 50%;
   background-color: transparent;
+  color: #000000;
   text-align: center;
   line-height: 30px;
   transition: background-color 0.8s ease-out;
 }
 
 .page-number.active {
-  background-color: #80549f;
-  color: #fff;
+  border: 1px solid #80549f;
+  color: #80549f;
 }
 
 .page-number:hover {
-  color: #ffffff;
-  background-color: #80549f;
+  border: 1px solid #80549f;
+  color: #80549f;
 }
 
 .thead-consultar {
@@ -233,4 +229,23 @@ thead th {
 
 .mostrarTodosConsultar tbody tr:last-child:hover td:last-child {
   border-bottom-right-radius: 10px;
+}
+
+.pagination-button {
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+  margin: 0 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  padding: 0px 0px;
+  background-color: #80549f;
+  color: white;
+}
+
+.pagination-button.disabled {
+  background-color: white;
+  color: #c8c8c8;
+  border: 1px solid #c8c8c8;
 }

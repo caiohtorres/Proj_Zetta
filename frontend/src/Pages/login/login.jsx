@@ -3,13 +3,15 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserService from "../../Services/UserService";
 import { validarEmail, validarSenha } from "../../Utils/validadores";
+import Modal from "../components/modal";
 import "./login.css";
 
 const userService = new UserService();
 
 const Login = () => {
-  const [loading, setLoading] = useState("");
-  const [form, setForm] = useState();
+  const [loading, setLoading] = useState(false); // Alterado para false
+  const [form, setForm] = useState({});
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -19,9 +21,7 @@ const Login = () => {
       const response = await userService.login(form);
       console.log("response do login", response);
       if (response && !response.error) {
-        alert("Usuário logado com sucesso");
-        navigate("/home");
-        window.location.reload();
+        setShowModal(true); // Exibir o modal após o login bem-sucedido
       } else {
         alert("Credenciais inválidas");
       }
@@ -37,6 +37,11 @@ const Login = () => {
 
   const validadorInput = () => {
     return form && validarEmail(form.email) && validarSenha(form.password);
+  };
+
+  const confirmLogout = () => {
+    navigate("/home"); // Redirecionar após o login bem-sucedido
+    setShowModal(false); // Fechar o modal após o redirecionamento
   };
 
   return (
@@ -101,7 +106,7 @@ const Login = () => {
                     <button
                       type="submit"
                       onClick={handleSubmit}
-                      disabled={loading === true || !validadorInput()}
+                      disabled={loading || !validadorInput()} // Removido === true
                     >
                       Entrar
                     </button>
@@ -125,6 +130,15 @@ const Login = () => {
           </div>
         </body>
       </div>
+
+      {/* Use o componente Modal após o formulário */}
+      <Modal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        modalText={"Usuário logado com sucesso!"}
+        confirmAction={confirmLogout}
+        isLoginPage={true}
+      />
     </motion.div>
   );
 };

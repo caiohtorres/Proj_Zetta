@@ -1,5 +1,8 @@
+// Busca.jsx
+
 import React, { useState } from "react";
 import Api from "../../../Services/api";
+import Modal from "../../components/modal";
 import "./busca.css";
 
 const listaLocal = [
@@ -43,10 +46,11 @@ function Busca({ data }) {
   const [changedMarca, setChangedMarca] = useState(
     data.marca || data.marcaMonitor
   );
+  const [showModal, setShowModal] = useState(false);
 
-  async function handleSave(e) {
+  async function handleSave() {
     const patrimonioAlterado = await Api.post(
-      "http://177.105.35.235:7777/contentChange/" + e,
+      "http://177.105.35.235:7777/contentChange/" + data.patrimonio,
       {
         notas: changedNote,
         local: changedLocal,
@@ -60,9 +64,9 @@ function Busca({ data }) {
     }
   }
 
-  async function handleDelete(e) {
+  async function handleDelete() {
     const patrimonioDeletado = await Api.delete(
-      "http://177.105.35.235:7777/annotations/" + e
+      "http://177.105.35.235:7777/annotations/" + data.patrimonio
     );
     if (patrimonioDeletado) {
       alert("Patrimônio deletado com sucesso!");
@@ -83,6 +87,12 @@ function Busca({ data }) {
 
   return (
     <>
+      <Modal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        modalText={"Deseja realmente salvar as alterações?"}
+        confirmAction={handleSave} // Alterado para chamar a função handleSave
+      />
       <h2>Visualizar Patrimônio</h2>
       <div className="container-busca">
         <div className="data-container">
@@ -94,6 +104,7 @@ function Busca({ data }) {
             onClick={() => setEditMode(true)}
           />
           <ul>
+            {/* Conteúdo do componente Busca */}
             <div className="caixas">
               <li>
                 {" "}
@@ -242,9 +253,8 @@ function Busca({ data }) {
                       className="iconCadastrar"
                       src={require("../../img/salvar-editar.png")}
                       alt="botao-salvar"
-                      onClick={() => handleSave(data.patrimonio)}
+                      onClick={() => setShowModal(true)}
                     />
-
                     <img
                       className="iconCancelar"
                       src={require("../../img/Botão Limpar.png")}

@@ -135,6 +135,9 @@ button:hover {
 
 .data-aquisicao {
   color: #676767;
+  font-family: "Roboto", sans-serif;
+  font-weight: 450;
+  font-style: normal;
 }
 
 .cadastroPatrimonio {

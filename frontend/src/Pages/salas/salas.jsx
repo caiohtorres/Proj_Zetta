@@ -194,13 +194,14 @@ function Salas() {
         {showPatrimonios && (
           <div className="tabela">
             <table className="mostrarTodosConsultar">
-              <tbody>
+              <thead>
                 <tr>
                   <th>Número do Patrimônio</th>
                   <th>Objeto</th>
                   <th>Marca</th>
                 </tr>
-
+              </thead>
+              <tbody>
                 {data.map((dado, index) => (
                   <tr key={index}>
                     <td>{dado.patrimonio}</td>

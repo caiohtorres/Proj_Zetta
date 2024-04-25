@@ -230,16 +230,44 @@ function Consultar() {
 
     for (let i = startPage; i <= endPage; i++) {
       pageNumbers.push(
-        <span
+        <button
           key={i}
           className={`page-number ${currentPage === i ? "active" : ""}`}
           onClick={() => handlePageChange(i)}
         >
           {i}
-        </span>
+        </button>
       );
     }
     return pageNumbers;
+  };
+
+  const renderPrevButton = () => {
+    return (
+      <button
+        onClick={handlePrevPage}
+        disabled={currentPage === 1}
+        className={`pagination-button ${currentPage === 1 ? "disabled" : ""}`}
+      >
+        <span className={currentPage === 1 ? "disabled-arrow" : ""}>&lt;</span>
+      </button>
+    );
+  };
+
+  const renderNextButton = () => {
+    return (
+      <button
+        onClick={handleNextPage}
+        disabled={currentPage === totalPages}
+        className={`pagination-button ${
+          currentPage === totalPages ? "disabled" : ""
+        }`}
+      >
+        <span className={currentPage === totalPages ? "disabled-arrow" : ""}>
+          &gt;
+        </span>
+      </button>
+    );
   };
 
   return (
@@ -318,16 +346,9 @@ function Consultar() {
             </div>
           </div>
           <div className="pagination">
-            <button onClick={handlePrevPage} disabled={currentPage === 1}>
-              &lt;
-            </button>
+            {renderPrevButton()}
             {renderPageNumbers()}
-            <button
-              onClick={handleNextPage}
-              disabled={currentPage === totalPages}
-            >
-              &gt;
-            </button>
+            {renderNextButton()}
           </div>
         </>
       )}

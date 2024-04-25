@@ -1,3 +1,4 @@
+import { motion } from "framer-motion"; // Importe motion do Framer Motion
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import UserService from "../../Services/UserService";
@@ -20,13 +21,16 @@ const Navbar = ({ children }) => {
     navigate("/");
   };
 
+  const [hovering, setHovering] = useState(false);
+
   return (
     <div>
       {/* Use o componente Modal */}
       <Modal
         showModal={showModal}
-        confirmLogout={confirmLogout}
         setShowModal={setShowModal}
+        modalText={"Deseja realmente sair?"}
+        confirmAction={confirmLogout}
       />
 
       <div className="navbar">
@@ -92,13 +96,23 @@ const Navbar = ({ children }) => {
                 <Link to="/sobre">Sobre</Link>
               </li>
             </ul>
-            <div className="zettaiconfooter">
+            <motion.div
+              className="zettaiconfooter"
+              whileHover={{ scale: 1.45 }}
+              onMouseEnter={() => setHovering(true)}
+              onMouseLeave={() => setHovering(false)}
+              style={{ display: "flex", alignItems: "center" }}
+            >
               <img
-                src={require("../img/zettaicon.png")}
+                src={
+                  hovering
+                    ? require("../img/transicaozetta.png")
+                    : require("../img/zettaicon.png")
+                }
                 alt="Zetta Icon"
                 width={40}
               />
-            </div>
+            </motion.div>
           </div>
         </footer>
       </div>

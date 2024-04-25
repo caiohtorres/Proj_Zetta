@@ -85,3 +85,7 @@ th {
 tr:hover {
   background-color: #ddd;
 }
+
+td {
+  font-size: 11px;
+}

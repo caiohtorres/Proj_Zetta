@@ -2,6 +2,10 @@ import { AnimatePresence } from "framer-motion";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import CadastroPatrimonio from "../Pages/cadastroPatrimonio/cadastroPatrimonio";
+
+import CadastroPatrimonioEletrodomestico from "../Pages/cadastroPatrimonio/cadastroEletrodomestico";
+import CadastroPatrimonioEletronico from "../Pages/cadastroPatrimonio/cadastroEletronico";
+import CadastroPatrimonioMovel from "../Pages/cadastroPatrimonio/cadastroMovel";
 import Navbar from "../Pages/components/navbar";
 import Consultar from "../Pages/consultar/consultar";
 import Dashboard from "../Pages/dashboard/dashboard";
@@ -39,6 +43,37 @@ const Routering = () => {
             </ProtectedRoutes>
           }
         />
+        <Route
+          path="/cadastropatrimonioeletronico"
+          element={
+            <ProtectedRoutes>
+              <Navbar>
+                <CadastroPatrimonioEletronico />
+              </Navbar>
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/cadastropatrimonioeletrodomestico"
+          element={
+            <ProtectedRoutes>
+              <Navbar>
+                <CadastroPatrimonioEletrodomestico />
+              </Navbar>
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/cadastropatrimoniomovel"
+          element={
+            <ProtectedRoutes>
+              <Navbar>
+                <CadastroPatrimonioMovel />
+              </Navbar>
+            </ProtectedRoutes>
+          }
+        />
+
         <Route
           path="/consultar"
           element={

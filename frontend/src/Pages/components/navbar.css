@@ -115,3 +115,14 @@
 body {
   margin: 0 0;
 }
+
+.btncancelar-login {
+  color: #80549f;
+  background-color: white;
+  border: 1px solid #80549f;
+}
+
+.btncancelar-login:hover {
+  color: #ffffff;
+  border: 1px solid #80549f;
+}
