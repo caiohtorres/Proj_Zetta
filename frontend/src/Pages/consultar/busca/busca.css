@@ -84,8 +84,10 @@
 }
 
 .container-busca input {
-  padding: 12px 15px;
-  width: 100%;
+  width: 98%;
+  background-color: #f2f2f2;
+  height: 40px;
+  font-size: 10px;
 }
 
 .corpo {

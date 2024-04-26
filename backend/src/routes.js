@@ -38,6 +38,5 @@ routes.post("/cadastrousuario", UserController.create);
 routes.get("/users", UserController.getAll);
 routes.post("/uploads", upload.single("file"), FileController.create);
 routes.get("/uploads/:file", FileController.read);
-routes.get("/insumos/", AnnotationController.insumosMes);
 
 module.exports = routes;
