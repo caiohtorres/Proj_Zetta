@@ -17,23 +17,23 @@ const Modal = ({
         <div className="button-container">
           {isLoginPage ? (
             <>
-              <button className="btnentrar" onClick={confirmAction}>
-                Entrar
-              </button>
               <button
                 className="btncancelar-login"
                 onClick={() => setShowModal(false)}
               >
                 Cancelar
               </button>
+              <button className="btnentrar" onClick={confirmAction}>
+                Entrar
+              </button>
             </>
           ) : (
             <>
-              <button className="btnsair" onClick={confirmAction}>
-                Sim
-              </button>
               <button className="btnnao" onClick={() => setShowModal(false)}>
                 Não
+              </button>
+              <button className="btnsair" onClick={confirmAction}>
+                Sim
               </button>
             </>
           )}

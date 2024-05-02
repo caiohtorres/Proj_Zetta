@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import Api from "../../Services/api";
+import React from "react";
 import "./home.css";
-import gifBackground from "../img/giphy.gif";
 
 function App() {
   return (
@@ -13,7 +11,9 @@ function App() {
         />
       </head>
       <body>
-        <div className="homebody"></div>
+        <div className="homebody">
+          <img src={require("../img/imginicial3.png")} alt="img-tela-inicial" />
+        </div>
       </body>
     </div>
   );

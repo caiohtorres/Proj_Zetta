@@ -221,6 +221,7 @@ function Busca({ data }) {
   const [changedLocal, setChangedLocal] = useState(data.local);
   const [changedValor, setChangedValor] = useState(data.valor);
   const [changedQuantidade, setChangedQuantidade] = useState(data.quantidade);
+  const [pageTitle, setPageTitle] = useState("Visualizando Patrimônio");
   const [changedProcessador, setChangedProcessador] = useState(
     data.processador
   );
@@ -242,6 +243,7 @@ function Busca({ data }) {
     data.marca || data.marcaMonitor
   );
   const [showModal, setShowModal] = useState(false);
+  const [showModalLixo, setShowModalLixo] = useState(false);
   const [changedTamanhoMonitor, setChangedTamanhoMonitor] = useState(
     data.tamanhoMonitor
   );
@@ -272,13 +274,16 @@ function Busca({ data }) {
       refreshPage();
     }
   }
+  function activateEditMode() {
+    setEditMode(true);
+    setPageTitle("Editando Patrimônio");
+  }
 
   async function handleDelete() {
     const patrimonioDeletado = await Api.delete(
       "http://177.105.35.235:7777/annotations/" + data.patrimonio
     );
     if (patrimonioDeletado) {
-      alert("Patrimônio deletado com sucesso!");
       refreshPage();
     }
   }
@@ -289,6 +294,7 @@ function Busca({ data }) {
 
   function handleCancel() {
     setEditMode(false);
+    setPageTitle("Visualizar Patrimônio");
     setChangedNote(data.notas);
     setChangedLocal(data.local);
     setChangedEstadoConservacao(data.estadoConservacao);
@@ -315,7 +321,13 @@ function Busca({ data }) {
         modalText={"Deseja realmente salvar as alterações?"}
         confirmAction={handleSave} // Alterado para chamar a função handleSave
       />
-      <h2>Visualizar Patrimônio</h2>
+      <Modal
+        showModal={showModalLixo}
+        setShowModal={setShowModalLixo}
+        modalText={"Deseja excluir esse patrimônio? Essa ação é irreversível!"}
+        confirmAction={() => handleDelete(data.patrimonio)}
+      />
+      <h2>{pageTitle}</h2>
       <div className="container-busca">
         <div className="data-container">
           <img
@@ -323,7 +335,7 @@ function Busca({ data }) {
             src={require("../../img/Vector.png")}
             alt="editar-patrimonio"
             width={26}
-            onClick={() => setEditMode(true)}
+            onClick={activateEditMode}
           />
           <ul>
             {/* Conteúdo do componente Busca */}
@@ -667,16 +679,16 @@ function Busca({ data }) {
                 <div className="botoesEditar">
                   <div className="esquerda">
                     <img
-                      className="iconCadastrar"
-                      src={require("../../img/salvar-editar.png")}
-                      alt="botao-salvar"
-                      onClick={() => setShowModal(true)}
-                    />
-                    <img
                       className="iconCancelar"
                       src={require("../../img/Botão Limpar.png")}
                       alt="botao-cancelar"
                       onClick={handleCancel}
+                    />
+                    <img
+                      className="iconCadastrar"
+                      src={require("../../img/salvar-editar.png")}
+                      alt="botao-salvar"
+                      onClick={() => setShowModal(true)}
                     />
                   </div>
                   <div className="lixeira">
@@ -684,7 +696,7 @@ function Busca({ data }) {
                       className="iconLixeira"
                       src={require("../../img/Trash-Bin-Circle--Streamline-Ultimate.svg.png")}
                       alt="iconlixeira"
-                      onClick={() => handleDelete(data.patrimonio)}
+                      onClick={() => setShowModalLixo(true)}
                       width={50}
                     />
                   </div>

@@ -5,7 +5,7 @@ select {
   margin: 8px 0;
   display: block;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 input[type="submit"] {
@@ -88,4 +88,30 @@ tr:hover {
 
 td {
   font-size: 11px;
+}
+
+.cima {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.select-sala {
+  width: 1000px;
+}
+
+#btnSala {
+  width: 170px;
+  border-radius: 10px;
+  height: 50px;
+}
+
+.tabela {
+  justify-content: center;
+  align-items: center;
+}
+
+.arrumawidth {
+  width: 100%;
 }

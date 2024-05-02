@@ -1,15 +1,9 @@
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import React, { useState } from "react";
-import { RiArrowGoBackFill } from "react-icons/ri";
+import React, { useEffect, useState } from "react";
+
 import Api from "../../Services/api";
 import "./salas.css";
-
-class Sair extends React.Component {
-  render() {
-    return <RiArrowGoBackFill />;
-  }
-}
 
 const refreshPage = () => {
   window.location.reload();
@@ -42,18 +36,44 @@ function Salas() {
   const [data, setData] = useState([]);
   const [salas, setSala] = useState("");
   const [showPatrimonios, setShowPatrimonios] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 15;
+  const [prevSelectedSala, setPrevSelectedSala] = useState("");
 
-  const getAllPatrimonios = async () => {
+  const [totalPages, setTotalPages] = useState(0);
+
+  const getAllPatrimonios = async (selectedSala, page = currentPage) => {
     try {
-      if (salas !== "") {
+      if (selectedSala !== "") {
+        if (selectedSala !== prevSelectedSala) {
+          setCurrentPage(1);
+          setPrevSelectedSala(selectedSala);
+        }
+
         const response = await Api.get(
-          `http://177.105.35.235:7777/buscasala/${encodeURIComponent(salas)}`
+          `http://177.105.35.235:7777/buscasala/${encodeURIComponent(
+            selectedSala
+          )}`
         );
 
-        const data = response.data;
-        setData(data);
+        let data = response.data;
+
+        data.sort((a, b) => a.objeto.localeCompare(b.objeto));
+
+        const totalItems = data.length;
+        const totalPag = Math.ceil(totalItems / itemsPerPage);
+        setTotalPages(totalPag);
+
+        const startIndex = (page - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const paginatedData = data.slice(startIndex, endIndex);
+
+        setData(paginatedData);
         setShowPatrimonios(true);
-        console.log(data);
+        setCurrentPage(page);
+      } else {
+        setData([]);
+        setShowPatrimonios(false);
       }
     } catch (err) {
       console.log(err);
@@ -61,8 +81,85 @@ function Salas() {
       refreshPage();
     }
   };
+  useEffect(() => {
+    setData([]);
+    setShowPatrimonios(false);
+  }, [salas]);
 
-  const generatePDF = () => {
+  const handlePrevPage = () => {
+    const prevPage = Math.max(currentPage - 1, 1);
+    setCurrentPage(prevPage);
+    getAllPatrimonios(salas, prevPage);
+  };
+
+  const handleNextPage = () => {
+    const nextPage = Math.min(currentPage + 1, totalPages);
+    setCurrentPage(nextPage);
+    getAllPatrimonios(salas, nextPage);
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    getAllPatrimonios(salas, page);
+  };
+
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+    if (totalPages > maxVisiblePages) {
+      if (endPage === totalPages) {
+        startPage = totalPages - maxVisiblePages + 1;
+      } else if (startPage === 1) {
+        endPage = maxVisiblePages;
+      }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(
+        <button
+          key={i}
+          className={`page-number ${currentPage === i ? "active" : ""}`}
+          onClick={() => handlePageChange(i)}
+        >
+          {i}
+        </button>
+      );
+    }
+    return pageNumbers;
+  };
+
+  const renderPrevButton = () => {
+    return (
+      <button
+        onClick={handlePrevPage}
+        disabled={currentPage === 1}
+        className={`pagination-button ${currentPage === 1 ? "disabled" : ""}`}
+      >
+        <span className={currentPage === 1 ? "disabled-arrow" : ""}>&lt;</span>
+      </button>
+    );
+  };
+
+  const renderNextButton = () => {
+    return (
+      <button
+        onClick={handleNextPage}
+        disabled={currentPage === totalPages}
+        className={`pagination-button ${
+          currentPage === totalPages ? "disabled" : ""
+        }`}
+      >
+        <span className={currentPage === totalPages ? "disabled-arrow" : ""}>
+          &gt;
+        </span>
+      </button>
+    );
+  };
+
+  const generatePDF = async () => {
     const currentDate = new Date();
     const formattedDate = currentDate.toLocaleDateString();
     const formattedTime = currentDate.toLocaleTimeString();
@@ -87,8 +184,16 @@ function Salas() {
 
     yPos += 15;
 
+    const allPatrimoniosResponse = await Api.get(
+      `http://177.105.35.235:7777/buscasala/${encodeURIComponent(salas)}`
+    );
+
+    const allPatrimoniosData = allPatrimoniosResponse.data;
+
+    const totalPatrimonios = allPatrimoniosData.length;
+
     const headerData = [
-      ["Total de Patrimônios", data.length.toString()],
+      ["Total de Patrimônios", totalPatrimonios.toString()],
       ["Local Vistoriado", salas],
       ["Data e hora", `${formattedDate} ${formattedTime}`],
     ];
@@ -116,7 +221,7 @@ function Salas() {
     yPos += headerHeight * headerData.length + 10;
 
     const objectCount = {};
-    data.forEach((dado) => {
+    allPatrimoniosData.forEach((dado) => {
       objectCount[dado.objeto] = (objectCount[dado.objeto] || 0) + 1;
     });
 
@@ -144,7 +249,7 @@ function Salas() {
     pdf.autoTable({
       startY: yPos,
       head: [["Patrimônio", "Objeto", "Marca", "Checkbox"]],
-      body: data.map((dado) => [
+      body: allPatrimoniosData.map((dado) => [
         dado.patrimonio,
         dado.objeto,
         dado.marca || dado.marcaMonitor,
@@ -170,27 +275,40 @@ function Salas() {
 
       <div className="corpo-salas">
         <h2>Busca por Sala</h2>
-        <div className="form-group">
-          <select value={salas} onChange={(e) => setSala(e.target.value)}>
-            <option value="">Escolha a sala</option>
-            {listaSalas.map((sala, index) => (
-              <option key={index} value={sala}>
-                {sala}
-              </option>
-            ))}
-          </select>
-        </div>
+        <div className="cima">
+          <div className="form-group">
+            <div className="arrumawidth">
+              <select
+                className="select-sala"
+                value={salas}
+                onChange={(e) => {
+                  const selectedValue = e.target.value;
+                  if (selectedValue === "0") {
+                    setData([]);
+                    setShowPatrimonios(false);
+                  } else {
+                    setSala(selectedValue);
+                    getAllPatrimonios(selectedValue, 1);
+                  }
+                }}
+              >
+                <option value="0">Selecione a sala</option>
+                {listaSalas.map((sala, index) => (
+                  <option key={index} value={sala}>
+                    {sala}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
 
-        <div className="botoes">
-          <button type="submit" onClick={getAllPatrimonios}>
-            Mostrar Patrimônios da Sala
-          </button>
-          <div className="divVazia"></div>
-          <button id="btnSala" onClick={generatePDF}>
-            Gerar PDF
-          </button>
+          <div className="botoes">
+            <div className="divVazia"></div>
+            <button id="btnSala" onClick={generatePDF}>
+              Gerar relatório PDF
+            </button>
+          </div>
         </div>
-
         {showPatrimonios && (
           <div className="tabela">
             <table className="mostrarTodosConsultar">
@@ -211,6 +329,11 @@ function Salas() {
                 ))}
               </tbody>
             </table>
+            <div className="pagination">
+              {renderPrevButton()}
+              {renderPageNumbers()}
+              {renderNextButton()}
+            </div>
           </div>
         )}
       </div>

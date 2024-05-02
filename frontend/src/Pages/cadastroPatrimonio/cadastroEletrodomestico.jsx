@@ -403,17 +403,16 @@ function CadastroPatrimonioEletrodomestico() {
           {errorMessage && <p className="error-message">{errorMessage}</p>}
           <div className="btnSalvar">
             <img
-              className="iconCadastrar"
-              src={require("../img/Botão aplicar filtro.png")}
-              alt="botao-salvar"
-              onClick={handleForm}
-            />
-
-            <img
               className="iconCancelar"
               src={require("../img/Botão Limpar.png")}
               alt="botao-cancelar"
               onClick={limparCampos}
+            />
+            <img
+              className="iconCadastrar"
+              src={require("../img/Botão aplicar filtro.png")}
+              alt="botao-salvar"
+              onClick={handleForm}
             />
           </div>
         </form>
