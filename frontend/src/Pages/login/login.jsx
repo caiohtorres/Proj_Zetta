@@ -9,7 +9,7 @@ import "./login.css";
 const userService = new UserService();
 
 const Login = () => {
-  const [loading, setLoading] = useState(false); // Alterado para false
+  const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({});
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const Login = () => {
       const response = await userService.login(form);
       console.log("response do login", response);
       if (response && !response.error) {
-        setShowModal(true); // Exibir o modal após o login bem-sucedido
+        setShowModal(true);
       } else {
         alert("Credenciais inválidas");
       }
@@ -40,8 +40,8 @@ const Login = () => {
   };
 
   const confirmLogout = () => {
-    navigate("/home"); // Redirecionar após o login bem-sucedido
-    setShowModal(false); // Fechar o modal após o redirecionamento
+    navigate("/home");
+    setShowModal(false);
   };
 
   return (
@@ -106,7 +106,7 @@ const Login = () => {
                     <button
                       type="submit"
                       onClick={handleSubmit}
-                      disabled={loading || !validadorInput()} // Removido === true
+                      disabled={loading || !validadorInput()}
                     >
                       Entrar
                     </button>

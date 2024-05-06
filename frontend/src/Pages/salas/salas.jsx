@@ -276,8 +276,8 @@ function Salas() {
       <div className="corpo-salas">
         <h2>Busca por Sala</h2>
         <div className="cima">
-          <div className="form-group">
-            <div className="arrumawidth">
+          <div className="arrumawidth">
+            <div className="form-group">
               <select
                 className="select-sala"
                 value={salas}
