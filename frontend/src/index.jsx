@@ -1,11 +1,10 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client"; // Alterando a importação para 'react-dom/client'
 import { BrowserRouter as Router } from "react-router-dom";
 import Routering from "./Routes/routes";
 
-ReactDOM.render(
+createRoot(document.getElementById("root")).render(
   <Router>
     <Routering />
-  </Router>,
-  document.getElementById("root")
+  </Router>
 );

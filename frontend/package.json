@@ -3,31 +3,43 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@blackbox-vision/react-qr-reader": "^5.0.0",
     "@mui/styled-engine-sc": "^6.0.0-alpha.6",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.2",
     "bold-ui": "^1.0.0-beta.59",
+    "chart.js": "^4.4.3",
     "filesize": "^10.1.0",
     "filter-data-advanced": "^1.0.8",
-    "framer-motion": "^11.0.24",
+    "framer-motion": "^11.2.9",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.2",
+    "jsqr": "^1.4.0",
     "lodash": "^4.17.21",
+    "quagga": "^0.12.1",
     "react": "^18.2.0",
+    "react-awesome-reveal": "^4.2.11",
+    "react-barcode": "^1.5.3",
+    "react-chartjs-2": "^5.2.0",
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-google-charts": "^4.0.1",
     "react-hook-form": "^7.48.2",
     "react-icons": "^4.11.0",
+    "react-modal": "^3.16.1",
+    "react-qr-reader": "^3.0.0-beta-1",
+    "react-qr-scanner": "^1.0.0-alpha.11",
     "react-radio-group": "^3.0.3",
     "react-router-dom": "^6.18.0",
     "react-scripts": "5.0.1",
     "react-to-pdf": "^1.0.1",
-    "styled-components": "^6.1.1",
-    "web-vitals": "^2.1.4"
+    "styled-components": "^6.1.11",
+    "use-scan-detection": "^0.2.3",
+    "web-vitals": "^2.1.4",
+    "webrtc-adapter": "^9.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -52,5 +64,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "html5-qrcode": "^2.3.8"
   }
 }

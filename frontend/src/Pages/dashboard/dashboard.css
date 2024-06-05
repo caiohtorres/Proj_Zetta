@@ -1,66 +1,105 @@
-.graficos {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
+/* dashboard.css */
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #ffffff;
+  margin: 0;
+  padding: 0;
 }
 
-.grafico-com-legenda {
+#consultar {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.cabecalho {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.legenda {
   display: flex;
   flex-direction: column;
-}
-.legenda {
-  padding: 20px;
-  font-family: "Roboto", sans-serif;
-  font-weight: 450;
-  font-style: normal;
-  font-size: 13px;
-  overflow: hidden;
-  border-radius: 5px;
-  border-color: #f2f2f2;
-  border-style: hidden;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  gap: 20px;
 }
 
-.legenda h2 {
+.legenda-categoria {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.legenda h3 {
   margin-bottom: 15px;
-  color: #000;
-  font-size: 10px;
-  font-weight: bolder;
+  color: #343a40;
 }
 
 .legenda table {
   width: 100%;
   border-collapse: collapse;
-  border-radius: 5px;
-  border-color: #f2f2f2;
-  border-style: hidden;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 .legenda th,
 .legenda td {
   padding: 10px;
-  font-family: "Roboto", sans-serif;
-  font-weight: 450;
-  font-style: normal;
-  font-size: 10px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.legenda th {
+  background-color: #343a40;
+  color: #ffffff;
   text-align: left;
 }
 
 .legenda tr:nth-child(odd) {
-  background-color: #ffffff;
-}
-
-.legenda th {
-  background-color: #80549f;
-
-  color: #fff;
+  background-color: #f8f9fa;
 }
 
 .legenda tr:hover {
-  background-color: #ddd;
+  background-color: #e9ecef;
 }
 
-#consultar {
+.graficos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.graficos > div {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 300px;
+}
+
+.chart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chart-container h4 {
+  margin-bottom: 15px;
+  color: #343a40;
+}
+
+@media (max-width: 768px) {
+  .graficos {
+    flex-direction: column;
+  }
+}
+
+.tudo-dashboard {
   height: 100vh;
+}
+
+h3 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
 }

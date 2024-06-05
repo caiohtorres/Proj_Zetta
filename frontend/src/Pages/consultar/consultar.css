@@ -249,3 +249,124 @@ thead th {
   color: #c8c8c8;
   border: 1px solid #c8c8c8;
 }
+
+.filters-sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100%;
+  background-color: white;
+  box-shadow: 0px 0 7px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  overflow-y: auto;
+  transition: width 1s ease;
+  width: 0;
+}
+
+.show-sidebar {
+  width: 300px;
+}
+
+.hide-sidebar {
+  width: 0px;
+}
+
+.close-filters {
+  background-color: #fff;
+  color: #80549f;
+  border-radius: 7px;
+  border: #80549f 1px solid;
+  font-size: 16px;
+  cursor: pointer;
+  float: right;
+  margin-right: 15px;
+}
+
+.close-filters:hover {
+  background-color: #80549f;
+  color: #fff;
+}
+
+.filter-section {
+  margin-bottom: 20px;
+  margin-right: 30px;
+  cursor: pointer;
+}
+
+.apply-filters {
+  background-color: #80549f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 5px;
+  margin-left: 15px;
+  border-radius: 7px;
+}
+
+.apply-filters:hover {
+  background-color: #80549f;
+}
+
+.botao-filtro {
+  display: flex;
+}
+
+.ajuste-filtro {
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+  font-weight: 450;
+  font-style: normal;
+  font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.h4-filtro,
+.h4-filtro-cor {
+  font-family: "Roboto", sans-serif;
+  font-weight: 550;
+  font-style: normal;
+  font-size: 18px;
+  margin-left: -15px;
+  margin: 0 0;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.dentro-filtro {
+  margin-left: 30px;
+  margin-bottom: 60px;
+}
+
+.h2-filtro {
+  margin-bottom: 60px;
+  margin-top: 40px;
+}
+
+.caixa-filtro {
+  display: flex;
+  justify-content: space-between;
+}
+
+.h4-filtro-cor {
+  color: #80549f;
+  font-size: 22px;
+}
+
+.dentro-filtro label {
+  order: 2;
+}
+
+.dentro-filtro input {
+  order: 2;
+  margin-left: 80px;
+}
+
+.input-filtro {
+  width: auto;
+}

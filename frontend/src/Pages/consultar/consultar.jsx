@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { QrReader } from "react-qr-reader";
+import "webrtc-adapter";
+
 import { useForm } from "react-hook-form";
-import { RiArrowGoBackFill } from "react-icons/ri";
 import Api from "../../Services/api";
 import Busca from "./busca/busca.jsx";
-
 import "./consultar.css";
-
-const Sair = () => {
-  return <RiArrowGoBackFill />;
-};
 
 const refreshPage = () => {
   window.location.reload();
@@ -17,6 +14,7 @@ const refreshPage = () => {
 function Consultar() {
   const [patrimonioById, setPatrimonioById] = useState("");
   const [data, setData] = useState([]);
+  const [allData, setAllData] = useState([]);
   const [mostrarTodos, setMostrarTodos] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15;
@@ -25,6 +23,20 @@ function Consultar() {
   const [sortByLocal, setSortByLocal] = useState(false);
   const [sortByObjeto, setSortByObjeto] = useState(false);
   const [sortByMarca, setSortByMarca] = useState(false);
+  const [showFiltersSidebar, setShowFiltersSidebar] = useState(false);
+  const [selectedObjetos, setSelectedObjetos] = useState([]);
+  const [showObjetos, setShowObjetos] = useState(false);
+  const [showMarcas, setShowMarcas] = useState(false);
+  const [showProcessadores, setShowProcessadores] = useState(false);
+  const [selectedMarcas, setSelectedMarcas] = useState([]);
+  const [selectedProcessadores, setSelectedProcessadores] = useState([]);
+  const [selectedLocais, setSelectedLocais] = useState([]);
+  const [selectedPlacasVideo, setSelectedPlacasVideo] = useState([]);
+  const [showLocais, setShowLocais] = useState(false);
+  const [showPlacasVideo, setShowPlacasVideo] = useState(false);
+  const [scannedCode, setScannedCode] = useState("");
+  const [showScanner, setShowScanner] = useState(false);
+
   const {
     register,
     formState: { errors },
@@ -46,6 +58,49 @@ function Consultar() {
       alert("Patrimônio não encontrado!");
       refreshPage();
     }
+  };
+
+  const startBarcodeScanner = () => {
+    console.log("Verificando suporte para MediaDevices API...");
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      console.log("MediaDevices API suportada.");
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then(() => {
+          console.log("Acesso à câmera concedido.");
+          setShowScanner(true);
+        })
+        .catch((error) => {
+          console.error("Error accessing camera: ", error);
+          if (error.name === "NotAllowedError") {
+            alert(
+              "Permissão para acessar a câmera foi negada. Por favor, conceda a permissão no navegador."
+            );
+          } else if (error.name === "NotFoundError") {
+            alert(
+              "Nenhuma câmera encontrada. Por favor, conecte uma câmera e tente novamente."
+            );
+          } else {
+            alert("Erro ao acessar a câmera: " + error.message);
+          }
+        });
+    } else {
+      console.error("MediaDevices API has no support for your browser.");
+      alert(
+        "Seu navegador não suporta a API necessária para o scanner de QR Code."
+      );
+    }
+  };
+
+  const handleQrScan = (result) => {
+    if (result) {
+      setPatrimonioById(result?.text || result);
+      setShowScanner(false);
+    }
+  };
+
+  const handleQrError = (error) => {
+    console.error(error);
   };
 
   const toggleSortByMarca = () => {
@@ -93,6 +148,7 @@ function Consultar() {
       const endIndex = startIndex + itemsPerPage;
       const paginatedData = data.slice(startIndex, endIndex);
 
+      setAllData(data);
       setData(paginatedData);
       setMostrarTodos(true);
     } catch (err) {
@@ -270,8 +326,357 @@ function Consultar() {
     );
   };
 
+  const closeFilters = () => {
+    setShowFiltersSidebar(false);
+  };
+
+  const toggleShowFilters = () => {
+    setShowFiltersSidebar(!showFiltersSidebar);
+  };
+
+  const toggleMarca = (marca) => {
+    if (selectedMarcas.includes(marca)) {
+      setSelectedMarcas(selectedMarcas.filter((m) => m !== marca));
+    } else {
+      setSelectedMarcas([...selectedMarcas, marca]);
+    }
+  };
+
+  const toggleProcessador = (processador) => {
+    if (selectedProcessadores.includes(processador)) {
+      setSelectedProcessadores(
+        selectedProcessadores.filter((p) => p !== processador)
+      );
+    } else {
+      setSelectedProcessadores([...selectedProcessadores, processador]);
+    }
+  };
+
+  const toggleObjeto = (objeto) => {
+    if (selectedObjetos.includes(objeto)) {
+      setSelectedObjetos(selectedObjetos.filter((obj) => obj !== objeto));
+    } else {
+      setSelectedObjetos([...selectedObjetos, objeto]);
+    }
+  };
+
+  const toggleShowObjetos = () => {
+    setShowObjetos(!showObjetos);
+  };
+
+  const toggleShowMarcas = () => {
+    setShowMarcas(!showMarcas);
+  };
+
+  const toggleShowProcessadores = () => {
+    setShowProcessadores(!showProcessadores);
+  };
+
+  const toggleShowPlacaVideo = () => {
+    setShowPlacasVideo(!showPlacasVideo);
+  };
+
+  const toggleShowLocal = () => {
+    setShowLocais(!showLocais);
+  };
+
+  const toggleLocal = (local) => {
+    if (selectedLocais.includes(local)) {
+      setSelectedLocais(selectedLocais.filter((l) => l !== local));
+    } else {
+      setSelectedLocais([...selectedLocais, local]);
+    }
+  };
+
+  const togglePlacaVideo = (placaVideo) => {
+    if (selectedPlacasVideo.includes(placaVideo)) {
+      setSelectedPlacasVideo(
+        selectedPlacasVideo.filter((pv) => pv !== placaVideo)
+      );
+    } else {
+      setSelectedPlacasVideo([...selectedPlacasVideo, placaVideo]);
+    }
+  };
+
+  const applyFilters = () => {
+    closeFilters();
+    const filteredData = allData.filter((patrimonio) => {
+      let passFilter = true;
+      if (
+        selectedObjetos.length > 0 &&
+        !selectedObjetos.includes(patrimonio.objeto)
+      ) {
+        passFilter = false;
+      }
+      if (
+        selectedMarcas.length > 0 &&
+        !selectedMarcas.some((marca) =>
+          (patrimonio.marca || patrimonio.marcaMonitor || "")
+            .toLowerCase()
+            .includes(marca.toLowerCase())
+        )
+      ) {
+        passFilter = false;
+      }
+      if (
+        selectedProcessadores.length > 0 &&
+        !selectedProcessadores.some((processador) =>
+          (patrimonio.processador || "")
+            .toLowerCase()
+            .includes(processador.toLowerCase())
+        )
+      ) {
+        passFilter = false;
+      }
+      if (
+        selectedLocais.length > 0 &&
+        !selectedLocais.includes(patrimonio.local)
+      ) {
+        passFilter = false;
+      }
+      if (
+        selectedPlacasVideo.length > 0 &&
+        !selectedPlacasVideo.includes(patrimonio.placaVideo)
+      ) {
+        passFilter = false;
+      }
+      return passFilter;
+    });
+    setData(filteredData);
+    setCurrentPage(1);
+    setSelectedMarcas("");
+    setSelectedObjetos("");
+    setSelectedProcessadores("");
+    setSelectedLocais("");
+    setSelectedPlacasVideo("");
+  };
+
+  const renderFiltersSidebar = () => {
+    const objetos = [
+      "Desktop",
+      "Monitor",
+      "Workstation",
+      "Notebook",
+      "Impressora",
+      "noBreak",
+      "Switch",
+      "Geladeira",
+      "Fogao",
+      "Bebedouro",
+      "Ar",
+      "Microondas",
+      "Televisao",
+      "Mesa",
+      "Cadeira",
+      "Escrivaninha",
+    ];
+    const marcas = [
+      "Samsung",
+      "Daten",
+      "LG",
+      "Dell",
+      "Hp",
+      "Brastemp",
+      "Midea",
+      "Consul",
+      "Eletrolux",
+      "Komeco",
+      "Cavaletti",
+      "UFLA",
+      "VIPH",
+      "EPSON",
+    ];
+    const processadores = ["i3", "i5", "i7", "i9"];
+
+    const placaVideo = [
+      "GTX 1050 Ti",
+      "GTX 1060",
+      "GTX 1070",
+      "GTX 1080",
+      "GTX 1080 Ti",
+      "GTX 1650",
+      "GTX 1650 SUPER",
+      "GTX 1660",
+      "GTX 1660 SUPER",
+      "GTX 1660 Ti",
+      "RTX 2060",
+      "RTX 2070",
+      "RTX 2080",
+      "RTX 2080 Ti",
+      "RTX 3050",
+      "RTX 3060",
+      "RTX 3060 Ti",
+      "RTX 3070",
+      "RTX 3070 Ti",
+      "RTX 3080",
+      "RTX 3080 Ti",
+      "RTX 3090",
+      "RTX 4060",
+      "RTX 4070",
+      "RTX 4070 Ti",
+      "RTX 4080",
+      "RTX 4080 Ti",
+      "RTX 4090",
+    ];
+
+    const locais = [
+      "Administrativo",
+      "Beco",
+      "GEO",
+      "MPF",
+      "Cozinha",
+      "Almoxarifado",
+      "Criatividade",
+      "Comunicação",
+      "Treinamento",
+      "Recepção",
+      "Sociedade",
+      "Projetos",
+      "Coordenação",
+      "Ara",
+      "Vale",
+      "Embrapii",
+      "Inovação",
+      "Lemaf",
+      "Desfazimento",
+      "Servidor 2º andar",
+    ];
+
+    return (
+      <div
+        className={`filters-sidebar ${showFiltersSidebar && "show-sidebar"}`}
+      >
+        <div className="tudo-filtro">
+          <h2 className="h2-filtro">Filtro</h2>
+          <div className="filter-section">
+            <div className="dentro-filtro">
+              <div className="caixa-filtro" onClick={toggleShowObjetos}>
+                <h4 className="h4-filtro">Objeto</h4>
+                <h4 className="h4-filtro-cor">{showObjetos ? "-" : "+"}</h4>
+              </div>
+
+              {showObjetos &&
+                objetos.map((objeto) => (
+                  <label key={objeto} className="ajuste-filtro">
+                    <input
+                      className="input-filtro"
+                      type="checkbox"
+                      checked={selectedObjetos.includes(objeto)}
+                      onChange={() => toggleObjeto(objeto)}
+                    />
+                    {objeto}
+                  </label>
+                ))}
+            </div>
+          </div>
+
+          <div className="filter-section">
+            <div className="dentro-filtro">
+              <div className="caixa-filtro" onClick={toggleShowMarcas}>
+                <h4 className="h4-filtro">Marca</h4>
+                <h4 className="h4-filtro-cor">{showMarcas ? "-" : "+"}</h4>
+              </div>
+
+              {showMarcas &&
+                marcas.map((marca) => (
+                  <label key={marca} className="ajuste-filtro">
+                    <input
+                      className="input-filtro"
+                      type="checkbox"
+                      checked={selectedMarcas.includes(marca)}
+                      onChange={() => toggleMarca(marca)}
+                    />
+                    {marca}
+                  </label>
+                ))}
+            </div>
+          </div>
+
+          <div className="filter-section">
+            <div className="dentro-filtro">
+              <div className="caixa-filtro" onClick={toggleShowProcessadores}>
+                <h4 className="h4-filtro">Processador</h4>
+                <h4 className="h4-filtro-cor">
+                  {showProcessadores ? "-" : "+"}
+                </h4>
+              </div>
+
+              {showProcessadores &&
+                processadores.map((processador) => (
+                  <label key={processador} className="ajuste-filtro">
+                    <input
+                      className="input-filtro"
+                      type="checkbox"
+                      checked={selectedProcessadores.includes(processador)}
+                      onChange={() => toggleProcessador(processador)}
+                    />
+                    {processador}
+                  </label>
+                ))}
+            </div>
+          </div>
+
+          <div className="filter-section">
+            <div className="dentro-filtro">
+              <div className="caixa-filtro" onClick={toggleShowPlacaVideo}>
+                <h4 className="h4-filtro">Placa de Vídeo</h4>
+                <h4 className="h4-filtro-cor">{showPlacasVideo ? "-" : "+"}</h4>
+              </div>
+
+              {showPlacasVideo &&
+                placaVideo.map((placaVideo) => (
+                  <label key={placaVideo} className="ajuste-filtro">
+                    <input
+                      className="input-filtro"
+                      type="checkbox"
+                      checked={selectedPlacasVideo.includes(placaVideo)}
+                      onChange={() => togglePlacaVideo(placaVideo)}
+                    />
+                    {placaVideo}
+                  </label>
+                ))}
+            </div>
+          </div>
+
+          <div className="filter-section">
+            <div className="dentro-filtro">
+              <div className="caixa-filtro" onClick={toggleShowLocal}>
+                <h4 className="h4-filtro">Locais</h4>
+                <h4 className="h4-filtro-cor">{showLocais ? "-" : "+"}</h4>
+              </div>
+
+              {showLocais &&
+                locais.map((locais) => (
+                  <label key={locais} className="ajuste-filtro">
+                    <input
+                      className="input-filtro"
+                      type="checkbox"
+                      checked={selectedLocais.includes(locais)}
+                      onChange={() => toggleLocal(locais)}
+                    />
+                    {locais}
+                  </label>
+                ))}
+            </div>
+          </div>
+
+          <div className="botao-filtro">
+            <button className="apply-filters" onClick={applyFilters}>
+              Aplicar
+            </button>
+            <button className="close-filters" onClick={closeFilters}>
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="consultar">
+      {renderFiltersSidebar()}
+
       <div className="cabecalho"></div>
 
       {selectedPatrimonio ? (
@@ -297,15 +702,14 @@ function Consultar() {
                     {...register("patrimonio", { required: true })}
                     value={patrimonioById}
                     onChange={(ev) => setPatrimonioById(ev.target.value)}
-                  />
+                  />{" "}
                   {errors?.patrimonio?.type === "required" && (
                     <p className="error-message">
                       Número do patrimônio é necessário
                     </p>
                   )}
-
                   <button type="submit">Consultar</button>
-                  <div className="btn-expandir">
+                  <div className="btn-expandir" onClick={toggleShowFilters}>
                     <img
                       src={require("../img/filter-big-svgrepo-com 1.png")}
                       alt="img-filtro"
@@ -314,17 +718,22 @@ function Consultar() {
                     />
                   </div>
                 </div>
-                <nav className="menu-lateral-filtro">
-                  <ul>
-                    <li className="item-menu"></li>
-                    <li className="item-menu"></li>
-                    <li className="item-menu"></li>
-                    <li className="item-menu"></li>
-                  </ul>
-                </nav>
               </div>
             </form>
+
+            <button className="button-consultar" onClick={startBarcodeScanner}>
+              Escanear QR Code
+            </button>
           </div>
+          {showScanner && (
+            <div className="qr-scanner">
+              <QrReader
+                onResult={handleQrScan}
+                onError={handleQrError}
+                style={{ width: "100%" }}
+              />
+            </div>
+          )}
 
           <div>
             <div>
@@ -332,7 +741,6 @@ function Consultar() {
                 <thead>
                   <tr>
                     <th>Objeto {renderSortArrowObjeto()}</th>
-
                     <th>Número do patrimônio </th>
                     <th>Marca {renderSortArrowMarca()}</th>
                     <th>Processador </th>
