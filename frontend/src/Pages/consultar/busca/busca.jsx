@@ -250,7 +250,7 @@ function Busca({ data }) {
 
   async function handleSave() {
     const patrimonioAlterado = await Api.post(
-      "http://177.105.35.235:7777/contentChange/" + data.patrimonio,
+      "/contentChange/" + data.patrimonio,
       {
         notas: changedNote,
         local: changedLocal,
@@ -281,7 +281,7 @@ function Busca({ data }) {
 
   async function handleDelete() {
     const patrimonioDeletado = await Api.delete(
-      "http://177.105.35.235:7777/annotations/" + data.patrimonio
+      "/annotations/" + data.patrimonio
     );
     if (patrimonioDeletado) {
       refreshPage();

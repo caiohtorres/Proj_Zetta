@@ -1,8 +1,6 @@
 import Api from "./api";
 
 export default class UserService {
-  // ...
-
   async login(dados) {
     try {
       const response = await Api.post("/login", dados);

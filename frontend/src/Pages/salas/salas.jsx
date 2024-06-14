@@ -51,9 +51,7 @@ function Salas() {
         }
 
         const response = await Api.get(
-          `http://177.105.35.235:7777/buscasala/${encodeURIComponent(
-            selectedSala
-          )}`
+          `/buscasala/${encodeURIComponent(selectedSala)}`
         );
 
         let data = response.data;
@@ -185,7 +183,7 @@ function Salas() {
     yPos += 15;
 
     const allPatrimoniosResponse = await Api.get(
-      `http://177.105.35.235:7777/buscasala/${encodeURIComponent(salas)}`
+      `/buscasala/${encodeURIComponent(salas)}`
     );
 
     const allPatrimoniosData = allPatrimoniosResponse.data;

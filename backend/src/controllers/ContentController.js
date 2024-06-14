@@ -27,7 +27,6 @@ module.exports = {
         return res.status(404).json({ error: "Documento não encontrado" });
       }
 
-      // Atualize os campos conforme necessário
       if (notas !== undefined) {
         annotation.notas = notas;
       }

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { QrReader } from "react-qr-reader";
-import "webrtc-adapter";
-
 import { useForm } from "react-hook-form";
+import "webrtc-adapter";
 import Api from "../../Services/api";
 import Busca from "./busca/busca.jsx";
 import "./consultar.css";
+
+import { Html5QrcodeScanner } from "html5-qrcode";
 
 const refreshPage = () => {
   window.location.reload();
@@ -34,7 +34,7 @@ function Consultar() {
   const [selectedPlacasVideo, setSelectedPlacasVideo] = useState([]);
   const [showLocais, setShowLocais] = useState(false);
   const [showPlacasVideo, setShowPlacasVideo] = useState(false);
-  const [scannedCode, setScannedCode] = useState("");
+
   const [showScanner, setShowScanner] = useState(false);
 
   const {
@@ -43,12 +43,25 @@ function Consultar() {
     reset,
   } = useForm();
 
+  const handleQrScan = (decodedText) => {
+    setPatrimonioById(decodedText);
+    setShowScanner(false);
+  };
+
+  useEffect(() => {
+    if (showScanner) {
+      const html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", {
+        fps: 10,
+        qrbox: 250,
+      });
+      html5QrcodeScanner.render(handleQrScan);
+    }
+  }, [showScanner]);
+
   const getPatrimonioById = async (ev) => {
     ev.preventDefault();
     try {
-      const response = await Api.get(
-        "http://177.105.35.235:7777/annotations/" + patrimonioById
-      );
+      const response = await Api.get("/annotations/" + patrimonioById);
       const data = response.data;
       setData([data]);
       setMostrarTodos(false);
@@ -58,49 +71,6 @@ function Consultar() {
       alert("Patrimônio não encontrado!");
       refreshPage();
     }
-  };
-
-  const startBarcodeScanner = () => {
-    console.log("Verificando suporte para MediaDevices API...");
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      console.log("MediaDevices API suportada.");
-      navigator.mediaDevices
-        .getUserMedia({ video: true })
-        .then(() => {
-          console.log("Acesso à câmera concedido.");
-          setShowScanner(true);
-        })
-        .catch((error) => {
-          console.error("Error accessing camera: ", error);
-          if (error.name === "NotAllowedError") {
-            alert(
-              "Permissão para acessar a câmera foi negada. Por favor, conceda a permissão no navegador."
-            );
-          } else if (error.name === "NotFoundError") {
-            alert(
-              "Nenhuma câmera encontrada. Por favor, conecte uma câmera e tente novamente."
-            );
-          } else {
-            alert("Erro ao acessar a câmera: " + error.message);
-          }
-        });
-    } else {
-      console.error("MediaDevices API has no support for your browser.");
-      alert(
-        "Seu navegador não suporta a API necessária para o scanner de QR Code."
-      );
-    }
-  };
-
-  const handleQrScan = (result) => {
-    if (result) {
-      setPatrimonioById(result?.text || result);
-      setShowScanner(false);
-    }
-  };
-
-  const handleQrError = (error) => {
-    console.error(error);
   };
 
   const toggleSortByMarca = () => {
@@ -121,7 +91,7 @@ function Consultar() {
 
   const getAllPatrimonios = async () => {
     try {
-      const response = await Api.get("http://177.105.35.235:7777/annotations/");
+      const response = await Api.get("/annotations/");
       let data = response.data;
 
       if (sortByLocal) {
@@ -720,19 +690,20 @@ function Consultar() {
                 </div>
               </div>
             </form>
-
-            <button className="button-consultar" onClick={startBarcodeScanner}>
-              Escanear QR Code
-            </button>
           </div>
+
+          <button
+            className="btn-scann"
+            onClick={() => setShowScanner(!showScanner)}
+          >
+            {showScanner ? "Fechar Scanner" : "Abrir Scanner"}
+          </button>
+
           {showScanner && (
-            <div className="qr-scanner">
-              <QrReader
-                onResult={handleQrScan}
-                onError={handleQrError}
-                style={{ width: "100%" }}
-              />
-            </div>
+            <div
+              id="qr-reader"
+              style={{ width: "100%", marginBottom: "25px", marginTop: "15px" }}
+            ></div>
           )}
 
           <div>

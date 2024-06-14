@@ -14,8 +14,8 @@ const DashboardContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
   background-color: #ffffff;
+  margin-top: 7px;
 `;
 
 const Header = styled.div`
@@ -125,9 +125,7 @@ const Dashboard = () => {
 
   const getCountByType = async () => {
     try {
-      const response = await Api.get(
-        "http://177.105.35.235:7777/contadorPorTipo"
-      );
+      const response = await Api.get("/contadorPorTipo/");
       const data = response.data;
       setTipoCounts(data);
     } catch (err) {

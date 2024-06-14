@@ -1,11 +1,10 @@
 import { AnimatePresence } from "framer-motion";
 import React from "react";
-import { Route, Routes } from "react-router-dom";
-import CadastroPatrimonio from "../Pages/cadastroPatrimonio/cadastroPatrimonio";
-
+import { Navigate, Route, Routes } from "react-router-dom";
 import CadastroPatrimonioEletrodomestico from "../Pages/cadastroPatrimonio/cadastroEletrodomestico";
 import CadastroPatrimonioEletronico from "../Pages/cadastroPatrimonio/cadastroEletronico";
 import CadastroPatrimonioMovel from "../Pages/cadastroPatrimonio/cadastroMovel";
+import CadastroPatrimonio from "../Pages/cadastroPatrimonio/cadastroPatrimonio";
 import Navbar from "../Pages/components/navbar";
 import Consultar from "../Pages/consultar/consultar";
 import Dashboard from "../Pages/dashboard/dashboard";
@@ -20,7 +19,8 @@ const Routering = () => {
   return (
     <AnimatePresence mode="wait">
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/cadastrousuario" element={<Signup />} />
 
         <Route
@@ -73,7 +73,6 @@ const Routering = () => {
             </ProtectedRoutes>
           }
         />
-
         <Route
           path="/consultar"
           element={
