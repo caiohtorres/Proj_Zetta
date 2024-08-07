@@ -1,20 +1,4 @@
-.navbar li {
-  font-family: "Roboto", sans-serif;
-  font-weight: 450;
-  font-style: normal;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: inline;
-  margin: 10px;
-}
-
-.planejaZetta {
-  top: 0;
-  left: 0;
-
-  cursor: pointer;
-}
+/* navbar.css */
 
 .navbar {
   max-height: 100vh;
@@ -36,12 +20,53 @@
   border-bottom: 1.4px solid transparent;
   transition: border-bottom 0.3s ease;
 }
+
 .navLetras {
   display: flex;
   padding: 15px;
   justify-content: space-between;
   border-bottom: 1px solid #909090;
+  align-items: center;
 }
+
+.navLetras .menu-toggle {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.navbar nav {
+  display: flex;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.navbar nav ul {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  align-items: center;
+}
+
+.navbar li {
+  font-family: "Roboto", sans-serif;
+  font-weight: 450;
+  font-style: normal;
+  margin: 0;
+  padding: 0;
+  display: inline;
+  margin: 10px;
+}
+
+.planejaZettaImg {
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  width: 160px;
+  height: 89px;
+}
+
 .navbar a:hover {
   color: #80549f;
 }
@@ -90,14 +115,6 @@
 
 .navbar li.active a {
   color: #80549f;
-}
-
-.navbar li.active a {
-  border-bottom: 1.4px solid #80549f;
-}
-
-.navbar li a:hover {
-  color: #80549f;
   border-bottom: 1.4px solid #80549f;
 }
 
@@ -106,13 +123,13 @@
   transition: none;
 }
 
+.botaocadastrarpatrimonio {
+  width: 150px;
+}
+
 .body {
   overflow-y: scroll;
   flex: 1;
-}
-
-body {
-  margin: 0 0;
 }
 
 .btncancelar-login {
@@ -124,4 +141,128 @@ body {
 .btncancelar-login:hover {
   color: #ffffff;
   border: 1px solid #80549f;
+}
+
+@media (max-width: 850px) {
+  .navLetras {
+    align-items: center;
+  }
+  .navbar a {
+    font-size: 8px;
+  }
+
+  .navbar nav ul {
+    display: flex;
+
+    align-items: start;
+  }
+
+  .botaocadastrarpatrimonio {
+    width: 75px;
+  }
+
+  .navLetras .menu-toggle {
+    display: flex;
+    transition: transform 0.3s ease;
+    font-size: 8px;
+  }
+
+  .navbar nav {
+    display: none;
+  }
+
+  .planejaZettaImg {
+    width: 80px;
+    height: 45px;
+  }
+
+  .navbar nav.active {
+    display: flex;
+
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .ul-footer li {
+    margin: 5px 0;
+  }
+
+  .zettaiconfooter {
+    margin: 10px 10px;
+  }
+
+  .body {
+    padding: 10px;
+  }
+
+  .nav-esquerda {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .active {
+    margin-left: 20px;
+  }
+}
+
+@media (max-width: 650px) {
+  .navLetras {
+    align-items: center;
+  }
+  .navbar a {
+    font-size: 7px;
+  }
+
+  .navbar nav ul {
+    display: flex;
+
+    align-items: start;
+  }
+
+  .botaocadastrarpatrimonio {
+    width: 55px;
+  }
+
+  .navLetras .menu-toggle {
+    display: flex;
+    transition: transform 0.3s ease;
+    font-size: 7px;
+  }
+
+  .navbar nav {
+    display: none;
+  }
+
+  .planejaZettaImg {
+    width: 60px;
+    height: 35px;
+  }
+
+  .navbar nav.active {
+    display: flex;
+
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .ul-footer li {
+    margin: 4px 0;
+  }
+
+  .zettaiconfooter {
+    margin: 10px 10px;
+  }
+
+  .body {
+    padding: 10px;
+  }
+
+  .nav-esquerda {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .active {
+    margin-left: 20px;
+  }
 }

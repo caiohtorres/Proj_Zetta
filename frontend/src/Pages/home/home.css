@@ -83,8 +83,73 @@
 #app {
   display: flex;
   justify-content: center;
-  align-items: center;
   height: 100vh;
   background-repeat: no-repeat;
   background-size: auto;
+}
+
+/* Estilos existentes... */
+
+@media (max-width: 850px) {
+  #chamativo {
+    margin: 20px auto;
+    font-size: 14px;
+  }
+
+  #zettaIcon {
+    height: 80px;
+    margin: 20px auto;
+  }
+
+  .container-home {
+    flex-direction: column;
+    gap: 20px;
+    height: auto;
+  }
+
+  .body-home {
+    width: 90%;
+    height: auto;
+    padding: 15px;
+    box-shadow: none;
+  }
+
+  .info-home h2 {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .body-home h1 {
+    font-size: 36px;
+    margin: 20px auto;
+    text-align: center;
+  }
+
+  .p-mes p {
+    font-size: 14px;
+  }
+
+  .homebody {
+    height: auto;
+  }
+
+  .imgzetta {
+    margin-top: 20px;
+  }
+
+  #app {
+    height: 100vh;
+    padding: 10px;
+    background-size: cover;
+  }
+
+  .img-zetta-home {
+    width: 800px;
+  }
+}
+
+@media (max-width: 650px) {
+  .img-zetta-home {
+    width: 600px;
+  }
 }

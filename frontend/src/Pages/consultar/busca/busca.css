@@ -2,14 +2,15 @@
   color: white;
   padding: 10px;
   margin-top: 55px;
-  background-color: #fafafa;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  border-color: #f2f2f2;
+  border-style: hidden;
   border-radius: 10px;
 }
 
 .data-container label {
   display: flex;
-  margin-top: 10px;
   margin-left: 20px;
 }
 .container-busca {
@@ -34,7 +35,8 @@
 }
 
 .container-busca ul {
-  display: contents;
+  display: flex;
+  justify-content: space-between;
   color: black;
 }
 
@@ -86,7 +88,7 @@
 
 .container-busca input {
   width: 98%;
-  background-color: #f2f2f2;
+  background-color: white;
   height: 40px;
   font-size: 10px;
 }
@@ -122,7 +124,6 @@
 }
 
 .caixas {
-  padding: 5px;
 }
 
 .input-editar {
@@ -135,12 +136,12 @@
   text-indent: 35px;
   height: 50px;
   cursor: pointer;
-  width: 90%;
+  width: 95%;
   margin-left: 25px;
 }
 
 .select-edit {
-  background-color: #f2f2f2;
+  background-color: white;
   border-color: #f2f2f2;
   border-style: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
@@ -151,7 +152,7 @@
   font-size: 10px;
   height: 40px;
   cursor: pointer;
-  width: 98%;
+  width: 90%;
   margin-left: 25px;
 }
 
@@ -163,4 +164,34 @@
 
 .lixeira {
   margin-top: 10px;
+}
+
+.engloba-caixas {
+  margin-left: 80px;
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.iconCadastrarBusca {
+  width: 100px !important;
+}
+
+.iconCancelarBusca {
+  width: 110px !important;
+}
+
+.dados {
+  display: flex;
+  justify-content: space-between;
+}
+
+.borda-img {
+  border-color: #f2f2f2;
+  border-style: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.borda-img img {
+  margin: 0 0 0;
 }

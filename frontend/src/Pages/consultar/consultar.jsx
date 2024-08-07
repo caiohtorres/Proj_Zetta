@@ -1,11 +1,12 @@
+import { Html5QrcodeScanner } from "html5-qrcode";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import "webrtc-adapter";
 import Api from "../../Services/api";
 import Busca from "./busca/busca.jsx";
 import "./consultar.css";
-
-import { Html5QrcodeScanner } from "html5-qrcode";
 
 const refreshPage = () => {
   window.location.reload();
@@ -34,7 +35,6 @@ function Consultar() {
   const [selectedPlacasVideo, setSelectedPlacasVideo] = useState([]);
   const [showLocais, setShowLocais] = useState(false);
   const [showPlacasVideo, setShowPlacasVideo] = useState(false);
-
   const [showScanner, setShowScanner] = useState(false);
 
   const {
@@ -172,8 +172,7 @@ function Consultar() {
         )}
         <td>{dado.patrimonio}</td>
         <td>{dado.marca || dado.marcaMonitor}</td>
-        <td>{dado.processador}</td>
-        <td>{dado.placaVideo}</td>
+
         <td>{dado.notas}</td>
         <td>{dado.local}</td>
       </tr>
@@ -419,6 +418,113 @@ function Consultar() {
     setSelectedProcessadores("");
     setSelectedLocais("");
     setSelectedPlacasVideo("");
+  };
+
+  const generatePDF = () => {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleDateString();
+    const formattedTime = currentDate.toLocaleTimeString();
+
+    const filteredData = data; // Use the already filtered data
+
+    const pdf = new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: "a4",
+    });
+
+    let yPos = 10;
+    const colWidth = 40;
+
+    pdf.setFont("Lato");
+
+    pdf.text(
+      "Relatório Patrimonial Zetta",
+      pdf.internal.pageSize.width / 2,
+      yPos,
+      { align: "center" }
+    );
+
+    yPos += 15;
+
+    const totalPatrimonios = filteredData.length;
+
+    const headerData = [
+      ["Total de Patrimônios", totalPatrimonios.toString()],
+      ["Data e hora", `${formattedDate} ${formattedTime}`],
+    ];
+
+    const headerHeight = 6;
+
+    pdf.autoTable({
+      startY: yPos,
+      head: headerData,
+      body: [],
+      theme: "grid",
+      margin: { top: 20 },
+      columnStyles: {
+        0: { cellWidth: colWidth, halign: "left" },
+        1: { cellWidth: colWidth, halign: "right" },
+      },
+      styles: {
+        overflow: "linebreak",
+        fontStyle: "bold",
+        rowHeight: headerHeight,
+        halign: "left",
+      },
+    });
+
+    yPos += headerHeight * headerData.length + 10;
+
+    const objectCount = {};
+    filteredData.forEach((dado) => {
+      objectCount[dado.objeto] = (objectCount[dado.objeto] || 0) + 1;
+    });
+
+    const objectGridData = Object.entries(objectCount).map(
+      ([objeto, quantidade]) => [objeto, quantidade]
+    );
+
+    yPos = "auto";
+
+    pdf.autoTable({
+      startY: yPos,
+      head: [["Objeto", "Quantidade"]],
+      body: objectGridData,
+      theme: "grid",
+      margin: { top: 20 },
+      columnStyles: {
+        0: { cellWidth: "auto" },
+        1: { cellWidth: "auto" },
+      },
+      styles: { overflow: "linebreak", halign: "center" },
+    });
+
+    yPos = "auto";
+
+    pdf.autoTable({
+      startY: yPos,
+      head: [["Patrimônio", "Objeto", "Marca", "Notas", "Local"]],
+      body: filteredData.map((dado) => [
+        dado.patrimonio,
+        dado.objeto,
+        dado.marca || dado.marcaMonitor,
+        dado.notas,
+        dado.local,
+      ]),
+      theme: "grid",
+      margin: { top: 20 },
+      columnStyles: {
+        0: { cellWidth: "auto" },
+        1: { cellWidth: "auto" },
+        2: { cellWidth: "auto" },
+        3: { cellWidth: "auto" },
+        4: { cellWidth: "auto" },
+      },
+      styles: { overflow: "linebreak", halign: "center" },
+    });
+
+    pdf.save("patrimonios_filtrados.pdf");
   };
 
   const renderFiltersSidebar = () => {
@@ -691,13 +797,15 @@ function Consultar() {
               </div>
             </form>
           </div>
-
-          <button
-            className="btn-scann"
-            onClick={() => setShowScanner(!showScanner)}
-          >
-            {showScanner ? "Fechar Scanner" : "Abrir Scanner"}
-          </button>
+          <div className="botoes-consultar">
+            <button
+              className="btn-scann"
+              onClick={() => setShowScanner(!showScanner)}
+            >
+              {showScanner ? "Fechar Scanner" : "Abrir Scanner"}
+            </button>
+            <button onClick={generatePDF}>Gerar PDF</button>
+          </div>
 
           {showScanner && (
             <div
@@ -706,23 +814,20 @@ function Consultar() {
             ></div>
           )}
 
-          <div>
-            <div>
-              <table className="mostrarTodosConsultar">
-                <thead>
-                  <tr>
-                    <th>Objeto {renderSortArrowObjeto()}</th>
-                    <th>Número do patrimônio </th>
-                    <th>Marca {renderSortArrowMarca()}</th>
-                    <th>Processador </th>
-                    <th>Placa de Vídeo </th>
-                    <th>Notas </th>
-                    <th>Local {renderSortArrowLocal()}</th>
-                  </tr>
-                </thead>
-                <tbody>{renderColumns()}</tbody>
-              </table>
-            </div>
+          <div className="table-container">
+            <table className="mostrarTodosConsultar">
+              <thead>
+                <tr>
+                  <th>Objeto {renderSortArrowObjeto()}</th>
+                  <th>Número do patrimônio </th>
+                  <th>Marca {renderSortArrowMarca()}</th>
+
+                  <th>Notas </th>
+                  <th>Local {renderSortArrowLocal()}</th>
+                </tr>
+              </thead>
+              <tbody>{renderColumns()}</tbody>
+            </table>
           </div>
           <div className="pagination">
             {renderPrevButton()}

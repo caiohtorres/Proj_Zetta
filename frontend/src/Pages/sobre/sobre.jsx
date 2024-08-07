@@ -8,6 +8,7 @@ import "./sobre.css";
 
 function Sobre() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [contactModalOpen, setContactModalOpen] = useState(false);
   const [currentPerson, setCurrentPerson] = useState(null);
 
   const pessoas = [
@@ -18,6 +19,8 @@ function Sobre() {
         "Desenvolvi todo o código do sistema utilizando NodeJs e ReactJs.",
       foto: fotoCaio,
       contato: "torrescaio12@gmail.com",
+      telefone: "(35) 99811-4395",
+      linkedin: "https://www.linkedin.com/in/caiohtorres2001/",
     },
     {
       nome: "Rafael Vilela",
@@ -26,6 +29,8 @@ function Sobre() {
         "Foi quem teve a ideia inicial do sistema, pensando nas melhorias e usabilidade.",
       foto: fotoRafael,
       contato: "r.alvesvilela@gmail.com",
+      telefone: "",
+      linkedin: "",
     },
     {
       nome: "Nicholas Andrade",
@@ -34,6 +39,8 @@ function Sobre() {
         "Equipe de Design de Soluções, desenharam todo o design do sistema.",
       foto: fotoNicholas,
       contato: "nicholas.adandrade@gmail.com",
+      telefone: "",
+      linkedin: "",
     },
     {
       nome: "Anderson Barbosa",
@@ -42,6 +49,8 @@ function Sobre() {
         "Equipe de Design de Soluções, desenharam todo o design do sistema.",
       foto: fotoAnderson,
       contato: "andersonbarbosa@estudante.ufla.br",
+      telefone: "",
+      linkedin: "",
     },
     {
       nome: "Éder Teixeira",
@@ -50,6 +59,8 @@ function Sobre() {
         "Auxiliou na infraestrutura de rede e servidor para o sistema.",
       foto: "",
       contato: "",
+      telefone: "",
+      linkedin: "",
     },
     {
       nome: "Gláucio Martins",
@@ -58,6 +69,8 @@ function Sobre() {
         "Agradecimento especial ao Gláucio que me ajudou em vários problemas que tive durante o desenvolvimento, apesar de não ter vínculo nenhum com a Zetta, teve boa vontade para ajudar e contribuir com o desenvolvimento.",
       foto: fotoGlaucio,
       contato: "glaucionepre@gmail.com",
+      telefone: "",
+      linkedin: "",
     },
   ];
 
@@ -69,6 +82,14 @@ function Sobre() {
   const closeModal = () => {
     setCurrentPerson(null);
     setModalOpen(false);
+  };
+
+  const openContactModal = () => {
+    setContactModalOpen(true);
+  };
+
+  const closeContactModal = () => {
+    setContactModalOpen(false);
   };
 
   return (
@@ -101,13 +122,35 @@ function Sobre() {
               <h3>{currentPerson.nome}</h3>
               <p>{currentPerson.descricao}</p>
               {currentPerson.contato && (
-                <a href={`email:${currentPerson.contato}`}>
-                  <button className="contact-button">Contato</button>
-                </a>
+                <div>
+                  <button className="contact-button" onClick={openContactModal}>
+                    Contato
+                  </button>
+                </div>
               )}
             </div>
           </div>
         )}
+        <div className="modal-contato">
+          {contactModalOpen && (
+            <div className="modal">
+              <div className="modal-content">
+                <button className="close-button" onClick={closeContactModal}>
+                  &times;
+                </button>
+                <h4>Contato</h4>
+                <p>Email: {currentPerson.contato}</p>
+                <p>Telefone: {currentPerson.telefone}</p>
+                <p>
+                  LinkedIn:{" "}
+                  <a className="link-linkedin" href={currentPerson.linkedin}>
+                    {currentPerson.linkedin}
+                  </a>
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -370,3 +370,14 @@ thead th {
 .input-filtro {
   width: auto;
 }
+
+.botoes-consultar {
+  display: flex;
+  width: 100%;
+  justify-content: start;
+}
+
+.botoes-consultar button {
+  margin-left: 10px;
+  width: 200px;
+}

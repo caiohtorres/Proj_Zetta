@@ -83,6 +83,8 @@ module.exports = {
         });
       }
 
+      const file = req.file ? req.file.path : null;
+
       const annotationCreated = await Annotations.create({
         patrimonio,
         objeto,
@@ -103,11 +105,8 @@ module.exports = {
         data,
         cidade,
         marca,
+        file,
       });
-
-      if (tipoContadores[tipo]) {
-        global[tipoContadores[tipo]] += 1;
-      }
 
       return res.status(201).json({
         success: true,

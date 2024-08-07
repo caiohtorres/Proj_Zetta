@@ -17,10 +17,13 @@ const AnnotationDataSchema = new mongoose.Schema({
   tamanhoMonitor: String,
   destinatario: String,
   cidade: String,
-  file: String,
   data: String,
   projeto: String,
   marca: String,
+  file: {
+    data: Buffer,
+    contentType: String,
+  },
 });
 
 module.exports = mongoose.model("Annotations", AnnotationDataSchema);

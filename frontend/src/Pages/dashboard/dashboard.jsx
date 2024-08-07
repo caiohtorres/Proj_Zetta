@@ -1,8 +1,7 @@
-// Dashboard.js
 import { Chart, registerables } from "chart.js";
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import { Doughnut } from "react-chartjs-2";
+import { Bar, Doughnut, Pie } from "react-chartjs-2";
 import styled from "styled-components";
 import Api from "../../Services/api";
 import "./dashboard.css";
@@ -21,13 +20,112 @@ const DashboardContainer = styled.div`
 const Header = styled.div`
   width: 100%;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 
   h1 {
     color: black;
     font-size: 1.5em;
     font-style: normal;
     font-weight: 400;
+  }
+`;
+
+const SummaryContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  height: 150px;
+  flex-wrap: wrap; /* Permite que os elementos se ajustem em múltiplas linhas */
+
+  @media (max-width: 1100px) {
+    gap: 5px;
+    margin-bottom: 10px;
+    height: auto;
+  }
+`;
+
+const SummaryBox = styled.button`
+  background-color: ${(props) => (props.active ? props.activeColor : "white")};
+  color: ${(props) => (props.active ? "white" : "#909090")};
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: none;
+  cursor: pointer;
+  width: 350px;
+  text-align: right;
+  display: flex;
+  justify-content: space-between;
+
+  h3 {
+    text-align: right;
+  }
+
+  &:hover {
+    color: white;
+    background-color: ${(props) => props.activeColor};
+    p {
+      color: white;
+    }
+  }
+
+  img {
+    position: relative;
+    width: 100px;
+    display: flex;
+    top: -50px;
+  }
+
+  @media (max-width: 1100px) {
+    width: 100%; /* Para ocupar toda a largura disponível em dispositivos menores */
+    padding: 10px;
+    img {
+      width: 50px; /* Reduz o tamanho da imagem em dispositivos menores */
+      top: -25px;
+    }
+
+    h3 {
+      font-size: 1em;
+    }
+  }
+`;
+
+const ChartTypeContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+
+  @media (max-width: 1100px) {
+    margin-bottom: 30px;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 650px) {
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+`;
+
+const ChartTypeButton = styled.button`
+  background-color: transparent !important;
+  color: ${(props) => (props.active ? "white" : "black")};
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+
+  img {
+    filter: ${(props) => (props.active ? "brightness(0)" : "none")};
+  }
+
+  &:hover {
+    color: white;
+
+    img {
+      filter: brightness(0);
+    }
   }
 `;
 
@@ -40,7 +138,7 @@ const ChartContainer = styled.div`
 `;
 
 const ChartBox = styled(motion.div)`
-  background-color: #f8f9fa;
+  background-color: white;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -59,37 +157,8 @@ const ChartBox = styled(motion.div)`
   }
 `;
 
-const SummaryContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
-`;
-
-const SummaryBox = styled.button`
-  background-color: ${(props) =>
-    props.active ? props.activeColor : "#f8f9fa"};
-  color: ${(props) => (props.active ? "white" : "black")};
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  border: none;
-  cursor: pointer;
-  width: 150px;
-  text-align: center;
-
-  h3 {
-    margin-bottom: 10px;
-  }
-
-  &:hover {
-    color: white;
-    background-color: ${(props) => props.activeColor};
-  }
-`;
-
 const LegendBox = styled.div`
-  background-color: #f8f9fa;
+  background-color: white;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -118,6 +187,8 @@ const LegendBox = styled.div`
 const Dashboard = () => {
   const [tipoCounts, setTipoCounts] = useState({});
   const [selectedCategory, setSelectedCategory] = useState("Eletrônicos");
+  const [chartType, setChartType] = useState("Doughnut");
+  const [activeChartType, setActiveChartType] = useState("Doughnut");
 
   useEffect(() => {
     getCountByType();
@@ -169,7 +240,7 @@ const Dashboard = () => {
   const legendasEletrodomesticos = generateLegend(listaTipoEletrodomesticos);
   const legendasMoveis = generateLegend(listaTipoMoveis);
 
-  const doughnutData = {
+  const chartData = {
     labels:
       selectedCategory === "Eletrônicos"
         ? listaTipoEletronicos
@@ -210,6 +281,18 @@ const Dashboard = () => {
       ? legendasEletrodomesticos
       : legendasMoveis;
 
+  const renderChart = () => {
+    switch (chartType) {
+      case "Pie":
+        return <Pie data={chartData} />;
+      case "Bar":
+        return <Bar data={chartData} options={{ indexAxis: "y" }} />;
+      case "Doughnut":
+      default:
+        return <Doughnut data={chartData} />;
+    }
+  };
+
   return (
     <div className="tudo-dashboard">
       <DashboardContainer>
@@ -219,26 +302,95 @@ const Dashboard = () => {
         <SummaryContainer>
           <SummaryBox
             active={selectedCategory === "Eletrônicos"}
-            activeColor="#80549F"
+            activeColor="#67CBFF"
             onClick={() => setSelectedCategory("Eletrônicos")}
           >
-            <h3>Eletrônicos</h3>
+            <img
+              src={require("../img/Frame 170.png")}
+              alt="eletronicoimg"
+              width={30}
+            />
+            <div>
+              <h2>Eletrônicos</h2>
+              <p>
+                {legendasEletronicos.reduce(
+                  (sum, item) => sum + item.quantidade,
+                  0
+                )}
+              </p>
+            </div>
           </SummaryBox>
           <SummaryBox
             active={selectedCategory === "Eletrodomésticos"}
-            activeColor="#66A959"
+            activeColor="#C97CFF"
             onClick={() => setSelectedCategory("Eletrodomésticos")}
           >
-            <h3>Eletrodomésticos</h3>
+            <img
+              src={require("../img/Frame 174.png")}
+              alt="eletrodomesticoimg"
+              width={30}
+            />
+            <div>
+              <h2>Eletrodomésticos</h2>
+              <p>
+                {legendasEletrodomesticos.reduce(
+                  (sum, item) => sum + item.quantidade,
+                  0
+                )}
+              </p>
+            </div>
           </SummaryBox>
           <SummaryBox
             active={selectedCategory === "Móveis"}
-            activeColor="#53A2CB"
+            activeColor="#FCC467"
             onClick={() => setSelectedCategory("Móveis")}
           >
-            <h3>Móveis</h3>
+            <img
+              src={require("../img/Frame 172.png")}
+              alt="movelimg"
+              width={30}
+            />
+            <div>
+              <h2>Móveis</h2>
+              <p>
+                {legendasMoveis.reduce((sum, item) => sum + item.quantidade, 0)}
+              </p>
+            </div>
           </SummaryBox>
         </SummaryContainer>
+        <ChartTypeContainer>
+          <ChartTypeButton
+            active={activeChartType === "Doughnut"}
+            onClick={() => {
+              setChartType("Doughnut");
+              setActiveChartType("Doughnut");
+            }}
+          >
+            <img
+              src={require("../img/_01-Donuts-Chart.png")}
+              alt="Doughnut Chart"
+              width={30}
+            />
+          </ChartTypeButton>
+          <ChartTypeButton
+            active={activeChartType === "Pie"}
+            onClick={() => {
+              setChartType("Pie");
+              setActiveChartType("Pie");
+            }}
+          >
+            <img src={require("../img/Pizza.png")} alt="Pie Chart" width={30} />
+          </ChartTypeButton>
+          <ChartTypeButton
+            active={activeChartType === "Bar"}
+            onClick={() => {
+              setChartType("Bar");
+              setActiveChartType("Bar");
+            }}
+          >
+            <img src={require("../img/Barra.png")} alt="Bar Chart" width={30} />
+          </ChartTypeButton>
+        </ChartTypeContainer>
         <ChartContainer>
           <ChartBox
             whileHover={{ scale: 1.05 }}
@@ -248,26 +400,7 @@ const Dashboard = () => {
             transition={{ duration: 0.5 }}
           >
             <h3>Total por {selectedCategory}</h3>
-            <Doughnut
-              data={doughnutData}
-              options={{
-                plugins: {
-                  tooltip: {
-                    callbacks: {
-                      label: function (context) {
-                        const label = context.label || "";
-                        const value = context.raw || 0;
-                        return `${label}: ${value}`;
-                      },
-                    },
-                  },
-                  centerText: {
-                    display: true,
-                    text: totalSelectedCategory,
-                  },
-                },
-              }}
-            />
+            {renderChart()}
           </ChartBox>
           <LegendBox>
             <h3>Detalhes</h3>

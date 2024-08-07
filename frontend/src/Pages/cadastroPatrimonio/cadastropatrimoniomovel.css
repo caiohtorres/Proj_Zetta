@@ -67,3 +67,32 @@
 .hovered .caixaroxa {
   background-color: #80549f;
 }
+
+@media (max-width: 1250px) {
+  .escolha {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    justify-content: center;
+  }
+  .arrumawidth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media (max-width: 750px) {
+  .escolha {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .arrumawidth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

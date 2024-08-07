@@ -1,6 +1,5 @@
 const express = require("express");
 const routes = express.Router();
-const multer = require("multer");
 const upload = require("./config/multer");
 
 const AnnotationController = require("./controllers/AnnotationController");
@@ -11,8 +10,8 @@ const UserController = require("./controllers/UserController");
 const FileController = require("./controllers/FileController");
 const BuscaSalaController = require("./controllers/BuscaSalaController");
 
-//Rota Annotations
-routes.post("/annotations", AnnotationController.create);
+// Rotas Annotations
+routes.post("/annotations", upload.single("foto"), AnnotationController.create);
 routes.get("/annotations/:patrimonio", AnnotationController.read);
 routes.get("/annotations/", AnnotationController.readAll);
 routes.delete("/annotations/:patrimonio", AnnotationController.delete);
@@ -25,6 +24,8 @@ routes.get("/buscasala/:local", BuscaSalaController.readSala);
 routes.post("/login", UserController.login);
 routes.post("/cadastrousuario", UserController.create);
 routes.get("/users", UserController.getAll);
+
+// Rotas de Upload de Arquivo
 routes.post("/uploads", upload.single("file"), FileController.create);
 routes.get("/uploads/:file", FileController.read);
 

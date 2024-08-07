@@ -59,7 +59,6 @@ function CadastroPatrimonioMovel() {
 
   const {
     register,
-
     formState: { errors },
   } = useForm();
 
@@ -77,10 +76,8 @@ function CadastroPatrimonioMovel() {
     setEstadoConservacao("");
     setValor("");
     setQuantidade("");
-
     setTipo("");
     setLocal("");
-
     setMarca("");
     setProjeto("");
     setData("");
@@ -98,12 +95,9 @@ function CadastroPatrimonioMovel() {
         estadoConservacao,
         valor,
         quantidade,
-
         tipo,
         local,
-
         marca,
-
         projeto,
         data,
       });
@@ -114,10 +108,8 @@ function CadastroPatrimonioMovel() {
       setEstadoConservacao("");
       setValor("");
       setQuantidade("");
-
       setTipo("");
       setLocal("");
-
       setProjeto("");
       setData("");
       setMarca("");
@@ -125,9 +117,9 @@ function CadastroPatrimonioMovel() {
       alert("Patrimônio cadastrado com sucesso!");
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
-        setErrorMessage(error.response.data.error); // define a mensagem de erro do servidor
+        setErrorMessage(error.response.data.error);
       } else {
-        setErrorMessage("Erro ao cadastrar patrimônio."); // caso não haja uma mensagem específica do servidor
+        setErrorMessage("Erro ao cadastrar patrimônio.");
       }
       console.error("Erro ao cadastrar patrimônio: ", error);
     }

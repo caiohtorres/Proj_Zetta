@@ -1,8 +1,8 @@
-import { motion } from "framer-motion"; // Importe motion do Framer Motion
+import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import UserService from "../../Services/UserService";
-import Modal from "./modal"; // Importe o componente Modal
+import Modal from "./modal";
 import "./navbar.css";
 
 const Navbar = ({ children }) => {
@@ -22,10 +22,14 @@ const Navbar = ({ children }) => {
   };
 
   const [hovering, setHovering] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
   return (
     <div>
-      {/* Use o componente Modal */}
       <Modal
         showModal={showModal}
         setShowModal={setShowModal}
@@ -37,42 +41,46 @@ const Navbar = ({ children }) => {
         <div className="navLetras">
           <div className="planejaZetta">
             <img
+              className="planejaZettaImg"
               src={require("../img/planejazetta.png")}
               alt="planejaZetta"
-              width={160}
-              height={89}
               onClick={() => navigate("/home")}
             />
           </div>
-          <nav>
-            <ul className="ul-img">
-              <li
-                className={location.pathname === "/consultar" ? "active" : ""}
-              >
-                <Link to="/consultar">Consultar patrimônio</Link>
-              </li>
-              <li
-                className={location.pathname === "/dashboard" ? "active" : ""}
-              >
-                <Link to="/dashboard">Dashboard</Link>
-              </li>
-              <li className={location.pathname === "/salas" ? "active" : ""}>
-                <Link to="/salas">Salas</Link>
-              </li>
-              <li>
-                <Link
-                  className="botaocadastraroffhover"
-                  to="/cadastropatrimonio"
+          <div className="nav-esquerda">
+            <div className="menu-toggle" onClick={toggleMenu}>
+              {menuOpen ? "✖" : "☰"}
+            </div>
+            <nav className={menuOpen ? "active" : ""}>
+              <ul className="ul-img">
+                <li
+                  className={location.pathname === "/consultar" ? "active" : ""}
                 >
-                  <img
-                    src={require("../img/Botão Cadastrar patrimonio.png")}
-                    alt="botao-cadastrar-patrimonio"
-                    width={150}
-                  />
-                </Link>
-              </li>
-            </ul>
-          </nav>
+                  <Link to="/consultar">Consultar patrimônio</Link>
+                </li>
+                <li
+                  className={location.pathname === "/dashboard" ? "active" : ""}
+                >
+                  <Link to="/dashboard">Dashboard</Link>
+                </li>
+                {/*<li className={location.pathname === "/salas" ? "active" : ""}>
+                  <Link to="/salas">Salas</Link>
+  </li>*/}
+                <li>
+                  <Link
+                    className="botaocadastraroffhover"
+                    to="/cadastropatrimonio"
+                  >
+                    <img
+                      className="botaocadastrarpatrimonio"
+                      src={require("../img/Botão Cadastrar patrimonio.png")}
+                      alt="botao-cadastrar-patrimonio"
+                    />
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
 
         <div className="body">{children}</div>

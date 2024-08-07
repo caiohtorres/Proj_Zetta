@@ -12,7 +12,11 @@ function App() {
       </head>
       <body>
         <div className="homebody">
-          <img src={require("../img/imginicial3.png")} alt="img-tela-inicial" />
+          <img
+            className="img-zetta-home"
+            src={require("../img/imginicial3.png")}
+            alt="img-tela-inicial"
+          />
         </div>
       </body>
     </div>

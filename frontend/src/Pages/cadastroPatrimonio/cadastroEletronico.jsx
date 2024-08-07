@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-
 import Api from "../../Services/api";
 import "./stylePag.css";
 
@@ -21,7 +20,6 @@ function CadastroPatrimonioEletronico() {
   const [tamanhoMonitor, setTamanhoMonitor] = useState("");
   const [destinatario, setDestinatario] = useState("");
   const [cidade, setCidade] = useState("");
-
   const [marca, setMarca] = useState("");
   const [projeto, setProjeto] = useState("");
   const [data, setData] = useState("");
@@ -140,13 +138,10 @@ function CadastroPatrimonioEletronico() {
   const listaObjetos = [
     "Desktop",
     "Monitor",
-
     "Workstation",
     "Notebook",
     "Impressora",
-
     "noBreak",
-
     "Switch",
   ];
   const listaMemoriaRam = [
@@ -342,9 +337,9 @@ function CadastroPatrimonioEletronico() {
       alert("Patrimônio cadastrado com sucesso!");
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
-        setErrorMessage(error.response.data.error); // define a mensagem de erro do servidor
+        setErrorMessage(error.response.data.error);
       } else {
-        setErrorMessage("Erro ao cadastrar patrimônio."); // caso não haja uma mensagem específica do servidor
+        setErrorMessage("Erro ao cadastrar patrimônio.");
       }
       console.error("Erro ao cadastrar patrimônio: ", error);
     }

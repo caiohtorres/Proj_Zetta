@@ -39,7 +39,6 @@ function Salas() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15;
   const [prevSelectedSala, setPrevSelectedSala] = useState("");
-
   const [totalPages, setTotalPages] = useState(0);
 
   const getAllPatrimonios = async (selectedSala, page = currentPage) => {

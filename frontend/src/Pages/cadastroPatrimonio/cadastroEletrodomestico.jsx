@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Api from "../../Services/api";
 import "./stylePag.css";
+import "./upload.css";
 
 function CadastroPatrimonioEletrodomestico() {
   const [patrimonio, setPatrimonio] = useState("");
@@ -10,14 +11,15 @@ function CadastroPatrimonioEletrodomestico() {
   const [estadoConservacao, setEstadoConservacao] = useState("");
   const [valor, setValor] = useState("");
   const [quantidade, setQuantidade] = useState("");
-
   const [tipo, setTipo] = useState("");
   const [local, setLocal] = useState("");
-
   const [marca, setMarca] = useState("");
   const [projeto, setProjeto] = useState("");
   const [data, setData] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [file, setFile] = useState("");
+  const [imagePreviewUrl, setImagePreviewUrl] = useState("");
+  const [imageName, setImageName] = useState("");
 
   console.log("Renderizou");
 
@@ -61,9 +63,7 @@ function CadastroPatrimonioEletrodomestico() {
     "Fogao",
     "Bebedouro",
     "Ar",
-
     "Microondas",
-
     "Televisao",
   ];
 
@@ -85,14 +85,15 @@ function CadastroPatrimonioEletrodomestico() {
     setEstadoConservacao("");
     setValor("");
     setQuantidade("");
-
     setTipo("");
     setLocal("");
-
     setMarca("");
     setProjeto("");
     setData("");
+    setFile("");
     setErrorMessage("");
+    setImagePreviewUrl("");
+    setImageName("");
   };
 
   async function handleForm(e) {
@@ -106,40 +107,39 @@ function CadastroPatrimonioEletrodomestico() {
         estadoConservacao,
         valor,
         quantidade,
-
         tipo,
         local,
-
         marca,
-
         projeto,
         data,
+        file,
       });
 
-      setPatrimonio("");
-      setObjeto("");
-      setNotas("");
-      setEstadoConservacao("");
-      setValor("");
-      setQuantidade("");
-
-      setTipo("");
-      setLocal("");
-
-      setProjeto("");
-      setData("");
-      setMarca("");
+      limparCampos();
       console.log(response);
       alert("Patrimônio cadastrado com sucesso!");
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
-        setErrorMessage(error.response.data.error); // define a mensagem de erro do servidor
+        setErrorMessage(error.response.data.error);
       } else {
-        setErrorMessage("Erro ao cadastrar patrimônio."); // caso não haja uma mensagem específica do servidor
+        setErrorMessage("Erro ao cadastrar patrimônio.");
       }
       console.error("Erro ao cadastrar patrimônio: ", error);
     }
   }
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFile(file);
+        setImagePreviewUrl(reader.result);
+        setImageName(file.name);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <div className="cadastroPatrimonio">
@@ -390,16 +390,42 @@ function CadastroPatrimonioEletrodomestico() {
             />
           </div>
 
-          {/*<div className="form-group">
-            <label>Arquivo</label>
-            <br />
-            <input
-              type="file"
-              className="file"
-              accept="image/png, image/jpeg, application/pdf"
-              onChange={handleUpload}
-            />
-            </div>*/}
+          <div className="upload-container">
+            <div className="drop-area">
+              <input
+                type="file"
+                className="file-input"
+                accept="image/png, image/jpeg"
+                onChange={handleImageChange}
+              />
+              <div className="drop-text">
+                <img
+                  src={require("../img/Cloud upload.png")}
+                  alt="Cloud Icon"
+                />
+                <p>
+                  Solte os arquivos aqui <br /> ou escolha da sua biblioteca
+                </p>
+              </div>
+            </div>
+          </div>
+          {imagePreviewUrl && (
+            <div className="image-preview">
+              <img
+                src={imagePreviewUrl}
+                alt="Image preview"
+                className="image-thumbnail"
+                width={100}
+              />
+              <p
+                className="p-upload
+              "
+              >
+                {imageName}
+              </p>
+            </div>
+          )}
+
           {errorMessage && <p className="error-message">{errorMessage}</p>}
           <div className="btnSalvar">
             <img

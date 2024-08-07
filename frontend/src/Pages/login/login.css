@@ -1,4 +1,52 @@
-.telaLogin .form-login {
+.telaLogin {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.quadradosSuperiores,
+.quadradosInferiores {
+  position: absolute;
+}
+
+.quadradosSuperiores {
+  top: 0;
+  left: 0;
+  margin-left: -8px;
+  margin-top: -8px;
+}
+
+.quadradosInferiores {
+  bottom: 0;
+  right: 0;
+  margin-right: -8px;
+  margin-bottom: -8px;
+}
+
+.quadrado {
+  width: 80px;
+  height: 80px;
+}
+
+.quadrado.verde {
+  background-color: #66a959;
+}
+
+.quadrado.azul {
+  background-color: #53a2cb;
+}
+
+.quadrado.amarelo {
+  background-color: #f6a51e;
+}
+
+.quadrado.roxo {
+  background-color: #80549f;
+}
+
+.form-login {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,6 +57,7 @@
   border-radius: 10px;
   width: 900px;
   height: 750px;
+  background: white;
 }
 
 .preencherDados {
@@ -18,21 +67,22 @@
   justify-content: center;
   flex-direction: column;
   width: 100%;
-  background-color: white;
-
   max-width: 350px;
   padding: 20px;
   border-radius: 5px;
+  background-color: white;
 }
+
 .preencherDados input {
   height: 50px;
-  width: 300px;
+  width: 150%;
+  max-width: 300px;
   border-radius: 5px;
-  border-color: #f2f2f2;
-  border-style: hidden;
+  border: none;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   padding-left: 30px;
 }
+
 .btnLogin {
   color: #80549f;
   font-family: sans-serif;
@@ -46,7 +96,6 @@
 
 .preencherDados strong {
   cursor: pointer;
-
   text-decoration: none;
   color: #676767;
 }
@@ -89,72 +138,27 @@ h2,
 .telaLogin .navlink-registrar:hover {
   color: #53a2cb;
 }
-.telaLogin {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.quadradosSuperiores,
-.quadradosInferiores {
-  position: absolute;
-}
-
-.quadradosSuperiores {
-  top: 0%; /* Ajuste conforme necessário */
-  left: 0%; /* Ajuste conforme necessário */
-  margin-left: -8px;
-  margin-top: -8px;
-}
-
-.quadradosInferiores {
-  bottom: 0%; /* Ajuste conforme necessário */
-  right: 0%; /* Ajuste conforme necessário */
-  margin-right: -8px;
-  margin-bottom: -8px;
-}
-
-.quadrado {
-  width: 80px; /* Ajuste conforme necessário */
-  height: 80px; /* Ajuste conforme necessário */
-}
-
-.quadrado.verde {
-  background-color: #66a959;
-}
-
-.quadrado.azul {
-  background-color: #53a2cb;
-}
-
-.quadrado.amarelo {
-  background-color: #f6a51e;
-}
-
-.quadrado.roxo {
-  background-color: #80549f;
-}
 
 @media (max-width: 768px) {
-  .quadradosSuperiores {
-    top: 3%; /* Ajuste conforme necessário */
-    left: 3%; /* Ajuste conforme necessário */
+  .telaLogin {
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 50px;
   }
 
+  .form-login {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    border-radius: 5px;
+  }
+
+  .preencherDados input {
+    width: 150%;
+  }
+
+  .quadradosSuperiores,
   .quadradosInferiores {
-    bottom: 3%; /* Ajuste conforme necessário */
-    right: 3%; /* Ajuste conforme necessário */
+    display: none;
   }
-}
-
-.quadradosSuperiores .quadrado.azul {
-  margin-top: -80px;
-  margin-left: 80px;
-}
-
-.quadradosInferiores .quadrado.verde {
-  margin-left: -80px;
-  margin-bottom: -80px;
 }

@@ -319,7 +319,7 @@ function Busca({ data }) {
         showModal={showModal}
         setShowModal={setShowModal}
         modalText={"Deseja realmente salvar as alterações?"}
-        confirmAction={handleSave} // Alterado para chamar a função handleSave
+        confirmAction={handleSave}
       />
       <Modal
         showModal={showModalLixo}
@@ -338,372 +338,390 @@ function Busca({ data }) {
             onClick={activateEditMode}
           />
           <ul>
-            {/* Conteúdo do componente Busca */}
-            <div className="caixas">
-              <li>
-                {" "}
-                <label>Número do patrimônio:</label>
-                <p>{data.patrimonio}</p>
-              </li>
-            </div>
-            <div className="caixas">
-              <li>
-                {" "}
-                <label>Tipo patrimônio:</label>
-                <p>{data.tipo}</p>
-              </li>
-            </div>
-            {(data.tipo === "Desktop" || data.tipo === "Notebook") && (
-              <div className="caixas">
-                <li>
-                  {" "}
-                  <label>Processador:</label>
-                  {editMode ? (
-                    <select
-                      className="select-edit"
-                      value={changedProcessador}
-                      onChange={(e) => setChangedProcessador(e.target.value)}
-                    >
-                      <option value="0">Altere o Processador</option>
-                      {processadoresIntel.map((processador, index) => (
-                        <option key={index} value={processador}>
-                          {processador}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <p>{data.processador}</p>
-                  )}
-                </li>
+            <div className="dados">
+              <div className="borda-img">
+                <img src={require("../../img/_01-Donuts-Chart.png")} alt="" />
               </div>
-            )}
-            {(data.tipo === "Desktop" || data.tipo === "Notebook") && (
-              <div className="caixas">
-                <li>
-                  {" "}
-                  <label>Placa de Vídeo:</label>
-                  {editMode ? (
-                    <select
-                      className="select-edit"
-                      value={changedPlacaVideo}
-                      onChange={(e) => setChangedPlacaVideo(e.target.value)}
-                    >
-                      <option value="0">Altere a Placa de Vídeo</option>
-                      {placaDeVideoNvidea.map((placaVideo, index) => (
-                        <option key={index} value={placaVideo}>
-                          {placaVideo}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <p>{data.placaVideo}</p>
-                  )}
-                </li>
-              </div>
-            )}
-            {(data.tipo === "Desktop" || data.tipo === "Notebook") && (
-              <div className="caixas">
-                <li>
-                  {" "}
-                  <label>Memória Ram:</label>
-                  {editMode ? (
-                    <select
-                      className="select-edit"
-                      value={changedMemoriaRam}
-                      onChange={(e) => setChangedMemoriaRam(e.target.value)}
-                    >
-                      <option value="0">Altere a Memória Ram</option>
-                      {listaMemoriaRam.map((memoriaRam, index) => (
-                        <option key={index} value={memoriaRam}>
-                          {memoriaRam}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <p>{data.memoriaRam}</p>
-                  )}
-                </li>
-              </div>
-            )}
-            {(data.tipo === "Desktop" || data.tipo === "Notebook") && (
-              <div className="caixas">
-                <li>
-                  {" "}
-                  <label>Armazenamento:</label>
-                  {editMode ? (
-                    <select
-                      className="select-edit"
-                      value={changedArmazenamento}
-                      onChange={(e) => setChangedArmazenamento(e.target.value)}
-                    >
-                      <option value="0">Altere o Armazenamento</option>
-                      {listaArmazenamento.map((armazenamento, index) => (
-                        <option key={index} value={armazenamento}>
-                          {armazenamento}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <p>{data.armazenamento}</p>
-                  )}
-                </li>
-              </div>
-            )}
-            {data.tipo === "Notebook" && (
-              <div className="caixas">
-                <li>
-                  {" "}
-                  <label>Cidade:</label>
-                  {editMode ? (
-                    <input
-                      className="input-editar"
-                      type="text"
-                      value={changedCidade}
-                      onChange={(e) => setChangedCidade(e.target.value)}
-                    />
-                  ) : (
-                    <p>{data.cidade}</p>
-                  )}
-                </li>
-              </div>
-            )}
-            {data.tipo === "Notebook" && (
-              <div className="caixas">
-                <li>
-                  {" "}
-                  <label>Destinatário:</label>
-                  {editMode ? (
-                    <input
-                      className="input-editar"
-                      type="text"
-                      value={changedDestinatario}
-                      onChange={(e) => setChangedDestinatario(e.target.value)}
-                    />
-                  ) : (
-                    <p>{data.destinatario}</p>
-                  )}
-                </li>
-              </div>
-            )}
-            {data.tipo === "Monitor" && (
-              <div className="caixas">
-                <li>
-                  {" "}
-                  <label>Marca:</label>
-                  {editMode ? (
-                    <select
-                      className="select-edit"
-                      value={changedMarca}
-                      onChange={(e) => setChangedMarca(e.target.value)}
-                    >
-                      <option value="0">Altere a Marca</option>
-                      {listaMarcaMonitor.map((marca, index) => (
-                        <option key={index} value={marca}>
-                          {marca}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <p>{data.marca || data.marcaMonitor}</p>
-                  )}
-                </li>
-              </div>
-            )}
-            {data.tipo !== "Monitor" && (
-              <div className="caixas">
-                <li>
-                  {" "}
-                  <label>Marca:</label>
-                  {editMode ? (
-                    <select
-                      className="select-edit"
-                      value={changedMarca}
-                      onChange={(e) => setChangedMarca(e.target.value)}
-                    >
-                      <option value="0">Altere a Marca</option>
-                      {listaMarca.map((marca, index) => (
-                        <option key={index} value={marca}>
-                          {marca}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <p>{data.marca || data.marcaMonitor}</p>
-                  )}
-                </li>
-              </div>
-            )}
-            {(data.tipo === "Monitor" || data.tipo === "Televisão") && (
-              <div className="caixas">
-                <li>
-                  {" "}
-                  <label>Tamanho:</label>
-                  {editMode ? (
-                    <select
-                      className="select-edit"
-                      value={changedTamanhoMonitor}
-                      onChange={(e) => setChangedTamanhoMonitor(e.target.value)}
-                    >
-                      <option value="0">Altere o Tamanho</option>
-                      {listaTamanhoMonitor.map((tamanho, index) => (
-                        <option key={index} value={tamanho}>
-                          {tamanho}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <p>{data.tamanhoMonitor}</p>
-                  )}
-                </li>
-              </div>
-            )}
-            <div className="caixas">
-              <li>
-                {" "}
-                <label>Projeto:</label>
-                {editMode ? (
-                  <input
-                    className="input-editar"
-                    type="text"
-                    value={changedProjeto}
-                    onChange={(e) => setChangedProjeto(e.target.value)}
-                  />
-                ) : (
-                  <p>{data.projeto}</p>
-                )}
-              </li>
-            </div>
-            <div className="caixas">
-              <li>
-                {" "}
-                <label>Data:</label>
-                <p>{data.data}</p>
-              </li>
-            </div>
-            <div className="caixas">
-              <li>
-                {" "}
-                <label>Local:</label>
-                {editMode ? (
-                  <select
-                    className="select-edit"
-                    value={changedLocal}
-                    onChange={(e) => setChangedLocal(e.target.value)}
-                  >
-                    <option value="0">Altere o Local</option>
-                    {listaLocal.map((local, index) => (
-                      <option key={index} value={local}>
-                        {local}
-                      </option>
-                    ))}
-                  </select>
-                ) : (
-                  <p>{data.local}</p>
-                )}
-              </li>
-            </div>
-            <div className="caixas">
-              <li>
-                {" "}
-                <label>Estado de Conservação:</label>
-                {editMode ? (
-                  <select
-                    className="select-edit"
-                    value={changedEstadoConservacao}
-                    onChange={(e) =>
-                      setChangedEstadoConservacao(e.target.value)
-                    }
-                  >
-                    <option value="0">Altere o Estado de Conservação</option>
-                    {listaEC.map((estadoconservacao, index) => (
-                      <option key={index} value={estadoconservacao}>
-                        {estadoconservacao}
-                      </option>
-                    ))}
-                  </select>
-                ) : (
-                  <p>{data.estadoConservacao}</p>
-                )}
-              </li>
-            </div>
-            <div className="caixas">
-              <li>
-                {" "}
-                <label>Valor:</label>
-                {editMode ? (
-                  <input
-                    className="input-editar"
-                    type="text"
-                    value={changedValor}
-                    onChange={(e) => setChangedValor(e.target.value)}
-                  />
-                ) : (
-                  <p>{data.valor}</p>
-                )}
-              </li>
-            </div>
-            <div className="caixas">
-              <li>
-                {" "}
-                <label>Quantidade:</label>
-                {editMode ? (
-                  <input
-                    className="input-editar"
-                    type="text"
-                    value={changedQuantidade}
-                    onChange={(e) => setChangedQuantidade(e.target.value)}
-                  />
-                ) : (
-                  <p>{data.quantidade}</p>
-                )}
-              </li>
-            </div>
-            <div className="caixas">
-              <li>
-                {" "}
-                <label>Observações:</label>
-                {editMode ? (
-                  <input
-                    className="input-editar"
-                    type="text"
-                    value={changedNote}
-                    onChange={(e) => setChangedNote(e.target.value)}
-                  />
-                ) : (
-                  <p>{data.notas}</p>
-                )}
-              </li>
-            </div>
-            {editMode && (
-              <>
-                <div className="botoesEditar">
-                  <div className="esquerda">
-                    <img
-                      className="iconCancelar"
-                      src={require("../../img/Botão Limpar.png")}
-                      alt="botao-cancelar"
-                      onClick={handleCancel}
-                    />
-                    <img
-                      className="iconCadastrar"
-                      src={require("../../img/salvar-editar.png")}
-                      alt="botao-salvar"
-                      onClick={() => setShowModal(true)}
-                    />
-                  </div>
-                  <div className="lixeira">
-                    <img
-                      className="iconLixeira"
-                      src={require("../../img/Trash-Bin-Circle--Streamline-Ultimate.svg.png")}
-                      alt="iconlixeira"
-                      onClick={() => setShowModalLixo(true)}
-                      width={50}
-                    />
-                  </div>
+              <div className="engloba-caixas">
+                <div className="caixas">
+                  <li>
+                    {" "}
+                    <label>Número do patrimônio:</label>
+                    <p>{data.patrimonio}</p>
+                  </li>
                 </div>
-              </>
-            )}
+                <div className="caixas">
+                  <li>
+                    {" "}
+                    <label>Tipo patrimônio:</label>
+                    <p>{data.tipo}</p>
+                  </li>
+                </div>
+                {(data.tipo === "Desktop" || data.tipo === "Notebook") && (
+                  <div className="caixas">
+                    <li>
+                      {" "}
+                      <label>Processador:</label>
+                      {editMode ? (
+                        <select
+                          className="select-edit"
+                          value={changedProcessador}
+                          onChange={(e) =>
+                            setChangedProcessador(e.target.value)
+                          }
+                        >
+                          <option value="0">Altere o Processador</option>
+                          {processadoresIntel.map((processador, index) => (
+                            <option key={index} value={processador}>
+                              {processador}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <p>{data.processador}</p>
+                      )}
+                    </li>
+                  </div>
+                )}
+                {(data.tipo === "Desktop" || data.tipo === "Notebook") && (
+                  <div className="caixas">
+                    <li>
+                      {" "}
+                      <label>Placa de Vídeo:</label>
+                      {editMode ? (
+                        <select
+                          className="select-edit"
+                          value={changedPlacaVideo}
+                          onChange={(e) => setChangedPlacaVideo(e.target.value)}
+                        >
+                          <option value="0">Altere a Placa de Vídeo</option>
+                          {placaDeVideoNvidea.map((placaVideo, index) => (
+                            <option key={index} value={placaVideo}>
+                              {placaVideo}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <p>{data.placaVideo}</p>
+                      )}
+                    </li>
+                  </div>
+                )}
+                {(data.tipo === "Desktop" || data.tipo === "Notebook") && (
+                  <div className="caixas">
+                    <li>
+                      {" "}
+                      <label>Memória Ram:</label>
+                      {editMode ? (
+                        <select
+                          className="select-edit"
+                          value={changedMemoriaRam}
+                          onChange={(e) => setChangedMemoriaRam(e.target.value)}
+                        >
+                          <option value="0">Altere a Memória Ram</option>
+                          {listaMemoriaRam.map((memoriaRam, index) => (
+                            <option key={index} value={memoriaRam}>
+                              {memoriaRam}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <p>{data.memoriaRam}</p>
+                      )}
+                    </li>
+                  </div>
+                )}
+                {(data.tipo === "Desktop" || data.tipo === "Notebook") && (
+                  <div className="caixas">
+                    <li>
+                      {" "}
+                      <label>Armazenamento:</label>
+                      {editMode ? (
+                        <select
+                          className="select-edit"
+                          value={changedArmazenamento}
+                          onChange={(e) =>
+                            setChangedArmazenamento(e.target.value)
+                          }
+                        >
+                          <option value="0">Altere o Armazenamento</option>
+                          {listaArmazenamento.map((armazenamento, index) => (
+                            <option key={index} value={armazenamento}>
+                              {armazenamento}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <p>{data.armazenamento}</p>
+                      )}
+                    </li>
+                  </div>
+                )}
+                {data.tipo === "Notebook" && (
+                  <div className="caixas">
+                    <li>
+                      {" "}
+                      <label>Cidade:</label>
+                      {editMode ? (
+                        <input
+                          className="input-editar"
+                          type="text"
+                          value={changedCidade}
+                          onChange={(e) => setChangedCidade(e.target.value)}
+                        />
+                      ) : (
+                        <p>{data.cidade}</p>
+                      )}
+                    </li>
+                  </div>
+                )}
+                {data.tipo === "Notebook" && (
+                  <div className="caixas">
+                    <li>
+                      {" "}
+                      <label>Destinatário:</label>
+                      {editMode ? (
+                        <input
+                          className="input-editar"
+                          type="text"
+                          value={changedDestinatario}
+                          onChange={(e) =>
+                            setChangedDestinatario(e.target.value)
+                          }
+                        />
+                      ) : (
+                        <p>{data.destinatario}</p>
+                      )}
+                    </li>
+                  </div>
+                )}
+                {data.tipo === "Monitor" && (
+                  <div className="caixas">
+                    <li>
+                      {" "}
+                      <label>Marca:</label>
+                      {editMode ? (
+                        <select
+                          className="select-edit"
+                          value={changedMarca}
+                          onChange={(e) => setChangedMarca(e.target.value)}
+                        >
+                          <option value="0">Altere a Marca</option>
+                          {listaMarcaMonitor.map((marca, index) => (
+                            <option key={index} value={marca}>
+                              {marca}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <p>{data.marca || data.marcaMonitor}</p>
+                      )}
+                    </li>
+                  </div>
+                )}
+                {data.tipo !== "Monitor" && (
+                  <div className="caixas">
+                    <li>
+                      {" "}
+                      <label>Marca:</label>
+                      {editMode ? (
+                        <select
+                          className="select-edit"
+                          value={changedMarca}
+                          onChange={(e) => setChangedMarca(e.target.value)}
+                        >
+                          <option value="0">Altere a Marca</option>
+                          {listaMarca.map((marca, index) => (
+                            <option key={index} value={marca}>
+                              {marca}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <p>{data.marca || data.marcaMonitor}</p>
+                      )}
+                    </li>
+                  </div>
+                )}
+                {(data.tipo === "Monitor" || data.tipo === "Televisão") && (
+                  <div className="caixas">
+                    <li>
+                      {" "}
+                      <label>Tamanho:</label>
+                      {editMode ? (
+                        <select
+                          className="select-edit"
+                          value={changedTamanhoMonitor}
+                          onChange={(e) =>
+                            setChangedTamanhoMonitor(e.target.value)
+                          }
+                        >
+                          <option value="0">Altere o Tamanho</option>
+                          {listaTamanhoMonitor.map((tamanho, index) => (
+                            <option key={index} value={tamanho}>
+                              {tamanho}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <p>{data.tamanhoMonitor}</p>
+                      )}
+                    </li>
+                  </div>
+                )}
+                <div className="caixas">
+                  <li>
+                    {" "}
+                    <label>Projeto:</label>
+                    {editMode ? (
+                      <input
+                        className="input-editar"
+                        type="text"
+                        value={changedProjeto}
+                        onChange={(e) => setChangedProjeto(e.target.value)}
+                      />
+                    ) : (
+                      <p>{data.projeto}</p>
+                    )}
+                  </li>
+                </div>
+                <div className="caixas">
+                  <li>
+                    {" "}
+                    <label>Data:</label>
+                    <p>{data.data}</p>
+                  </li>
+                </div>
+                <div className="caixas">
+                  <li>
+                    {" "}
+                    <label>Local:</label>
+                    {editMode ? (
+                      <select
+                        className="select-edit"
+                        value={changedLocal}
+                        onChange={(e) => setChangedLocal(e.target.value)}
+                      >
+                        <option value="0">Altere o Local</option>
+                        {listaLocal.map((local, index) => (
+                          <option key={index} value={local}>
+                            {local}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      <p>{data.local}</p>
+                    )}
+                  </li>
+                </div>
+                <div className="caixas">
+                  <li>
+                    {" "}
+                    <label>Estado de Conservação:</label>
+                    {editMode ? (
+                      <select
+                        className="select-edit"
+                        value={changedEstadoConservacao}
+                        onChange={(e) =>
+                          setChangedEstadoConservacao(e.target.value)
+                        }
+                      >
+                        <option value="0">
+                          Altere o Estado de Conservação
+                        </option>
+                        {listaEC.map((estadoconservacao, index) => (
+                          <option key={index} value={estadoconservacao}>
+                            {estadoconservacao}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      <p>{data.estadoConservacao}</p>
+                    )}
+                  </li>
+                </div>
+                <div className="caixas">
+                  <li>
+                    {" "}
+                    <label>Valor:</label>
+                    {editMode ? (
+                      <input
+                        className="input-editar"
+                        type="text"
+                        value={changedValor}
+                        onChange={(e) => setChangedValor(e.target.value)}
+                      />
+                    ) : (
+                      <p>{data.valor}</p>
+                    )}
+                  </li>
+                </div>
+                <div className="caixas">
+                  <li>
+                    {" "}
+                    <label>Quantidade:</label>
+                    {editMode ? (
+                      <input
+                        className="input-editar"
+                        type="text"
+                        value={changedQuantidade}
+                        onChange={(e) => setChangedQuantidade(e.target.value)}
+                      />
+                    ) : (
+                      <p>{data.quantidade}</p>
+                    )}
+                  </li>
+                </div>
+                <div className="caixas">
+                  <li>
+                    {" "}
+                    <label>Observações:</label>
+                    {editMode ? (
+                      <input
+                        className="input-editar"
+                        type="text"
+                        value={changedNote}
+                        onChange={(e) => setChangedNote(e.target.value)}
+                      />
+                    ) : (
+                      <p>{data.notas}</p>
+                    )}
+                  </li>
+                </div>
+              </div>
+            </div>
           </ul>
+          {editMode && (
+            <>
+              <div className="botoesEditar">
+                <div className="esquerda">
+                  <img
+                    className="iconCancelarBusca"
+                    src={require("../../img/Botão Limpar.png")}
+                    alt="botao-cancelar"
+                    onClick={handleCancel}
+                    width={110}
+                  />
+                  <img
+                    className="iconCadastrarBusca"
+                    src={require("../../img/salvar-editar.png")}
+                    alt="botao-salvar"
+                    onClick={() => setShowModal(true)}
+                    width={100}
+                  />
+                </div>
+                <div className="lixeira">
+                  <img
+                    className="iconLixeiraBusca"
+                    src={require("../../img/Trash-Bin-Circle--Streamline-Ultimate.svg.png")}
+                    alt="iconlixeira"
+                    onClick={() => setShowModalLixo(true)}
+                    width={40}
+                  />
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>
