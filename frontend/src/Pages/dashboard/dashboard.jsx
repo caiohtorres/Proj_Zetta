@@ -402,16 +402,6 @@ const Dashboard = () => {
             <h3>Total por {selectedCategory}</h3>
             {renderChart()}
           </ChartBox>
-          <LegendBox>
-            <h3>Detalhes</h3>
-            <ul>
-              {legendasAtuais.map((item) => (
-                <li key={item.nome}>
-                  {item.nome}: {item.quantidade}
-                </li>
-              ))}
-            </ul>
-          </LegendBox>
         </ChartContainer>
       </DashboardContainer>
     </div>

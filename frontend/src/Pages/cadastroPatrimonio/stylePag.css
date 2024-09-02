@@ -143,3 +143,12 @@ button:hover {
 .cadastroPatrimonio {
   height: 100vh;
 }
+
+@media (max-width: 650px) {
+  .btnSalvar .iconCancelar {
+    width: 100px;
+  }
+  .btnSalvar .iconCadastrar {
+    width: 95px;
+  }
+}

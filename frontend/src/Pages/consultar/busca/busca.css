@@ -35,7 +35,7 @@
 }
 
 .container-busca ul {
-  display: flex;
+  display: block;
   justify-content: space-between;
   color: black;
 }
@@ -182,7 +182,7 @@
 
 .dados {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .borda-img {
@@ -194,4 +194,55 @@
 
 .borda-img img {
   margin: 0 0 0;
+}
+
+@media (max-width: 650px) {
+  .dados {
+    display: block;
+  }
+
+  .container-busca ul {
+    padding: 0;
+  }
+
+  .engloba-caixas {
+    margin: 0;
+    display: block;
+  }
+
+  .container-busca input {
+    width: 90%;
+  }
+
+  .caixas li p {
+    margin-top: 5px;
+  }
+  .caixas li {
+    margin-top: 0;
+    margin: 0;
+  }
+
+  .caixas {
+    margin-top: 2px;
+    margin-bottom: 30px;
+  }
+  .borda-img {
+    margin-bottom: 30px;
+  }
+
+  .data-container {
+    margin-bottom: 55px;
+    box-shadow: none;
+  }
+  .botoesEditar {
+    padding: 0;
+  }
+
+  .esquerda img {
+    width: 80px !important;
+  }
+
+  .lixeira {
+    margin: 0;
+  }
 }

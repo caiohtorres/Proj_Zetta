@@ -53,6 +53,15 @@ const Navbar = ({ children }) => {
             </div>
             <nav className={menuOpen ? "active" : ""}>
               <ul className="ul-img">
+                <li className="menu-back-icon">
+                  <img
+                    className="back-icon"
+                    src={require("../img/voltar.png")}
+                    alt="Voltar"
+                    onClick={() => setMenuOpen(!menuOpen)}
+                    width={20}
+                  />
+                </li>
                 <li
                   className={location.pathname === "/consultar" ? "active" : ""}
                 >
@@ -75,6 +84,7 @@ const Navbar = ({ children }) => {
                       className="botaocadastrarpatrimonio"
                       src={require("../img/Botão Cadastrar patrimonio.png")}
                       alt="botao-cadastrar-patrimonio"
+                      width={200}
                     />
                   </Link>
                 </li>

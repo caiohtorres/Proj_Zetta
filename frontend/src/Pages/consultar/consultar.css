@@ -69,10 +69,10 @@
 
 .input-container {
   position: relative;
+  width: auto;
 }
 
 .input-container input {
-  width: calc(100% - 40px);
   background-color: transparent;
 }
 
@@ -80,7 +80,7 @@
   position: absolute;
   right: 0;
   top: 0;
-  margin-right: 100px;
+  margin-right: 5px;
   bottom: 0;
   width: 100px;
   padding: 0 0;
@@ -98,6 +98,10 @@
   right: 60px;
   transform: translateY(-120%);
   cursor: pointer;
+}
+
+.input-container button {
+  border-radius: 10px;
 }
 
 .pagination {
@@ -263,6 +267,10 @@ thead th {
   width: 0;
 }
 
+.img-filtro {
+  cursor: pointer;
+}
+
 .show-sidebar {
   width: 300px;
 }
@@ -380,4 +388,113 @@ thead th {
 .botoes-consultar button {
   margin-left: 10px;
   width: 200px;
+}
+
+@media (max-width: 650px) {
+  .mostrarTodosConsultar {
+    width: 100%;
+  }
+  thead {
+    display: none;
+  }
+  td img {
+    width: 15px;
+    margin-left: 10px;
+  }
+  .iconsconsultar {
+    display: flex !important;
+    justify-content: start !important;
+  }
+  .mostrarTodosConsultar tr {
+    display: block;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .mostrarTodosConsultar td {
+    display: block;
+
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    padding: 10px;
+    position: relative;
+    text-align: left;
+  }
+
+  .mostrarTodosConsultar td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 3px;
+    color: #000000;
+  }
+
+  .mostrarTodosConsultar tr:hover {
+    background-color: #f9f9f9;
+  }
+
+  /* Ajustar o conteúdo das células do cartão */
+  .mostrarTodosConsultar td:last-child {
+    border-bottom: none;
+  }
+
+  .input-container {
+    position: relative;
+  }
+
+  .input-container input {
+    font-size: 12px;
+  }
+
+  .input-container button {
+    width: auto;
+    font-size: 12px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+  }
+
+  .input-container img {
+  }
+
+  .btn-scan {
+    width: 200px;
+  }
+
+  .consultar {
+    margin: 0 0;
+  }
+
+  .botoes-consultar button {
+    width: auto;
+    height: auto;
+    font-size: 12px;
+    padding: 2px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .corpo {
+    padding: 0 0;
+  }
+
+  .botoes-consultar {
+    justify-content: space-around;
+  }
+
+  .show-sidebar {
+    width: 220px;
+  }
+
+  .dentro-filtro input {
+    margin: 0 0;
+  }
+
+  #qr-reader button {
+    width: 90%;
+  }
 }

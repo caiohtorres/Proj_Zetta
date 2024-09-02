@@ -139,7 +139,7 @@ h2,
   color: #53a2cb;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 650px) {
   .telaLogin {
     flex-direction: column;
     justify-content: flex-start;
@@ -154,11 +154,22 @@ h2,
   }
 
   .preencherDados input {
-    width: 150%;
+    width: 120%;
   }
 
   .quadradosSuperiores,
   .quadradosInferiores {
     display: none;
+  }
+
+  .telaLogin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .btnLogin button {
+    height: auto;
+    padding: 10px;
   }
 }

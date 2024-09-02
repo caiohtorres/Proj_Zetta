@@ -33,6 +33,7 @@ function CadastroPatrimonio() {
                   style={{ opacity: hoveredImage === "eletronico" ? 0 : 1 }}
                 />
                 <motion.img
+                  className="img-redimensionada-animacao"
                   src={require("../img/transicaoeletronico.png")}
                   alt="imgeletronico"
                   width={220}
@@ -84,6 +85,7 @@ function CadastroPatrimonio() {
                   style={{ opacity: hoveredImage === "movel" ? 0 : 1 }}
                 />
                 <motion.img
+                  className="img-redimensionada-animacao"
                   src={require("../img/transicaomovel.png")}
                   alt="imgmovel"
                   width={220}
@@ -138,6 +140,7 @@ function CadastroPatrimonio() {
                   }}
                 />
                 <motion.img
+                  className="img-redimensionada-animacao"
                   src={require("../img/transicaoeletrodomestico.png")}
                   alt="imgeletrodomestico"
                   width={230}

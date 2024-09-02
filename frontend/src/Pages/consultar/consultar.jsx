@@ -146,35 +146,49 @@ function Consultar() {
 
   const renderColumns = () => {
     return data.map((dado, index) => (
-      <tr
-        onClick={() => handleEditPatrimonio(dado)}
-        key={index}
-        className="tr-dados"
-      >
+      <tr key={index}>
+        <td
+          className="iconsconsultar"
+          style={{ justifyContent: "space-around", display: "flex" }}
+        >
+          <img
+            src={require("../img/Editar.png")}
+            alt="editar"
+            width={10}
+            onClick={() => handleEditPatrimonio(dado)}
+            style={{ cursor: "pointer" }}
+          />
+          <img
+            src={require("../img/visualizar.png")}
+            alt="visualizar"
+            width={10}
+            onClick={() => handleEditPatrimonio(dado)}
+            style={{ cursor: "pointer" }}
+          />
+        </td>
         {dado.destinatario ? (
-          <td>
+          <td data-label="Objeto">
             <div className="tooltip-container">
+              {dado.objeto}
               <img
                 src={require("../img/Person.png")}
                 alt="person-emprestado"
                 className="img-person"
-                style={{ marginRight: "5px" }}
+                style={{ marginLeft: "5px" }}
                 width={10}
               />
               <span className="tooltip">
                 Destinatário: {dado.destinatario}, Cidade: {dado.cidade}
               </span>
             </div>
-            {dado.objeto}
           </td>
         ) : (
-          <td>{dado.objeto}</td>
+          <td data-label="Objeto">{dado.objeto}</td>
         )}
-        <td>{dado.patrimonio}</td>
-        <td>{dado.marca || dado.marcaMonitor}</td>
-
-        <td>{dado.notas}</td>
-        <td>{dado.local}</td>
+        <td data-label="Patrimonio">{dado.patrimonio}</td>
+        <td data-label="Marca">{dado.marca || dado.marcaMonitor}</td>
+        <td data-label="Notas">{dado.notas}</td>
+        <td data-label="Local">{dado.local}</td>
       </tr>
     ));
   };
@@ -527,6 +541,111 @@ function Consultar() {
     pdf.save("patrimonios_filtrados.pdf");
   };
 
+  const generateAllPDF = () => {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleDateString();
+    const formattedTime = currentDate.toLocaleTimeString();
+
+    const pdf = new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: "a4",
+    });
+
+    let yPos = 10;
+    const colWidth = 40;
+
+    pdf.setFont("Lato");
+
+    pdf.text(
+      "Relatório Completo de Patrimônios",
+      pdf.internal.pageSize.width / 2,
+      yPos,
+      { align: "center" }
+    );
+
+    yPos += 15;
+
+    const totalPatrimonios = allData.length;
+
+    const headerData = [
+      ["Total de Patrimônios", totalPatrimonios.toString()],
+      ["Data e hora", `${formattedDate} ${formattedTime}`],
+    ];
+
+    const headerHeight = 6;
+
+    pdf.autoTable({
+      startY: yPos,
+      head: headerData,
+      body: [],
+      theme: "grid",
+      margin: { top: 20 },
+      columnStyles: {
+        0: { cellWidth: colWidth, halign: "left" },
+        1: { cellWidth: colWidth, halign: "right" },
+      },
+      styles: {
+        overflow: "linebreak",
+        fontStyle: "bold",
+        rowHeight: headerHeight,
+        halign: "left",
+      },
+    });
+
+    yPos += headerHeight * headerData.length + 10;
+
+    const objectCount = {};
+    allData.forEach((dado) => {
+      objectCount[dado.objeto] = (objectCount[dado.objeto] || 0) + 1;
+    });
+
+    const objectGridData = Object.entries(objectCount).map(
+      ([objeto, quantidade]) => [objeto, quantidade]
+    );
+
+    yPos = "auto";
+
+    pdf.autoTable({
+      startY: yPos,
+      head: [["Objeto", "Quantidade"]],
+      body: objectGridData,
+      theme: "grid",
+      margin: { top: 20 },
+      columnStyles: {
+        0: { cellWidth: "auto" },
+        1: { cellWidth: "auto" },
+      },
+      styles: { overflow: "linebreak", halign: "center" },
+    });
+
+    yPos = "auto";
+
+    pdf.autoTable({
+      startY: yPos,
+      head: [["Patrimônio", "Objeto", "Marca", "Notas", "Local"]],
+      body: allData.map((dado) => [
+        dado.patrimonio,
+        dado.objeto,
+        dado.marca || dado.marcaMonitor,
+        dado.notas,
+        dado.local,
+      ]),
+      theme: "grid",
+      margin: { top: 20 },
+      columnStyles: {
+        0: { cellWidth: "auto" },
+        1: { cellWidth: "auto" },
+        2: { cellWidth: "auto" },
+        3: { cellWidth: "auto" },
+        4: { cellWidth: "auto" },
+      },
+      styles: { overflow: "linebreak", halign: "center" },
+    });
+
+    pdf.save("patrimonios_completos.pdf");
+  };
+
   const renderFiltersSidebar = () => {
     const objetos = [
       "Desktop",
@@ -785,26 +904,33 @@ function Consultar() {
                     </p>
                   )}
                   <button type="submit">Consultar</button>
-                  <div className="btn-expandir" onClick={toggleShowFilters}>
-                    <img
-                      src={require("../img/filter-big-svgrepo-com 1.png")}
-                      alt="img-filtro"
-                      className="img-filtro"
-                      width={20}
-                    />
-                  </div>
+                </div>
+                <div className="btn-expandir" onClick={toggleShowFilters}>
+                  <img
+                    src={require("../img/filter-big-svgrepo-com 1.png")}
+                    alt="img-filtro"
+                    className="img-filtro"
+                    width={20}
+                  />
                 </div>
               </div>
             </form>
           </div>
           <div className="botoes-consultar">
-            <button
-              className="btn-scann"
-              onClick={() => setShowScanner(!showScanner)}
-            >
-              {showScanner ? "Fechar Scanner" : "Abrir Scanner"}
-            </button>
-            <button onClick={generatePDF}>Gerar PDF</button>
+            <div className="pdf-buttons">
+              <button
+                className="btn-scann"
+                onClick={() => setShowScanner(!showScanner)}
+              >
+                {showScanner ? "Fechar Scanner" : "Abrir Scanner"}
+              </button>
+              <button onClick={generatePDF} className="btn-gerar-pdf">
+                Gerar PDF Filtrado
+              </button>
+              <button onClick={generateAllPDF} className="btn-gerar-pdf">
+                Gerar PDF Geral
+              </button>
+            </div>
           </div>
 
           {showScanner && (
@@ -818,6 +944,7 @@ function Consultar() {
             <table className="mostrarTodosConsultar">
               <thead>
                 <tr>
+                  <th></th>
                   <th>Objeto {renderSortArrowObjeto()}</th>
                   <th>Número do patrimônio </th>
                   <th>Marca {renderSortArrowMarca()}</th>

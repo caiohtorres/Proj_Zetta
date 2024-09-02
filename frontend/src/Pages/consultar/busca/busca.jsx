@@ -339,9 +339,7 @@ function Busca({ data }) {
           />
           <ul>
             <div className="dados">
-              <div className="borda-img">
-                <img src={require("../../img/_01-Donuts-Chart.png")} alt="" />
-              </div>
+              <div className="borda-img">IMAGEM</div>
               <div className="engloba-caixas">
                 <div className="caixas">
                   <li>

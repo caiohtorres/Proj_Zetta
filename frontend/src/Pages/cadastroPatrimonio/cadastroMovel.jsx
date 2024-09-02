@@ -17,6 +17,9 @@ function CadastroPatrimonioMovel() {
   const [projeto, setProjeto] = useState("");
   const [data, setData] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [file, setFile] = useState("");
+  const [imagePreviewUrl, setImagePreviewUrl] = useState("");
+  const [imageName, setImageName] = useState("");
 
   console.log("Renderizou");
 
@@ -82,6 +85,19 @@ function CadastroPatrimonioMovel() {
     setProjeto("");
     setData("");
     setErrorMessage("");
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFile(file);
+        setImagePreviewUrl(reader.result);
+        setImageName(file.name);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   async function handleForm(e) {
@@ -373,6 +389,42 @@ function CadastroPatrimonioMovel() {
               onChange={(e) => setNotas(e.target.value)}
             />
           </div>
+
+          <div className="upload-container">
+            <div className="drop-area">
+              <input
+                type="file"
+                className="file-input"
+                accept="image/png, image/jpeg"
+                onChange={handleImageChange}
+              />
+              <div className="drop-text">
+                <img
+                  src={require("../img/Cloud upload.png")}
+                  alt="Cloud Icon"
+                />
+                <p>
+                  Solte os arquivos aqui <br /> ou escolha da sua biblioteca
+                </p>
+              </div>
+            </div>
+          </div>
+          {imagePreviewUrl && (
+            <div className="image-preview">
+              <img
+                src={imagePreviewUrl}
+                alt="Image preview"
+                className="image-thumbnail"
+                width={100}
+              />
+              <p
+                className="p-upload
+              "
+              >
+                {imageName}
+              </p>
+            </div>
+          )}
 
           {errorMessage && <p className="error-message">{errorMessage}</p>}
           <div className="btnSalvar">

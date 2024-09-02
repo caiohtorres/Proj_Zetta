@@ -68,3 +68,9 @@
   display: flex;
   justify-content: space-between;
 }
+
+@media (max-width: 650px) {
+  .modal-box {
+    width: 90%;
+  }
+}
